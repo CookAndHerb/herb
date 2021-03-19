@@ -3,4 +3,27 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Review">
+	<resultMap id="reResult" type="review">
+			<id property="rNum" column="R_NUM"></id>
+			<result property="pNum" column="P_NUM"></result>
+			<result property="rWriter" column="R_WRITER"></result>
+			<result property="rContent" column="R_CONTENT"></result>
+			<result property="rDate" column="R_DATE"></result>
+			<result property="rStar" column="R_STAR"></result>
+		</resultMap>
+		
+		<resultMap id="reFileResult" type="reviewFile">
+			<result property="rNum" column="R_NUM"></result>
+			<result property="rFile" column="R_FILE"></result>
+			<result property="pNum" column="P_NUM"></result>
+		</resultMap>
+	
+		<!-- 리뷰 리스트 -->
+		<select id="reviewAllList" parameterType="int" resultMap="reResult">
+			select * from review where p_num = #{pNum}
+		</select>
+		<!-- 리뷰 쓰기 -->
+		<insert id="reviewInsert" parameterType="review">
+			INSERT INTO REVIEW(P_NUM, R_NUM, R_WRITER, R_CONTENT, R_DATE, R_STAR) VALUES (#{pNum}, r_num_seq.nextval, #{rWriter}, #{rContent}, sysdate, #{rStar})
+		</insert>
 </mapper>

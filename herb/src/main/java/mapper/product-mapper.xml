@@ -3,4 +3,29 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Product">
+	<resultMap id="proResult" type="Product"> 	
+		<id property="pNum" column="P_NUM"></id>
+		<result property="pName" column="P_NAME"></result>
+		<result property="pCost" column="P_COST"></result>
+		<result property="imageName" column="P_IMAGE_NAME"></result>
+		<result property="imagePath" column="P_IMAGE_PATH"></result>
+		<result property="pContent" column="P_CONTENT"></result>
+		<result property="pStar" column="P_STAR"></result>
+		<result property="pSell" column="P_SELL"></result>
+		<result property="pMaDate" column="P_MA_DATE"></result>
+		<result property="pExDate" column="P_EX_DATE"></result>
+		<result property="pCapacity" column="P_CAPACITY"></result>
+		<result property="pType" column="P_TYPE"></result>
+		<result property="pImageName" column="P_INFO_IMAGE_NAME"></result>
+		<result property="infoImagePath" column="P_INFO_IMAGE_PATH"></result>
+	</resultMap>
+	
+	<!-- 상품 리스트 가져오기  -->
+	<select id="proAllList" resultMap="proResult">
+		select * from product
+	</select>
+	<!-- 상품 인포 -->
+	<select id="proInfo" parameterType="int" resultMap="proResult">
+		select * from product where p_num = #{pNum}
+	</select>
 </mapper>
