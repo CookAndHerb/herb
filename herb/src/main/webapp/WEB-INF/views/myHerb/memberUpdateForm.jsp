@@ -72,7 +72,7 @@
        
        
            <!-- 개인 정보 수정 폼 시작-->
-           <h2>김해리 님의 허브</h2>
+           <h2>님의 허브</h2>
            <h3>ooo@gmail.com</h3>
     <div class="register-login-section spad">
         <div class="container">
