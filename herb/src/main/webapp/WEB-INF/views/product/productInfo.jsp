@@ -75,12 +75,12 @@
 					
 					<table border="1">
 						<tr>
-							<th>${vo.shopName }</th>
-							<th>${vo.shopCost }</th>
-							<th>별점 ${vo.shopStar }</th>
+							<th>${vo.pName }</th>
+							<th>${vo.pCost }</th>
+							<th>별점 ${vo.pStar }</th>
 						</tr>
 						<tr>
-							<td Colspan="3">${vo.shopContent}</td>
+							<td Colspan="3">${vo.pContent}</td>
 						</tr>
 					</table>
 					
@@ -89,14 +89,14 @@
 					
 					<!-- 리뷰 쓰기 -->
 					<div id="reWrite">
-						<c:set var="shopNum" value="${num }"></c:set>
+						<c:set var="pNum" value="${num }"></c:set>
 
-						<form action="reInsert.do" id="refrm" method="POST">
-							<input type="hidden" name="shopNum" value="${shopNum }">
+						<form action="reviewInsert.do" id="refrm" method="POST">
+							<input type="hidden" name="pNum" value="${pNum }">
 							<table>
 								<tr>
 									<td>
-										별점: <select name="reStar">
+										별점: <select name="rStar">
 											<option value="1">1점</option>
 											<option value="2">2점</option>
 											<option value="3">3점</option>
@@ -105,17 +105,17 @@
 										</select>
 									</td>
 									<tr>
-										<td>작성자: <input type="text" name="reWriter"></td>
+										<td>작성자: <input type="text" name="rWriter"></td>
 									</tr>
 									<tr>
-										<td><textarea name="reContent" rows="7" cols="40"></textarea></td>
+										<td><textarea name="rContent" rows="7" cols="40"></textarea></td>
 									</tr>
 							</table>
 							<input type="submit">
 						</form>
 					</div>
 					
-					<div id="review">
+					<div id="reviewList">
 						<table border="1">
 							<tr>
 								<th>작성자</th>
@@ -125,10 +125,10 @@
 							</tr>
 							<c:forEach var="review" items="${review }">
 								<tr>
-									<td>${review.reWriter }</td>
-									<td>${review.reContent }</td>
-									<td><fmt:formatDate value="${review.reDate}" pattern="yyyy-MM-dd"/>
-									<td>${review.reStar }</td>
+									<td>${review.rWriter }</td>
+									<td>${review.rContent }</td>
+									<td><fmt:formatDate value="${review.rDate}" pattern="yyyy-MM-dd"/>
+									<td>${review.rStar }</td>
 								</tr>	
 							</c:forEach>
 						</table>
