@@ -1,5 +1,7 @@
 package com.kh.herb.review.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,12 @@ public class ReviewServiceImpl implements ReviewService {
 		
 		int result = dao.reviewInsert(review);
 		return result;
+	}
+
+	@Override
+	public List<Review> reviewAllList(int pNum) throws Exception {
+		List<Review> list = dao.reviewAllList(pNum);
+		return list;
 	}
 
 }

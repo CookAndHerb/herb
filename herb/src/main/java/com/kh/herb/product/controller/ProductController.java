@@ -11,11 +11,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.herb.product.model.service.ProductService;
 import com.kh.herb.product.model.vo.Product;
+import com.kh.herb.review.model.service.ReviewService;
+import com.kh.herb.review.model.vo.Review;
 
 @Controller
 public class ProductController {
 	@Autowired
 	ProductService proSe;
+	
+	@Autowired
+	ReviewService reSe;
 	
 	@RequestMapping(value="product.do")
 	public ModelAndView productAllList(ModelAndView modelAndView) throws Exception {
@@ -26,15 +31,15 @@ public class ProductController {
 		return modelAndView;
 	}
 	
-	/*
-	 * @RequestMapping("productInfo.do") public String shopInfo(Model
-	 * model, @RequestParam("num") int num) throws Exception{ Product pro =
-	 * proSe.productInfo(num); List<Review> review = shopSe.shopReAllList(num);
-	 * model.addAttribute("vo",shop); model.addAttribute("review",review);
-	 * 
-	 * return "shopping/shopInfo";
-	 * 
-	 * }
-	 */
+	@RequestMapping("productInfo.do")
+	public String shopInfo(Model model, @RequestParam("num") int num) throws Exception{
+		Product product = proSe.productInfo(num);
+		List<Review> review = reSe.reviewAllList(num);
+		model.addAttribute("vo",product);
+		model.addAttribute("review",review);
+		
+		return "product/productInfo";
+		
+	}
 	
 }

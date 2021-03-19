@@ -1,5 +1,30 @@
 package com.kh.herb.review.controller;
 
-public class ReviewController {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.herb.review.model.service.ReviewService;
+import com.kh.herb.review.model.vo.Review;
+
+@Controller
+public class ReviewController {
+	
+	@Autowired
+	ReviewService reSe;
+
+	@RequestMapping(value="reviewInsert.do", method=RequestMethod.POST)
+	public ModelAndView reInsert(RedirectAttributes Redirect, ModelAndView modelAndView, Review review) throws Exception{		
+		
+		reSe.reviewInsert(review);
+		System.out.println("num: "+review.getpNum() );
+		modelAndView.addObject("num",review.getpNum());
+		modelAndView.setViewName("redirect:/productInfo.do");
+		
+		return modelAndView;
+	}
 }
