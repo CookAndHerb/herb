@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="5000000" /> <!-- 업로드 사이즈 제한(5MB) -->
+		<property name="uploadTempDir" ref="uploadDirResource" />
+	</bean>
+
+	<!-- <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> -->
+	<!-- one of the properties available; the maximum file size in bytes 2MB -->
+	<!-- <property name="maxUploadSize" value="2000000"/> -->
+	<!-- </bean> -->
+
+	<!-- Configure the file upload directory -->
+	<bean id="uploadDirResource"
+		class="org.springframework.core.io.FileSystemResource">
+		<constructor-arg>
+			<value>C:/Temp/</value> <!-- 업로드 파일 임시 저장 폴더 지정 -->
+		</constructor-arg>
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="pills" />
+		<property name="password" value="pills" />
+	</bean>
+	<beans:bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="configLocation"
+			value="classpath:/mybatis-config.xml" /> <!-- JAVA Resources => src/main/resouces에 만들어주기  -->
+	</beans:bean>
+
+	<beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+		<beans:constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</beans:bean>
+	<!-- 트랜잭션 관리자 -->
+	<!-- 위의 트랜잭션 어노테이션 처리할때 이름을 transactionManager로 설정하면 다음 코드를 쓸 필요 없다. -->
+	<!-- TransactionManager를 정의하여 Commit, Rollback을 제어한다 -->
+	<beans:bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<beans:property name="dataSource" ref="dataSource" />
+	</beans:bean>
+	<!-- Transaction 의 대상 설정 -->
+	<tx:advice id="txAdvice"
+		transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- Transaction의 대상이 되는 메소드를 정의한다 -->
+			<tx:method name="select*" read-only="true" rollback-for="Exception" />
+			<tx:method name="insert*" rollback-for="Exception" />
+			<tx:method name="update*" rollback-for="Exception" />
+			<tx:method name="delete*" rollback-for="Exception" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- AOP를 통해 Transaction의 pointcut 설정 -->
+<!-- 	<aop:config> proxy-target-class="true"
+		<aop:pointcut id="txAdvisePointCut"
+			expression="execution(* com.mvc..impl.*Impl.*(..))" />
+		<aop:advisor pointcut-ref="txAdvisePointCut"
+			advice-ref="txAdvice" />
+	</aop:config> -->
+	<aop:config proxy-target-class="true">
+		<!-- <aop:pointcut id="daoMethod"
+			expression="execution(* com.mvcproject..*Impl.*(..)))" /> -->
+	<aop:pointcut id="daoMethod"
+			expression="execution(* com.kh..*Impl.*(..)))" />			
+		<aop:advisor id="transactionAdvisor"
+			pointcut-ref="daoMethod" advice-ref="txAdvice" />
+	</aop:config>
+</beans>
+
+
