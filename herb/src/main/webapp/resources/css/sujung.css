@@ -1,0 +1,38 @@
+/* 공통 CSS */
+.font{
+	color: white;
+}
+.sidebar:visited{
+	color: #e7ab3c;
+}
+
+/* 관리자페이지 메인 */
+.totalSales{
+	border: 1px solid #e7ab3c;
+	background: #e7ab3c;
+	width: 420px;
+	height: 200px;
+	display: inline-block;
+}
+.monthSales{
+	border: 1px solid #6e6e6e;
+	background: #6e6e6e; 
+	width: 420px;
+	height: 200px;
+	display: inline-block;
+}
+#eventing{
+	font-size: large;
+	font-weight: bold;	
+}
+.banner{
+	width: 850px;
+	height: 150px;
+}
+#mainPrice{
+	font-size: xx-large;
+	font-weight: bolder;
+	margin-top: 100px;
+	float: right;
+	color: black;
+}
