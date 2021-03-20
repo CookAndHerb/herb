@@ -50,5 +50,23 @@ public class HomeController {
 	@RequestMapping(value="board_template.do", method=RequestMethod.GET)
 	public String template2() {
 		return "template/board_template";
-	}	
+	}
+	
+	// memberUpdateForm.jsp로 가는 주소
+	@RequestMapping(value="memberUpdate.do", method=RequestMethod.GET)
+	public String memberUpdate() {
+		return "myHerb/memberUpdateForm";
+	}
+	
+	// memberDeleteForm.jsp로 가는 주소
+	@RequestMapping(value="memberDelete.do", method=RequestMethod.GET)
+	public String memberDelete() {
+		return "myHerb/memberDeleteForm";
+	}
+	
+	// memberOrder.jsp로 가는 주소
+	@RequestMapping(value="memberOrder.do", method=RequestMethod.GET)
+	public String memberOrder() {
+		return "myHerb/memberOrder";
+	}
 }

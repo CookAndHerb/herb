@@ -185,7 +185,7 @@
                      
                     	<c:choose>
                     	<c:when test="${member.userNum > 0 && member.userNum <= 999}">
-                        <li><a href="#">admin</a>
+                        <li><a href="adminMain.do">admin</a>
                             <ul class="dropdown">
                                 <li><a href="#">상품관리</a></li>
                                 <li><a href="#">주문관리</a></li>
@@ -193,14 +193,16 @@
                             </ul>
                         </li>
                        </c:when>
-                       <c:otherwise>
-                           <li><a href="#">MY HERB</a>
+                       <c:when  test="${member.userNum >999}">
+                           <li><a href="memberOrder.do">MY HERB</a>
                             <ul class="dropdown">
-                                <li><a href="./blog-details.html">주문 조회</a></li>
-                                <li><a href="./shopping-cart.html">개인 정보 수정</a></li>
-                                <li><a href="./check-out.html">탈퇴하기</a></li>
+                                <li><a href="memberOrder.do">주문 조회</a></li>
+                                <li><a href="memberUpdate.do">개인 정보 수정</a></li>
+                                <li><a href="memberDelete.do">탈퇴하기</a></li>
                             </ul>
                         </li>
+                        </c:when>
+                           <c:otherwise>
                         </c:otherwise>
                    </c:choose>
                    
