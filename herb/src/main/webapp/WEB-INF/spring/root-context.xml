@@ -12,9 +12,9 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="5000000" /> <!-- 업로드 사이즈 제한(5MB) -->
+		<property name="maxUploadSize" value="5000000" /> 
 		<property name="uploadTempDir" ref="uploadDirResource" />
-	</bean>
+	</bean> 
 
 	<!-- <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> -->
 	<!-- one of the properties available; the maximum file size in bytes 2MB -->
@@ -29,18 +29,12 @@
 		</constructor-arg>
 	</bean>
 	
-	<!-- 첨부파일을 임시기억저장소에 저장한다. -->
-	<!-- 파일이 포함된 경우의 bean 아이디는 반드시 아래와 같이 입력해야한다. -->
-	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="uploadTempDir" ref="uploadDirResource" />
-		<property name="maxUploadSize" value="1000000000"></property>
-	</bean>
+	
 	
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="url" value="jdbc:oracle:thin:@49.247.26.104:1521:xe" />
 		<property name="username" value="pills" />
 		<property name="password" value="pills" />
 	</bean>
