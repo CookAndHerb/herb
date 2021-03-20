@@ -27,4 +27,12 @@ public class FaqDAO {
 		
 		return sqlSession.selectList("Faq.listAll",map);
 	}
+
+	public int insertFaq(Faq faq) {
+		return sqlSession.insert("Faq.insertFaq",faq);
+	}
+
+	public Object increaseViewcnt() {
+		return null;
+	}
 }

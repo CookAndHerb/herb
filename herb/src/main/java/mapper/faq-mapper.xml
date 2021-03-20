@@ -14,8 +14,6 @@
 	</resultMap>
 	
 	
-	
-	
 	<!-- 리스트 반환 -->
 	<select id="listAll" parameterType="java.util.Map" resultType="Faq" resultMap="resultFaq">
 		<include refid="paging_header" /> <!-- 아래의 sql문을 include -->
@@ -46,5 +44,11 @@
 		OR FAQ_TITLE LIKE '%'||#{keyword}||'%'
 	</sql>
 	
+	<!-- 글 작성해서 insert -->
+	<insert id="insertFaq" parameterType="Faq">
+	<!-- 게시글 번호는 시퀀스로 하고 생성할 때마다 숫자가 1씩 증가하도록 설정 -->
+		INSERT INTO FAQ VALUES (faqNum,faqTitle,faqContent) VALUES
+				(FAQ_SEQ.NEXTVAL,#{faqTitle),#{faqContent})
+	</insert>
 	
 </mapper>

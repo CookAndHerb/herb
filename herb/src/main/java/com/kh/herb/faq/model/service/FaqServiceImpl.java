@@ -19,11 +19,17 @@ public class FaqServiceImpl implements FaqService {
 		return faqDao.listAll(keyword, start, end);
 	}
 
-	/*
+	
 	@Override
-	public int insertFaq(Faq faq) {
-		// TODO Auto-generated method stub
-		return 0;
-	}*/
+	public int insertFaq(Faq faq) throws Exception {
+		return faqDao.insertFaq(faq);
+	}
+
+
+	@Override
+	public void increaseViewcnt() throws Exception {
+		//return faqDao.increaseViewcnt();
+		
+	}
 	
 }

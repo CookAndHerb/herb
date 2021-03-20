@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +65,7 @@ public class FaqController {
 		return "faq/faqWriteForm";
 	}
 	
-	/*
+	
 	//faqWriteForm.jsp에서 입력한 내용들이 Faq에 저장됨
 	@RequestMapping(value="faqInsert.do", method=RequestMethod.POST)
 	public ModelAndView faqInsert (Faq faq, ModelAndView modelAndView) throws Exception {
@@ -71,6 +73,17 @@ public class FaqController {
 		int result = faqService.insertFaq(faq);
 		modelAndView.addObject("result",result);
 		//modelAndView.setViewName("");
+		return modelAndView;
+	}
+	
+	/*
+	@RequestMapping(value="faqView.do", method=RequestMethod.GET)
+	public ModelAndView faqView(@RequestParam int curPage, @RequestParam String keyword, HttpSession session)
+					throws Exception {
+		
+		//조회수 증가 쿼리
+        faqService.increaseViewcnt();
+		
 	}
 	*/
 	

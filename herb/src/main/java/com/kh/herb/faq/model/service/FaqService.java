@@ -11,6 +11,8 @@ public interface FaqService {
 	// 매개변수는 시작 레코드 번호, 끝번호, 옵션과 키워드가 들어간다
 	public List<Faq> listAll(String keyword, int start, int end) throws Exception;
 
-	//public int insertFaq(Faq faq);
+	public int insertFaq(Faq faq) throws Exception;
+
+	public void increaseViewcnt() throws Exception;
 
 }
