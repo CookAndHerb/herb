@@ -1,26 +1,26 @@
 package com.kh.herb.product.model.vo;
 
-import java.util.Date;
+import java.sql.Date;
 
 import org.springframework.stereotype.Component;
 
 @Component
 public class Product {
-	private int pNum;
-	private String pName;
-	private int pCost;
-	private String ImageName;
-	private String ImagePath;
-	private String pContent;
-	private int pStar;
-	private int pSell;
-	private Date pMaDate;
-	private Date pExDate;
-	private String pCapacity;
-	private String pType;
-	private String infoImageName;
-	private String infoImagePath;
-	private String pCategory;
+	private int pNum; //상품번호
+	private String pName; //상품명
+	private int pCost; //상품가격
+	private String ImageName; //이미지 이름
+	private String ImagePath; //이미지 경로
+	private String pContent; //상세설명
+	private int pStar; //별점
+	private int pSell; //수량(몇 개 살건지)
+	private Date pMaDate; //제조일
+	private Date pExDate; //유통기한
+	private String pCapacity; //포장단위별용량
+	private String pType; //식품의유형(건강기능식픔, 홍삼제품, 기타가공식품)
+	private String infoImageName; //대표이미지 이름
+	private String infoImagePath; //대표이미지 경로
+	private String pCategory; //카테고리
 	
 	public int getpNum() {
 		return pNum;
