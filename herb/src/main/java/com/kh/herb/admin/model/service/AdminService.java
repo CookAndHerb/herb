@@ -1,5 +1,7 @@
 package com.kh.herb.admin.model.service;
 
-public interface AdminService {
+import com.kh.herb.product.model.vo.Product;
 
+public interface AdminService {
+	public int insertProduct(Product product) throws Exception;
 }

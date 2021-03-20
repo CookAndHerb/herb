@@ -111,6 +111,10 @@
 							<option value="기타가공식품">기타가공식품</option>
 						</select>
 						</div><br>
+						<div class="form-inline">
+						<label for="pCost">판매가</label> &nbsp;&nbsp;&nbsp; 
+						<input type="number" class="col-sm-11 form-control" name="pCost" id="pCost">
+						</div><br>
 						<div class="custom-file col-sm-12">
     						<input type="file" class="custom-file-input" name="ImageName" id="ImageName" multiple="multiple">
     						<label class="custom-file-label" for="ImageName">상품 정보 이미지 (다중 선택 가능)</label>
@@ -135,8 +139,7 @@
 					$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 				});
 			</script>
-
-			</section>
+	</section>
 	<!-- content 끝 -->
 
 
