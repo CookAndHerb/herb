@@ -1,6 +1,9 @@
 package com.kh.herb.review.model.vo;
 
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class Review {
 	private int pNum;
@@ -10,6 +13,36 @@ public class Review {
 	private Date rDate;
 	private int rStar;
 	
+	private List<ReviewFile> mFileList;
+	private List<MultipartFile> fileName;
+	private List<String> oldFileName;
+	private List<ReviewFile> oldFileList;
+	
+	public List<ReviewFile> getmFileList() {
+		return mFileList;
+	}
+	public void setmFileList(List<ReviewFile> mFileList) {
+		this.mFileList = mFileList;
+	}
+	public List<MultipartFile> getFileName() {
+		return fileName;
+	}
+	public void setFileName(List<MultipartFile> fileName) {
+		this.fileName = fileName;
+	}
+	public List<String> getOldFileName() {
+		return oldFileName;
+	}
+	public void setOldFileName(List<String> oldFileName) {
+		this.oldFileName = oldFileName;
+	}
+	public List<ReviewFile> getOldFileList() {
+		return oldFileList;
+	}
+	
+	public void setOldFileList(List<ReviewFile> oldFileList) {
+		this.oldFileList = oldFileList;
+	}
 	public int getpNum() {
 		return pNum;
 	}

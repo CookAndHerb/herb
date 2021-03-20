@@ -9,6 +9,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<title>어른허브</title>
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -85,14 +86,14 @@
 					</table>
 					
 					<br>
-					<input type="button" value="리뷰쓰기" onclick="#">
-					
+					<input type="button" value="리뷰쓰기" onclick="reWriteBtn()">
 					<!-- 리뷰 쓰기 -->
-					<div id="reWrite">
+					<div id="reWrite" style="display:none;">
 						<c:set var="pNum" value="${num }"></c:set>
-
+						
 						<form action="reviewInsert.do" id="refrm" method="POST">
-							<input type="hidden" name="pNum" value="${pNum }">
+							<input type="hidden" name="pNum" value="${pNum}">
+							<input type="hidden" name="rWriter" value="${sessionScope.member.getUserId()}">
 							<table>
 								<tr>
 									<td>
@@ -105,10 +106,10 @@
 										</select>
 									</td>
 									<tr>
-										<td>작성자: <input type="text" name="rWriter"></td>
+										<td><textarea name="rContent" rows="7" cols="40"></textarea></td>
 									</tr>
 									<tr>
-										<td><textarea name="rContent" rows="7" cols="40"></textarea></td>
+										<td><input type="file" id="userFile"value="사진 업로드"></td>
 									</tr>
 							</table>
 							<input type="submit">
@@ -140,7 +141,22 @@
         </div>
     </section>
     <!-- content 끝 -->
+	<script>
+	// 리뷰쓰기 버튼 클릭 시, 로그인 체크
+	var id = $('input[name=rWriter]').val();
+		function reWriteBtn(){
+			if(id != ""){
+				$('#reWrite').show();
+			}else{
+				alert("로그인 해야 작성할 수 있습니다.");
+			}
+		}
+	
+	// 
+	$('#userFile').change(function() {
 
+	});
+	</script>
 
 	<!-- 하단 -->
 	<footer>

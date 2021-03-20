@@ -8,5 +8,5 @@ public interface ReviewService {
 	
 	public List<Review> reviewAllList(int pNum) throws Exception;
 	
-	public int reviewInsert(Review review) throws Exception;
+	public void reviewInsert(Review review) throws Exception;
 }

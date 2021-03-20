@@ -16,15 +16,17 @@ public class ReviewController {
 	
 	@Autowired
 	ReviewService reSe;
-
+	
+	// 리뷰 등록
 	@RequestMapping(value="reviewInsert.do", method=RequestMethod.POST)
 	public ModelAndView reInsert(RedirectAttributes Redirect, ModelAndView modelAndView, Review review) throws Exception{		
-		
 		reSe.reviewInsert(review);
-		System.out.println("num: "+review.getpNum() );
-		modelAndView.addObject("num",review.getpNum());
-		modelAndView.setViewName("redirect:/productInfo.do");
+		modelAndView.addObject("num", review.getpNum()); // 상품인포 주소에 들어갈 번호
+		
+		
+		modelAndView.setViewName("product/reviewComplete");
 		
 		return modelAndView;
 	}
+	
 }
