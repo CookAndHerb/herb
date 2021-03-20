@@ -27,6 +27,7 @@
 <!-- ckeditor -->
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/ckeditor/ckeditor.js"></script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -110,10 +111,14 @@
 							<option value="기타가공식품">기타가공식품</option>
 						</select>
 						</div><br>
-						<div class="custom-file col-sm-12">
-    						<input type="file" class="custom-file-input" name="ImageName" id="ImageName" multiple="multiple">
-    						<label class="custom-file-label" for="ImageName">상품 이미지(다중 선택 가능)</label>
-  						</div><br><br>
+						<div class="form-inline">
+						<label for="pCost">판매가</label> &nbsp;&nbsp;&nbsp; 
+						<input type="number" class="col-sm-11 form-control" name="pCost" id="pCost">
+						</div><br>
+						<div class="form-inline">
+							<label for="ImageName">상품 정보 이미지 </label>&nbsp;&nbsp;&nbsp; 
+    						<input type="file" class="col-sm-10" name="imageName" id="imageName" multiple="multiple">
+  						</div><br>
   						<textarea id="pContent" name="pContent"></textarea><br>
   						<div class="insButton">
 						<input type="submit" class="btn btn-warning" value="등록">
@@ -125,10 +130,16 @@
 			</div>
 
 			<script type="text/javascript">
-				CKEDITOR.replace('pContent', {
-					height : 500
+				//ck에디터
+				CKEDITOR.replace('pContent', {height : 500});
+				
+				//선택한 파일 이름으로 변경
+				$(".custom-file-input").on("change",function() {
+					var fileName = $(this).val().split("\\").pop();
+					$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 				});
-			</script></section>
+			</script>
+	</section>
 	<!-- content 끝 -->
 
 

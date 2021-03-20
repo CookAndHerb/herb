@@ -9,8 +9,8 @@ public class Product {
 	private int pNum; //상품번호
 	private String pName; //상품명
 	private int pCost; //상품가격
-	private String ImageName; //이미지 이름
-	private String ImagePath; //이미지 경로
+	private String imageName; //이미지 이름
+	private String imagePath; //이미지 경로
 	private String pContent; //상세설명
 	private int pStar; //별점
 	private int pSell; //수량(몇 개 살건지)
@@ -41,16 +41,16 @@ public class Product {
 		this.pCost = pCost;
 	}
 	public String getImageName() {
-		return ImageName;
+		return imageName;
 	}
 	public void setImageName(String imageName) {
-		ImageName = imageName;
+		this.imageName = imageName;
 	}
 	public String getImagePath() {
-		return ImagePath;
+		return imagePath;
 	}
 	public void setImagePath(String imagePath) {
-		ImagePath = imagePath;
+		this.imagePath = imagePath;
 	}
 	public String getpContent() {
 		return pContent;
