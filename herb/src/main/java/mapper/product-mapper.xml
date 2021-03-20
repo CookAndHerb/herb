@@ -16,7 +16,7 @@
 		<result property="pExDate" column="P_EX_DATE"></result>
 		<result property="pCapacity" column="P_CAPACITY"></result>
 		<result property="pType" column="P_TYPE"></result>
-		<result property="pImageName" column="P_INFO_IMAGE_NAME"></result>
+		<result property="infoImageName" column="P_INFO_IMAGE_NAME"></result>
 		<result property="infoImagePath" column="P_INFO_IMAGE_PATH"></result>
 		<result property="pCategory" column="P_CATEGORY"></result>
 	</resultMap>
