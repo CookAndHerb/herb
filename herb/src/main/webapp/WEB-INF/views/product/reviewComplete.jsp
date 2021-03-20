@@ -19,7 +19,7 @@
 		<c:otherwise>
 			<script>
 				alert('리뷰 등록을 실패하였습니다.');
-				location.href = 'product.do?num=${num}';
+				location.href = 'product.do';
 			</script>		
 		</c:otherwise>
 	</c:choose>
