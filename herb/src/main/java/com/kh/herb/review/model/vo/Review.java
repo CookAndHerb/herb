@@ -13,9 +13,9 @@ public class Review {
 	private Date rDate;
 	private int rStar;
 	
-	private List<ReviewFile> mFileList;
-	private List<MultipartFile> fileName;
-	private List<String> oldFileName;
+	private List<ReviewFile> mFileList;	// resultMap 사용하기 위한 변수
+	private List<MultipartFile> fileName;	
+	private List<String> oldFileName;	// 삭제되지 않고 남아있는 기존 파일명
 	private List<ReviewFile> oldFileList;
 	
 	public List<ReviewFile> getmFileList() {

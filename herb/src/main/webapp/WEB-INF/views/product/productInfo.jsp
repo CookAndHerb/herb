@@ -91,7 +91,7 @@
 					<div id="reWrite" style="display:none;">
 						<c:set var="pNum" value="${num }"></c:set>
 						
-						<form action="reviewInsert.do" id="refrm" method="POST">
+						<form action="reviewInsert.do" id="refrm" method="POST" enctype="multipart/form-data">
 							<input type="hidden" name="pNum" value="${pNum}">
 							<input type="hidden" name="rWriter" value="${sessionScope.member.getUserId()}">
 							<table>
@@ -112,7 +112,7 @@
 										<td><input type="file" id="userFile"value="사진 업로드"></td>
 									</tr>
 							</table>
-							<input type="submit">
+							<input type="button" id="reSumitBtn" value="제출">
 						</form>
 					</div>
 					
@@ -142,20 +142,61 @@
     </section>
     <!-- content 끝 -->
 	<script>
-	// 리뷰쓰기 버튼 클릭 시, 로그인 체크
-	var id = $('input[name=rWriter]').val();
-		function reWriteBtn(){
-			if(id != ""){
-				$('#reWrite').show();
-			}else{
-				alert("로그인 해야 작성할 수 있습니다.");
+	var fileList = []; //작성할 첨부파일을 담을 list
+	$(document).ready(function(){
+		// 리뷰쓰기 버튼 클릭 시, 로그인 체크
+		var id = $('input[name=rWriter]').val();
+			function reWriteBtn(){
+				if(id != ""){
+					$('#reWrite').show();
+				}else{
+					alert("로그인 해야 작성할 수 있습니다.");
+				}
 			}
-		}
+	// 리뷰 추가 이벤트
+	$('#reSumitBtn').on('click', reply_list);
 	
-	// 
-	$('#userFile').change(function() {
+	
+	}); // ready fucntion
+	
+	function reply_list() {
+		   //예외처리를 해줌
+		   if(fileList.length == 0){
+		      alert("후기 사진을 첨부해주세요.");
+		      return false;
+		   }
+		   
+		   if(fileList.length > 3){
+		      alert("사진은 최대 3개까지 첨부할 수 있습니다.");
+		      return false;
+		   }
 
-	});
+		   // 다중첨부파일
+		   if (fileList) {
+		      for ( var index in fileList) {
+		         form_data.append('filename', fileList[index]);
+		      }
+		   }
+
+		   $.ajax({
+		      // 첨부파일이 있을때는 data, contentType, enctype, processData가 이런 폼으로 있어야한다.
+		      type : 'POST',
+		      dataType : 'json',
+		      url : 'reviewInsert.do.',
+		      data : form_data,
+		      contentType : false,
+		      enctype : 'multipart/form-data',
+		      processData : false,
+		      success : 'location.href="product.do"',
+		      error : function(res){
+		         alert("error");
+		      }
+
+		   });
+
+		   fileList = [];
+
+		}
 	</script>
 
 	<!-- 하단 -->
