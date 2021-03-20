@@ -27,7 +27,7 @@ public class FaqServiceImpl implements FaqService {
 
 
 	@Override
-	public void increaseViewcnt() throws Exception {
+	public void increaseViewcnt(int faqNum) throws Exception {
 		//return faqDao.increaseViewcnt();
 		
 	}

@@ -32,7 +32,7 @@ public class FaqDAO {
 		return sqlSession.insert("Faq.insertFaq",faq);
 	}
 
-	public Object increaseViewcnt() {
-		return null;
+	public void increaseViewcnt(int faqNum) {
+		 sqlSession.update("Faq.increaseViewcnt", faqNum);
 	}
 }

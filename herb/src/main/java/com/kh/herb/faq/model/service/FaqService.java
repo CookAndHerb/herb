@@ -13,6 +13,6 @@ public interface FaqService {
 
 	public int insertFaq(Faq faq) throws Exception;
 
-	public void increaseViewcnt() throws Exception;
+	public void increaseViewcnt(int faqNum) throws Exception;
 
 }

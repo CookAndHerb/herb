@@ -47,8 +47,14 @@
 	<!-- 글 작성해서 insert -->
 	<insert id="insertFaq" parameterType="Faq">
 	<!-- 게시글 번호는 시퀀스로 하고 생성할 때마다 숫자가 1씩 증가하도록 설정 -->
-		INSERT INTO FAQ VALUES (faqNum,faqTitle,faqContent) VALUES
-				(FAQ_SEQ.NEXTVAL,#{faqTitle),#{faqContent})
+		INSERT INTO FAQ (FAQ_NUM,FAQ_TITLE,FAQ_CONTENT) VALUES
+				(FAQ_SEQ.NEXTVAL,#{faqTitle},#{faqContent})
 	</insert>
 	
+	<!-- 조회수 증가처리 -->
+	<update id = "increaseViewcnt">
+	<!-- 글 번호에 해당하는 조회수를 +1하는 쿼리문 -->
+	UPDATE FAQ SET READCOUNT = READCOUNT + 1
+		WHERE FAQ_NUM = #{faqNum}
+	</update>
 </mapper>

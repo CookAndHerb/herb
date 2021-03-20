@@ -76,15 +76,19 @@ public class FaqController {
 		return modelAndView;
 	}
 	
-	/*
+	
 	@RequestMapping(value="faqView.do", method=RequestMethod.GET)
-	public ModelAndView faqView(@RequestParam int curPage, @RequestParam String keyword, HttpSession session)
+	public ModelAndView faqView(@RequestParam int faqNum, @RequestParam int curPage, 
+			@RequestParam String keyword, ModelAndView modelAndView)
 					throws Exception {
 		
 		//조회수 증가 쿼리
-        faqService.increaseViewcnt();
+        faqService.increaseViewcnt(faqNum);
+		modelAndView.addObject("curPage", curPage);
+		modelAndView.addObject("keyword",keyword);
 		
+		return modelAndView;
 	}
-	*/
+	
 	
 }
