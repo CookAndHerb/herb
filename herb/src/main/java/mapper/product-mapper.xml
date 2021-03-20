@@ -18,6 +18,7 @@
 		<result property="pType" column="P_TYPE"></result>
 		<result property="pImageName" column="P_INFO_IMAGE_NAME"></result>
 		<result property="infoImagePath" column="P_INFO_IMAGE_PATH"></result>
+		<result property="pCategory" column="P_CATEGORY"></result>
 	</resultMap>
 	
 	<!-- 상품 리스트 가져오기  -->
