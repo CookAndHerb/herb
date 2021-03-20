@@ -28,6 +28,14 @@
 			<value>C:/Temp/</value> <!-- 업로드 파일 임시 저장 폴더 지정 -->
 		</constructor-arg>
 	</bean>
+	
+	<!-- 첨부파일을 임시기억저장소에 저장한다. -->
+	<!-- 파일이 포함된 경우의 bean 아이디는 반드시 아래와 같이 입력해야한다. -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="uploadTempDir" ref="uploadDirResource" />
+		<property name="maxUploadSize" value="1000000000"></property>
+	</bean>
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">

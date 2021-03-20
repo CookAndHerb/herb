@@ -2,6 +2,7 @@ package com.kh.herb.review.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.herb.review.model.service.ReviewService;
 import com.kh.herb.review.model.vo.Review;
 import com.kh.herb.review.model.vo.ReviewFile;
+
 
 @Controller
 public class ReviewController {
@@ -34,9 +36,15 @@ public class ReviewController {
 		List<ReviewFile> fList = new ArrayList<ReviewFile>();
 		
 		if(files != null) {
-			for(MutipartFile file : files) {
+			for(MultipartFile file : files) {
 				// 원래 파일명
+				String fileName = file.getOriginalFilename();
+				System.out.println("fileName: "+fileName);
 				
+				// 중복 제거를 위해 난수 발생 후 파일명을 db테이블에 저장
+				UUID random = UUID.randomUUID();
+				
+				String saveDirectory = path;
 			}
 		}
 		
