@@ -18,5 +18,12 @@ public class FaqServiceImpl implements FaqService {
 	public List<Faq> listAll(String keyword, int start, int end) throws Exception {
 		return faqDao.listAll(keyword, start, end);
 	}
+
+	/*
+	@Override
+	public int insertFaq(Faq faq) {
+		// TODO Auto-generated method stub
+		return 0;
+	}*/
 	
 }

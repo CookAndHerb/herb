@@ -63,6 +63,7 @@ public class FaqController {
 		return "faq/faqWriteForm";
 	}
 	
+	/*
 	//faqWriteForm.jsp에서 입력한 내용들이 Faq에 저장됨
 	@RequestMapping(value="faqInsert.do", method=RequestMethod.POST)
 	public ModelAndView faqInsert (Faq faq, ModelAndView modelAndView) throws Exception {
@@ -71,5 +72,6 @@ public class FaqController {
 		modelAndView.addObject("result",result);
 		//modelAndView.setViewName("");
 	}
+	*/
 	
 }
