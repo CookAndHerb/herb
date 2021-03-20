@@ -36,3 +36,8 @@
 	float: right;
 	color: black;
 }
+
+/* 상품등록페이지 */
+.insButton{
+	text-align: center;
+}
