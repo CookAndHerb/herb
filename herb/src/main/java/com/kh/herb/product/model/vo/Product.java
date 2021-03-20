@@ -20,6 +20,7 @@ public class Product {
 	private String pType;
 	private String infoImageName;
 	private String infoImagePath;
+	private String pCategory;
 	
 	public int getpNum() {
 		return pNum;
@@ -105,7 +106,12 @@ public class Product {
 	public void setInfoImagePath(String infoImagePath) {
 		this.infoImagePath = infoImagePath;
 	}
-	
+	public String getpCategory() {
+		return pCategory;
+	}
+	public void setpCategory(String pCategory) {
+		this.pCategory = pCategory;
+	}
 	
 	
 }

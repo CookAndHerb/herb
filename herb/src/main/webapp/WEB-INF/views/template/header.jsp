@@ -185,7 +185,7 @@
                      
                     	<c:choose>
                     	<c:when test="${member.userNum > 0 && member.userNum <= 999}">
-                        <li><a href="#">admin</a>
+                        <li><a href="adminMain.do">admin</a>
                             <ul class="dropdown">
                                 <li><a href="#">상품관리</a></li>
                                 <li><a href="#">주문관리</a></li>
