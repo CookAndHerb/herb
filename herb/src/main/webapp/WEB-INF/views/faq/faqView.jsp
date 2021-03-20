@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="${path}/ckeditor/ckeditor.js"></script> //ck에디터
+<script src="${path}/ckeditor/ckeditor.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
 <script>
@@ -41,7 +41,6 @@ listAttach();
 </script>
 <body>
 <!-- 게시물을 작성하기 위해 컨트롤러의 insert.do로 맵핑 -->
-<form id="form1" name="form1" method="post" action="${path }/faqList.do">
 
 </form>
 
