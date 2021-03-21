@@ -10,7 +10,9 @@
 		<result property="userName" column="USER_NAME"/>
 		<result property="userPhone" column="USER_PHONE"/>
 		<result property="userEmail" column="USER_EMAIL"/>
-		<result property="userAddress" column="USER_ADDRESS"/>
+		<result property="userAddress1" column="USER_ADDRESS1"/>
+		<result property="userAddress2" column="USER_ADDRESS2"/>
+		<result property="userAddress3" column="USER_ADDRESS3"/>
 		<result property="userBirth" column="USER_BIRTH"/>
 		<result property="userDel" column="USER_DEL"/>
 		<result property="userDate" column="USER_DATE"/>
@@ -28,7 +30,7 @@
 	<!-- 회원 가입 -->
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER VALUES(
-			MEMBER_SEQ.NEXTVAL,#{userId}, #{userPw}, #{userName}, #{userPhone}, #{userEmail}, #{userAddress} , #{userBirth}, DEFAULT, DEFAULT
+			MEMBER_SEQ.NEXTVAL,#{userId}, #{userPw}, #{userName}, #{userPhone}, #{userEmail}, #{userAddress1}, #{userAddress2}, #{userAddress3}, #{userBirth}, DEFAULT, DEFAULT
 		)
 	</insert>
 

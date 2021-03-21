@@ -58,7 +58,7 @@
                     <div class="filter-widget">
                         <h4 class="fw-title">Admin</h4>
                         <ul class="filter-catagories" style="font-weight: bold;">
-                            <li><a class="sidebar" href="adminProduct.do" >상품관리</a></li>
+                            <li><a href="adminProduct.do" >상품관리</a></li>
                             <li><a href="#" >주문관리</a></li>
                             <li><a href="#" >회원관리</a></li>
                         </ul>
@@ -68,10 +68,10 @@
                 <!-- 내용 -->
                 <div class="col-lg-9 order-1 order-lg-2">
 
-                <form action="productIns.do">
+                <form action="productIns.do" method="get">
                 	<input type="submit" class="btn btn-warning" value="상품 등록">
                 </form>
-                
+                </div>
             </div>
         </div>
     </section>

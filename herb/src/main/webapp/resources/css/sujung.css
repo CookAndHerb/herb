@@ -2,9 +2,6 @@
 .font{
 	color: white;
 }
-.sidebar:visited{
-	color: #e7ab3c;
-}
 
 /* 관리자페이지 메인 */
 .totalSales{
@@ -36,3 +33,11 @@
 	float: right;
 	color: black;
 }
+
+/* 상품등록페이지 */
+.insButton{
+	text-align: center;
+}
+/* #ImageName{
+	text-align: center;
+}  */

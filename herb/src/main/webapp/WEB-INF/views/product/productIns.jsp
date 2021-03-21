@@ -27,6 +27,7 @@
 <!-- ckeditor -->
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/ckeditor/ckeditor.js"></script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -75,14 +76,14 @@
 					<br>
 					<br>
 					<form action="productIns.do" method="post" enctype="multipart/form-data">
-						  <div class="custom-file col-sm-9">
+						  <div class="custom-file col-sm-12">
     						<input type="file" class="custom-file-input" name="infoImageName" id="customFile">
     						<label class="custom-file-label" for="customFile">상품 대표 이미지</label>
   						</div>
   						<br><br>
   						<div class="form-inline">
 						<label for="pName">상품 명</label> &nbsp;&nbsp;&nbsp; 
-						<input type="text" class="col-sm-5 form-control" name="pName" id="pName">
+						<input type="text" class="col-sm-8 form-control" name="pName" id="pName">&nbsp; 
 						<label for="sel1"></label> 
 						<select class="form-control col-sm-3" id="sel1" name="pCategory">
 							<option value="">카테고리 선택</option>
@@ -94,15 +95,15 @@
 						</select>
 						</div><br>
 						<div class="form-inline">
-							<label for="pMaDate">제조일자</label>&nbsp;&nbsp;
-							<input type="date" class="col-sm-3 form-control" name="pMaDate" id="pMaDate">
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<label for="pMaDate">유통기한</label> &nbsp;&nbsp;
-							<input type="date" class="col-sm-3 form-control" name="pExDate" id="pExDate">
+							<label for="pMaDate">제조일자</label>&nbsp;
+							<input type="date" class="col-sm-5 form-control" name="pMaDate" id="pMaDate">
+							&nbsp;
+							<label for="pMaDate">유통기한</label> &nbsp;
+							<input type="date" class="col-sm-5 form-control" name="pExDate" id="pExDate">
 						</div><br>
 						<div class="form-inline">
 						<label for="pCapacity">포장 단위별 용량</label> &nbsp;&nbsp;&nbsp; 
-						<input type="text" class="col-sm-4 form-control" name="pCapacity" id="pCapacity">
+						<input type="text" class="col-sm-7 form-control" name="pCapacity" id="pCapacity">&nbsp;
 						<select class="form-control col-sm-3" id="sel1" name="pType">
 							<option value="">식품유형 선택</option>
 							<option value="건강기능식품">건강기능식품</option>
@@ -110,24 +111,35 @@
 							<option value="기타가공식품">기타가공식품</option>
 						</select>
 						</div><br>
-						<div class="custom-file col-sm-9">
-    						<input type="file" class="custom-file-input" name="ImageName" id="ImageName" multiple="multiple">
-    						<label class="custom-file-label" for="ImageName">상품 이미지(다중 선택 가능)</label>
-  						</div><br><br>
+						<div class="form-inline">
+						<label for="pCost">판매가</label> &nbsp;&nbsp;&nbsp; 
+						<input type="number" class="col-sm-11 form-control" name="pCost" id="pCost">
+						</div><br>
+						<div class="form-inline">
+							<label for="ImageName">상품 정보 이미지 </label>&nbsp;&nbsp;&nbsp; 
+    						<input type="file" class="col-sm-10" name="imageName" id="imageName" multiple="multiple">
+  						</div><br>
   						<textarea id="pContent" name="pContent"></textarea><br>
-						<input type="submit" value="등록">
-						<input type="reset" value="취소">
+  						<div class="insButton">
+						<input type="submit" class="btn btn-warning" value="등록">
+						<input type="reset" class="btn btn-secondary" value="취소">
+						</div>
 					</form>
 				
 				</div>
 			</div>
 
 			<script type="text/javascript">
-				CKEDITOR.replace('pContent', {
-					height : 500,
-					width : 650
+				//ck에디터
+				CKEDITOR.replace('pContent', {height : 500});
+				
+				//선택한 파일 이름으로 변경
+				$(".custom-file-input").on("change",function() {
+					var fileName = $(this).val().split("\\").pop();
+					$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 				});
-			</script></section>
+			</script>
+	</section>
 	<!-- content 끝 -->
 
 
