@@ -86,18 +86,16 @@
 					</table>
 					
 					<br>
-					<input type="button" value="리뷰쓰기" onclick="reWriteBtn()">
+					<input type="button" value="리뷰쓰기" onclick="reWriteBtn();">
 					<!-- 리뷰 쓰기 -->
 					<div id="reWrite" style="display:none;">
 						<c:set var="pNum" value="${num }"></c:set>
-						
-						<form action="reviewInsert.do" id="refrm" method="POST" enctype="multipart/form-data">
-							<input type="hidden" name="pNum" value="${pNum}">
-							<input type="hidden" name="rWriter" value="${sessionScope.member.getUserId()}">
+							<input type="hidden" id="pNum" name="pNum" value="${pNum}">
+							<input type="hidden" id="rWriter" name="rWriter" value="${sessionScope.member.getUserId()}">
 							<table>
 								<tr>
 									<td>
-										별점: <select name="rStar">
+										별점: <select name="rStar" id="rStar">
 											<option value="1">1점</option>
 											<option value="2">2점</option>
 											<option value="3">3점</option>
@@ -106,14 +104,13 @@
 										</select>
 									</td>
 									<tr>
-										<td><textarea name="rContent" rows="7" cols="40"></textarea></td>
+										<td><textarea name="rContent" id="rContent" rows="7" cols="40"></textarea></td>
 									</tr>
 									<tr>
-										<td><input type="file" id="userFile"value="사진 업로드"></td>
+										<td><input type="file" id="userFile" value="사진 업로드"></td>
 									</tr>
 							</table>
 							<input type="button" id="reSumitBtn" value="제출">
-						</form>
 					</div>
 					
 					<div id="reviewList">
@@ -142,24 +139,34 @@
     </section>
     <!-- content 끝 -->
 	<script>
-	var fileList = []; //작성할 첨부파일을 담을 list
-	$(document).ready(function(){
+	var fileList = []; // 리뷰 사진객체  list
+	
+	// 리뷰 추가
+ 	$('#reSumitBtn').on('click', reviewList);
+	
+	function reWriteBtn(){
 		// 리뷰쓰기 버튼 클릭 시, 로그인 체크
 		var id = $('input[name=rWriter]').val();
-			function reWriteBtn(){
-				if(id != ""){
-					$('#reWrite').show();
-				}else{
-					alert("로그인 해야 작성할 수 있습니다.");
-				}
+			if(id != ""){
+				$('#reWrite').show();
+			}else{
+				alert("로그인 해야 작성할 수 있습니다.");
 			}
-	// 리뷰 추가 이벤트
-	$('#reSumitBtn').on('click', reply_list);
+	}
 	
+	var userfile = '';
+	$('#userFile').on('change', function(){
+		userfile = $('#userFile');
+		console.log($(userfile[0]).val());
+		
+/* 		var partname = $(userfile[0]).val().substring($(userfile[0]).val().lastIndexOf("\\") + 1);
+		console.log(partname); */
+
+		fileList.push(userfile[0].files[0]);
+	});
+
 	
-	}); // ready fucntion
-	
-	function reply_list() {
+	function reviewList() {
 		   //예외처리를 해줌
 		   if(fileList.length == 0){
 		      alert("후기 사진을 첨부해주세요.");
@@ -170,11 +177,18 @@
 		      alert("사진은 최대 3개까지 첨부할 수 있습니다.");
 		      return false;
 		   }
-
+		   
+		   var formData = new FormData();
+		   
+		   formData.append('pNum', $('#pNum').val());
+		   formData.append('rWriter',$("#rWriter").val());
+		   formData.append('rStar',$("#rStar").val());
+		   formData.append('rContent', $("#rContent").val());
+		   
 		   // 다중첨부파일
 		   if (fileList) {
 		      for ( var index in fileList) {
-		         form_data.append('filename', fileList[index]);
+		         formData.append('fileName', fileList[index]);
 		      }
 		   }
 
@@ -182,20 +196,19 @@
 		      // 첨부파일이 있을때는 data, contentType, enctype, processData가 이런 폼으로 있어야한다.
 		      type : 'POST',
 		      dataType : 'json',
-		      url : 'reviewInsert.do.',
-		      data : form_data,
+		      url : 'reviewInsert.do',
+		      data : formData,
 		      contentType : false,
 		      enctype : 'multipart/form-data',
 		      processData : false,
-		      success : 'location.href="product.do"',
-		      error : function(res){
-		         alert("error");
+		      success : function(){
+		    	  alert("리뷰가 등록 되었습니다.");
+		      },
+		      error : function(request,status,error){
+		    	  console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 		      }
 
 		   });
-
-		   fileList = [];
-
 		}
 	</script>
 

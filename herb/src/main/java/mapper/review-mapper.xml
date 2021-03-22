@@ -26,8 +26,8 @@
 			INSERT INTO REVIEW(P_NUM, R_NUM, R_WRITER, R_CONTENT, R_DATE, R_STAR) VALUES (#{pNum}, review_seq.nextval, #{rWriter}, #{rContent}, sysdate, #{rStar})
 		</insert>
 		<!-- 리뷰 사진 추가 -->
-		<insert id="reviewFileINsert" parameterType="ReviewFile">
-			INSERT INTO REVIEW_FILE VALUES (#{R_FILE_PATH},#{R_NUM},#{P_NUM})
+		<insert id="reviewFileInsert" parameterType="ReviewFile">
+			INSERT INTO REVIEW_FILE VALUES (#{rFile},#{rNum},#{pNum})
 		</insert>
 		<!-- 리뷰파일에 댓글번호 넣기 위한 쿼리 -->
 		<select id="reviewNum" resultType="int">
