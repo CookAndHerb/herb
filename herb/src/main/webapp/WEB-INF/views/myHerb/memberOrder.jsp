@@ -67,44 +67,35 @@
                    
                 </div>
                 
-                <!-- 내용 -->
+                <!-- content 시작 -->
                 <div class="col-lg-9 order-1 order-lg-2">
        
-       
-           <!-- 개인 정보 수정 폼 시작-->
-           <h2>${member.userName}님의 허브</h2>
-           <h3>${member.userEmail}</h3>
-    <div class="register-login-section spad">
+       		    <h2 style="font-weight:bold;">${member.userName}님의 허브</h2>
+           		<h4 style="font-weight:bold; color:gray;">${member.userEmail}</h4>
+           		<br>
+           		<h3 style="font-weight:bold;">주문 조회</h3>
+           		<br>
+           		<br>
+   				
+   				<!-- 주문 목록 시작 -->
+   	 <div class=""> <!-- 제일 큰 박스 -->
         <div class="container">
+        <span>주문날짜</span><span>주문</span>
+        <a>주문 상세 보기 ></a> <!-- 주문 날짜 -->
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
-                    <div class="register-form">
-                        <h2>개인 정보 수정</h2>
-                        <form action="#">
-                            <div class="group-input">
-                                <label for="username">아이디</label>
-                                <input type="text" id="username">
-                            </div>
-                            <div class="group-input">
-                                <label for="pass">비밀번호</label>
-                                <input type="text" id="pass">
-                            </div>
-                            <div class="group-input">
-                                <label for="con-pass">비밀번호 확인</label>
-                                <input type="text" id="con-pass">
-                            </div>
-                            <button type="submit" class="site-btn register-btn">수정하기</button>
-                        </form>
                       
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- Register Form Section End -->
+                
+        </div> <!-- 주문날짜, 주문상세보기 있는 박스 끝 -->
+    </div><!-- 제일 큰 박스 끝 -->
+   				
+   				
+   				 <!-- 주문 목록 끝-->
     
     
-                </div>
+               </div>  <!-- content 끝 -->
                 
                 
             </div>

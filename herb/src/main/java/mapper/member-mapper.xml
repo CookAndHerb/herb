@@ -30,7 +30,7 @@
 	<!-- 회원 가입 -->
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER VALUES(
-			MEMBER_SEQ.NEXTVAL,#{userId}, #{userPw}, #{userName}, #{userPhone}, #{userEmail}, #{userAddress} , #{userBirth}, DEFAULT, DEFAULT
+			MEMBER_SEQ.NEXTVAL,#{userId}, #{userPw}, #{userName}, #{userPhone}, #{userEmail}, #{userAddress1}, #{userAddress2}, #{userAddress3}, #{userBirth}, DEFAULT, DEFAULT
 		)
 	</insert>
 
