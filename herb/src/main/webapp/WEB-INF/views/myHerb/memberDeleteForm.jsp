@@ -23,7 +23,14 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
     
+    <style>
+    .label{
+    font-size:18px;
+	font-weight: bold;
+	margin-bottom:10px;
+    }
     
+    </style>
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -72,29 +79,27 @@
        
        
            <!-- 탈퇴 폼 시작-->
-                <h2>김해리 님의 허브</h2>
-  	         <h3>ooo@gmail.com</h3>
-    <div class="register-login-section spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 offset-lg-3">
+           <h2 style="font-weight:bold;">${member.userName}님의 허브</h2>
+           <h4 style="font-weight:bold; color:gray;">${member.userEmail}</h4>
+           <br>
+           <h3 style="font-weight:bold;">탈퇴</h3>
+           <br>
+           <br>
+        
+                <div class="col-lg-6 offset-lg-2">
                     <div class="register-form">
-                        <h2>탈퇴하기</h2>
-                        <form action="#">
+                        <form action="memberDelete.do" method="post">
                             <div class="group-input">
-                                <label for="username">아이디</label>
-                                <input type="text" id="username">
+                                <div class="label">아이디<span style="color:orange;">&nbsp;*</span></div>
+                                <input type="text" name="userId">
                             </div>
                             <div class="group-input">
-                                <label for="pass">비밀번호</label>
-                                <input type="text" id="pass">
+                                <div class="label">비밀번호<span style="color:orange;">&nbsp;*</span></div>
+                                <input type="text" name="userPw">
                             </div>
                             <button type="submit" class="site-btn register-btn">탈퇴하기</button>
                         </form>
                       
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <!-- Register Form Section End -->
