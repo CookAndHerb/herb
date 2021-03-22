@@ -34,6 +34,30 @@
 	color: black;
 }
 
+/* 상품관리페이지 */
+#productIns{
+	color: white;
+	display: inline-block;
+}
+#productTable{
+	text-align: center;
+}
+#searchButton{
+	border: white;
+	width: 40px;
+	color: white;
+}
+#searchDiv{
+	display: inline-block;
+	float: right;
+}
+
+/* 주문관리페이지 */
+#orderTable{
+	text-align: center;
+	font-size: small;
+}
+
 /* 상품등록페이지 */
 .insButton{
 	text-align: center;

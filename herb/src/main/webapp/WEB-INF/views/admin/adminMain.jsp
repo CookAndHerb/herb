@@ -59,8 +59,8 @@
                         <h4 class="fw-title">Admin</h4>
                         <ul class="filter-catagories" style="font-weight: bold;">
                             <li><a href="adminProduct.do" >상품관리</a></li>
-                            <li><a href="#" >주문관리</a></li>
-                            <li><a href="#" >회원관리</a></li>
+                            <li><a href="adminOrder.do" >주문관리</a></li>
+                            <li><a href="adminMember.do" >회원관리</a></li>
                         </ul>
                     </div>
 

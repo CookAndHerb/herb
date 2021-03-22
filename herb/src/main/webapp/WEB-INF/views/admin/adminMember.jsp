@@ -39,7 +39,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="adminMain.do"><i class="fa fa-home"></i> Admin</a>
-                        <span>상품관리</span>
+                        <span>회원관리</span>
                     </div>
                 </div>
             </div>
@@ -58,9 +58,9 @@
                     <div class="filter-widget">
                         <h4 class="fw-title">Admin</h4>
                         <ul class="filter-catagories" style="font-weight: bold;">
-                            <li><a href="adminProduct.do" style="color: #e7ab3c">상품관리</a></li>
+                            <li><a href="adminProduct.do" >상품관리</a></li>
                             <li><a href="adminOrder.do" >주문관리</a></li>
-                            <li><a href="adminMember.do" >회원관리</a></li>
+                            <li><a href="adminMember.do" style="color: #e7ab3c">회원관리</a></li>
                         </ul>
                     </div>              
                 </div>
@@ -68,18 +68,12 @@
                 <!-- 내용 -->
                 <div class="col-lg-9 order-1 order-lg-2">
 
-               	<h3>상품관리</h3>
+               	<h3>회원관리</h3>
                 <br><br>
-                &nbsp;&nbsp;&nbsp;
-                <button class="btn btn-warning btn-sm" id="productIns" onclick="location.href = 'productIns.do';">상품등록</button>
 				<div id="searchDiv">
                         <div class="form-inline serch">
-                            <select name="search" class="custom-select-sm">
-                            <option value="pNum">상품 번호</option>
-                            <option value="pName">상품 명</option>
-                            </select>
                             <div class="input-group">
-                                <input type="text" class="control-sm">
+                                <input type="text" class="control-sm" name="userId" placeholder="아이디 검색">
                                 <button type="button" id="searchButton" class="btn-warning"><i class="ti-search"></i></button>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             </div>
@@ -91,15 +85,13 @@
 						<table id="productTable" class="table table-bordered col-sm-12">
 							<thead>
 								<tr>
-									<th>상품번호</th>
-									<th>상품명</th>
-									<th>카테고리</th>
-									<th>식품의 유형</th>
-									<th>판매가</th>
-									<th>제조일</th>
-									<th>유통기한</th>
-									<th>수정</th>
-									<th>삭제</th>
+									<th>회원번호</th>
+									<th>아이디</th>
+									<th>이름</th>
+									<th>연락처</th>
+									<th>주소</th>
+									<th>이메일</th>
+									<th>탈퇴여부(N/Y)</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -111,8 +103,6 @@
 									<td></td>
 									<td></td>
 									<td></td>
-									<td>수정</td>
-									<td>삭제</td>
 								</tr>
 						</table>
 					</div>

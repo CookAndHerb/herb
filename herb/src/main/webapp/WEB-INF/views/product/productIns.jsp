@@ -62,9 +62,9 @@
 					<div class="filter-widget">
 						<h4 class="fw-title">Admin</h4>
 						<ul class="filter-catagories" style="font-weight: bold;">
-							<li><a class="sidebar" href="adminProduct.do">상품관리</a></li>
-							<li><a href="#">주문관리</a></li>
-							<li><a href="#">회원관리</a></li>
+							<li><a class="sidebar" href="adminProduct.do" style="color: #e7ab3c">상품관리</a></li>
+							<li><a href="adminOrder.do">주문관리</a></li>
+							<li><a href="adminMember.do">회원관리</a></li>
 						</ul>
 					</div>
 				</div>
@@ -77,15 +77,15 @@
 					<br>
 					<form action="productIns.do" method="post" enctype="multipart/form-data">
 						  <div class="custom-file col-sm-12">
-    						<input type="file" class="custom-file-input" name="infoImageName" id="customFile">
-    						<label class="custom-file-label" for="customFile">상품 대표 이미지</label>
+    						<input type="file" class="custom-file-input" name="infoImageName" id="infoImageName">
+    						<label class="custom-file-label" for="infoImageName">상품 대표 이미지</label>
   						</div>
   						<br><br>
   						<div class="form-inline">
 						<label for="pName">상품 명</label> &nbsp;&nbsp;&nbsp; 
 						<input type="text" class="col-sm-8 form-control" name="pName" id="pName">&nbsp; 
-						<label for="sel1"></label> 
-						<select class="form-control col-sm-3" id="sel1" name="pCategory">
+						<label for="pCategory"></label> 
+						<select class="form-control col-sm-3" id="pCategory" name="pCategory">
 							<option value="">카테고리 선택</option>
 							<option value="비타민">비타민</option>
 							<option value="홍삼">홍삼</option>
@@ -98,7 +98,7 @@
 							<label for="pMaDate">제조일자</label>&nbsp;
 							<input type="date" class="col-sm-5 form-control" name="pMaDate" id="pMaDate">
 							&nbsp;
-							<label for="pMaDate">유통기한</label> &nbsp;
+							<label for="pExDate">유통기한</label> &nbsp;
 							<input type="date" class="col-sm-5 form-control" name="pExDate" id="pExDate">
 						</div><br>
 						<div class="form-inline">
@@ -125,7 +125,7 @@
 						<input type="reset" class="btn btn-secondary" value="취소">
 						</div>
 					</form>
-				
+				</div>
 				</div>
 			</div>
 

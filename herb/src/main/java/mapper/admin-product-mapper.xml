@@ -26,7 +26,8 @@
 		INSERT INTO PRODUCT 
 		(P_NUM, P_NAME, P_COST, P_IMAGE_NAME, P_IMAGE_PATH, P_CONTEXT, P_MA_DATE, P_EX_DATE, 
 		P_CAPACITY, P_TYPE, P_INFO_IMAGE_NAME, P_INFO_IMAGE_PATH, P_CATEGORY) 
-		VALUES (PRODUCT_SEQ.NEXTVAL, #{pName}, #{pCost}, #{imageName}, #{imagePath}, #{pContent}, #{pMaDate}, #{pExDate}, 
+		VALUES (PRODUCT_SEQ.NEXTVAL, #{pName}, #{pCost}, #{imageName}, #{imagePath}, #{pContent}, 
+		TO_DATE(#{pMaDate}), TO_DATE(#{pExDate}), 
 		#{pCapacity}, #{pType}, #{infoImageName}, #{infoImagePath}, #{pCategory})
 	</insert>
 </mapper>
