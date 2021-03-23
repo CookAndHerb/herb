@@ -1,24 +1,25 @@
 package com.kh.herb.admin.model.service;
 
-<<<<<<< HEAD
-=======
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
->>>>>>> refs/heads/master
 import org.springframework.stereotype.Service;
 
-<<<<<<< HEAD
-=======
 import com.kh.herb.admin.model.dao.AdminDAO;
 import com.kh.herb.admin.model.vo.Search;
 import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.product.model.vo.Product;
 import com.kh.herb.product.model.vo.ProductFile;
 
->>>>>>> refs/heads/master
 @Service
 public class AdminServiceImpl implements AdminService {
+	@Autowired
+	private AdminDAO ad;
+	
+	@Override
+	public int insertProduct(Product product) throws Exception {
+		return ad.insertProduct(product);
+	}
 
 	@Override
 	public List<Member> memberList() throws Exception {

@@ -3,8 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="adminProduct">
-<<<<<<< HEAD
-=======
+
 	<resultMap id="proResult" type="Product">
 		<id property="pNum" column="P_NUM"></id>
 		<result property="pName" column="P_NAME"></result>
@@ -29,5 +28,5 @@
 		VALUES (PRODUCT_SEQ.NEXTVAL, #{pName}, #{pCost}, #{imageName}, #{imagePath}, #{pContent}, 
 		TO_DATE(#{pMaDate},'YYYY-MM-DD'), TO_DATE(#{pExDate},'YYYY-MM-DD'), #{pCapacity}, #{pType}, #{pCategory})
 	</insert>
->>>>>>> refs/heads/master
+
 </mapper>

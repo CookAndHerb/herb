@@ -10,14 +10,11 @@ public class Product {
 	private int pNum; //상품번호
 	private String pName; //상품명
 	private int pCost; //상품가격
-<<<<<<< HEAD
 	private String ImageName; //이미지 이름
 	private String ImagePath; //이미지 경로
-=======
 	private MultipartFile image;
 	private String imageName; //대표 이미지 이름
 	private String imagePath; //대표 이미지 경로
->>>>>>> refs/heads/master
 	private String pContent; //상세설명
 	private int pStar; //별점
 	private int pSell; //수량(몇 개 살건지)
@@ -45,7 +42,6 @@ public class Product {
 	public void setpCost(int pCost) {
 		this.pCost = pCost;
 	}
-<<<<<<< HEAD
 	public String getImageName() {
 		return ImageName;
 	}
@@ -58,9 +54,7 @@ public class Product {
 	public void setImagePath(String imagePath) {
 		ImagePath = imagePath;
 	}
-=======
 	
->>>>>>> refs/heads/master
 	public String getpContent() {
 		return pContent;
 	}
@@ -115,18 +109,7 @@ public class Product {
 	public void setImage(MultipartFile image) {
 		this.image = image;
 	}
-	public String getImageName() {
-		return imageName;
-	}
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
-	}
-	public String getImagePath() {
-		return imagePath;
-	}
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
+
 	
 	
 }
