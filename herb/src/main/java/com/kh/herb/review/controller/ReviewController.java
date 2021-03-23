@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
@@ -36,7 +37,7 @@ public class ReviewController {
 	// 리뷰 등록
 	@RequestMapping(value="reviewInsert.do")
 	@ResponseBody
-	public ModelAndView reInsert(HttpServletRequest request, ModelAndView modelAndView, Review review) throws Exception{	
+	public String reInsert(ModelAndView modelAndView, Review review) throws Exception{	
 		System.out.println(review.getrWriter());
 		System.out.println(review.getpNum());
 		System.out.println(review.getrContent());
@@ -86,10 +87,13 @@ public class ReviewController {
 			}
 		}
 		reSe.reviewInsert(review);
-		modelAndView.addObject("num", review.getpNum()); // 상품인포 주소에 들어갈 번호
-		modelAndView.setViewName("product/reviewComplete");
+		//modelAndView.addObject("num", review.getpNum()); // 상품인포 주소에 들어갈 번호
+		//modelAndView.setViewName("product/reviewComplete");
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("num", review.getpNum());
+		jsonObject.put("moveUrl", "productInfo.do");
 		
-		return modelAndView;
+		return jsonObject.toJSONString();
 	}
 	
 }
