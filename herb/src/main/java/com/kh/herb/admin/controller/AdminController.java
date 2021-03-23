@@ -58,64 +58,7 @@ public class AdminController {
 		return "product/productIns";
 	}
 	
-//	//상품등록 컨트롤러
-//	@RequestMapping(value="productIns.do", method=RequestMethod.POST)
-//	public ModelAndView insertProduct(ModelAndView mav, Product product, MultipartHttpServletRequest request) throws Exception {
-//		System.out.println("상품등록 메소드");
-//		
-////		String pName = request.getParameter("pName");
-////		int pCost = Integer.parseInt(request.getParameter("pCost"));
-//		List<MultipartFile> imagefileList = request.getFiles("imageName");
-//		String imageName = null;
-//		for(MultipartFile imagefile : imagefileList) {
-//			imageName = imagefile.getOriginalFilename();
-//			imageUplode(imagefile, product, request);
-//		}
-//		String imagePath;
-////		String pContent = request.getParameter("pContent");
-////		String pMaDate = request.getParameter("pMaDate");
-////		String pExDate = request.getParameter("pExDate");
-////		String pCapacity = request.getParameter("pCatacity");
-////		String pType = request.getParameter("pType");
-//		MultipartFile infoImageFile = request.getFile("infoImage");
-//		String infoImageName = infoImageFile.getOriginalFilename();
-//		imageUplode(infoImageFile, product, request);
-////		String infoImagePath;
-////		String pCategory = request.getParameter("pCategory");
-//			
-////		product.setpName(pName);
-////		product.setpCost(pCost);
-////		product.setImageName(imageName);
-//		//product.setImagePath(imagePath);
-////		product.setpContent(pContent);
-////		product.setpMaDate(pMaDate);
-////		product.setpExDate(pExDate);
-////		product.setpCapacity(pCapacity);
-////		product.setpType(pType);
-////		product.setInfoImageName(infoImageName);
-//		//product.setInfoImagePath(infoImagePath);
-////		product.setpCategory(pCategory);
-//
-//		
-//		int result = as.insertProduct(product);
-//		mav.addObject("result", result);
-//		mav.setViewName("prduct/productInsComplete");
-//		return mav;
-//	}
-//	@RequestMapping(value="productIns.do", method=RequestMethod.POST)
-//	public ModelAndView insertProduct(ModelAndView mav, Product product, MultipartHttpServletRequest request) throws Exception{	
-//		MultipartFile imageName[] = request.getFile("imageName");
-//		MultipartFile infoImageName = request.getFile("infoImageName");
-//		imageFile(imageName, infoImageName, request);
-//		
-//		product.setImageName(imageName[]);
-//		
-//		int result = as.insertProduct(product);
-//		mav.addObject("result", result);
-//		mav.setViewName("prduct/productInsComplete");
-//		return mav;
-//	}
-	
+	//상품등록
 	@RequestMapping(value="productIns.do", method=RequestMethod.POST)
 	public ModelAndView insertProduct(ModelAndView mav, Product product, ProductFile pf, 
 			@RequestParam("pInfoFiles") MultipartFile pInfoFiles[], MultipartHttpServletRequest request) throws Exception {
