@@ -61,9 +61,9 @@
 					<div class="filter-widget">
 						<h4 class="fw-title">Admin</h4>
 						<ul class="filter-catagories" style="font-weight: bold;">
-							<li><a class="sidebar" href="adminProduct.do">상품관리</a></li>
-							<li><a href="#">주문관리</a></li>
-							<li><a href="#">회원관리</a></li>
+							<li><a class="sidebar" href="adminProduct.do" style="color: #e7ab3c">상품관리</a></li>
+							<li><a href="adminOrder.do">주문관리</a></li>
+							<li><a href="adminMember.do">회원관리</a></li>
 						</ul>
 					</div>
 				</div>
@@ -75,16 +75,28 @@
 					<br>
 					<br>
 					<form action="productIns.do" method="post" enctype="multipart/form-data">
+<<<<<<< HEAD
 						  <div class="custom-file col-sm-9">
     						<input type="file" class="custom-file-input" name="infoImageName" id="customFile">
     						<label class="custom-file-label" for="customFile">상품 대표 이미지</label>
+=======
+						  <div class="custom-file col-sm-12">
+    						<input type="file" class="custom-file-input" name="image" id="image">
+    						<label class="custom-file-label" for="image">상품 대표 이미지</label>
+>>>>>>> refs/heads/master
   						</div>
   						<br><br>
   						<div class="form-inline">
 						<label for="pName">상품 명</label> &nbsp;&nbsp;&nbsp; 
+<<<<<<< HEAD
 						<input type="text" class="col-sm-5 form-control" name="pName" id="pName">
 						<label for="sel1"></label> 
 						<select class="form-control col-sm-3" id="sel1" name="pCategory">
+=======
+						<input type="text" class="col-sm-8 form-control" name="pName" id="pName">&nbsp; 
+						<label for="pCategory"></label> 
+						<select class="form-control col-sm-3" id="pCategory" name="pCategory">
+>>>>>>> refs/heads/master
 							<option value="">카테고리 선택</option>
 							<option value="비타민">비타민</option>
 							<option value="홍삼">홍삼</option>
@@ -94,11 +106,19 @@
 						</select>
 						</div><br>
 						<div class="form-inline">
+<<<<<<< HEAD
 							<label for="pMaDate">제조일자</label>&nbsp;&nbsp;
 							<input type="date" class="col-sm-3 form-control" name="pMaDate" id="pMaDate">
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<label for="pMaDate">유통기한</label> &nbsp;&nbsp;
 							<input type="date" class="col-sm-3 form-control" name="pExDate" id="pExDate">
+=======
+							<label for="pMaDate">제조일자</label>&nbsp;
+							<input type="date" class="col-sm-5 form-control" name="pMaDate" id="pMaDate">
+							&nbsp;
+							<label for="pExDate">유통기한</label> &nbsp;
+							<input type="date" class="col-sm-5 form-control" name="pExDate" id="pExDate">
+>>>>>>> refs/heads/master
 						</div><br>
 						<div class="form-inline">
 						<label for="pCapacity">포장 단위별 용량</label> &nbsp;&nbsp;&nbsp; 
@@ -110,15 +130,26 @@
 							<option value="기타가공식품">기타가공식품</option>
 						</select>
 						</div><br>
+<<<<<<< HEAD
 						<div class="custom-file col-sm-9">
     						<input type="file" class="custom-file-input" name="ImageName" id="ImageName" multiple="multiple">
     						<label class="custom-file-label" for="ImageName">상품 이미지(다중 선택 가능)</label>
   						</div><br><br>
+=======
+						<div class="form-inline">
+						<label for="pCost">판매가</label> &nbsp;&nbsp;&nbsp; 
+						<input type="number" class="col-sm-11 form-control" name="pCost" id="pCost">
+						</div><br>
+						<div class="form-inline">
+							<label for="ImageName">상품 정보 이미지 </label>&nbsp;&nbsp;&nbsp; 
+    						<input type="file" class="col-sm-10" name="pInfoFiles" id="pInfoFiles" multiple="multiple">
+  						</div><br>
+>>>>>>> refs/heads/master
   						<textarea id="pContent" name="pContent"></textarea><br>
 						<input type="submit" value="등록">
 						<input type="reset" value="취소">
 					</form>
-				
+				</div>
 				</div>
 			</div>
 

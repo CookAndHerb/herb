@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +41,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="adminMain.do"><i class="fa fa-home"></i> Admin</a>
-                        <span>상품관리</span>
+                        <span>회원관리</span>
                     </div>
                 </div>
             </div>
@@ -59,15 +60,9 @@
                     <div class="filter-widget">
                         <h4 class="fw-title">Admin</h4>
                         <ul class="filter-catagories" style="font-weight: bold;">
-<<<<<<< HEAD
-                            <li><a class="sidebar" href="adminProduct.do" >상품관리</a></li>
-                            <li><a href="#" >주문관리</a></li>
-                            <li><a href="#" >회원관리</a></li>
-=======
-                            <li><a href="adminProduct.do" style="color: #e7ab3c">상품관리</a></li>
+                            <li><a href="adminProduct.do" >상품관리</a></li>
                             <li><a href="adminOrder.do" >주문관리</a></li>
-                            <li><a href="adminMember.do" >회원관리</a></li>
->>>>>>> refs/heads/master
+                            <li><a href="adminMember.do" style="color: #e7ab3c">회원관리</a></li>
                         </ul>
                     </div>              
                 </div>
@@ -75,63 +70,57 @@
                 <!-- 내용 -->
                 <div class="col-lg-10 order-1 order-lg-2">
 
-<<<<<<< HEAD
-                <form action="productIns.do">
-                	<input type="submit" class="btn btn-warning" value="상품 등록">
-                </form>
-                
-=======
-               	<h3><i class='fas fa-capsules' style='font-size:32px; color:#e7ab3c'></i> 상품관리</h3>
-                <br><br>
-                &nbsp;&nbsp;&nbsp;
-                <button class="btn btn-sm" id="productIns" onclick="location.href = 'productIns.do';">상품등록</button>
+               	<h3><i class='fas fa-house-user' style='font-size:32px; color:#e7ab3c'></i> 회원관리</h3>
+                <br>
+				 <form action="searchMember.do">
 				<div id="searchDiv">
                         <div class="form-inline serch">
-                            <select name="search" class="custom-select-sm">
-                            <option value="pNum">상품 번호</option>
-                            <option value="pName">상품 명</option>
+                            <select name="select" class="custom-select-sm">
+                            <option value="userId">아이디</option>
+                            <option value="userName">이름</option>
                             </select>
                             <div class="input-group">
-                                <input type="text" class="control-sm">
-                                <button type="button" id="searchButton" class="btn-warning"><i class="ti-search"></i></button>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="text" class="control-sm" name="keyword">
+                                <%-- <button type="button" id="searchButton" class="btn-warning" 
+                                	onclick="location.href = 'searchMember.do?select=${select}&keyword=${keyword }';">
+                                	<i class="ti-search"></i></button> --%>
+                                <input type="submit" id="searchButton" class="btn-warning" value="&#xf002;">
+                            &nbsp;&nbsp;
                             </div>
                         </div>
                     </div>
+                   </form>
 				
 				<br><br>
 					<div class="container ">
-						<table id="productTable" class="table table-bordered col-sm-12">
+						<table id="memberTable" class="table table-bordered col-sm-12">
 							<thead>
 								<tr>
-									<th>상품번호</th>
-									<th>상품명</th>
-									<th>카테고리</th>
-									<th>식품의 유형</th>
-									<th>판매가</th>
-									<th>제조일</th>
-									<th>유통기한</th>
-									<th>수정</th>
-									<th>삭제</th>
+									<th style="padding-bottom:20px">번호</th>
+									<th style="padding-bottom:20px">아이디</th>
+									<th style="padding-bottom:20px">이름</th>
+									<th style="padding-bottom:20px">연락처</th>
+									<th style="padding-bottom:20px">주소</th>
+									<th style="padding-bottom:20px">이메일</th>
+									<th>탈퇴여부(N/Y)</th>
 								</tr>
 							</thead>
 							<tbody>
+							<c:forEach var="member" items="${searchMember }">
 								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td>수정</td>
-									<td>삭제</td>
+									<td>${member.userNum }</td>
+									<td>${member.userId }</td>
+									<td style="width:70px">${member.userName }</td>
+									<td>${member.userPhone }</td>
+									<td>${member.userAddress1 }, ${member.userAddress2 }, ${member.userAddress3 }</td>
+									<td>${member.userEmail }</td>
+									<td>${member.userDel }</td>
 								</tr>
+							</c:forEach>
 						</table>
 					</div>
 
 				</div>
->>>>>>> refs/heads/master
             </div>
         </div>
     </section>

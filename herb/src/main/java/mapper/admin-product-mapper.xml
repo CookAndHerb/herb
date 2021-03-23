@@ -3,4 +3,31 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="adminProduct">
+<<<<<<< HEAD
+=======
+	<resultMap id="proResult" type="Product">
+		<id property="pNum" column="P_NUM"></id>
+		<result property="pName" column="P_NAME"></result>
+		<result property="pCost" column="P_COST"></result>
+		<result property="imageName" column="P_IMAGE_NAME"></result>
+		<result property="imagePath" column="P_IMAGE_PATH"></result>
+		<result property="pContent" column="P_CONTENT"></result>
+		<result property="pStar" column="P_STAR"></result>
+		<result property="pSell" column="P_SELL"></result>
+		<result property="pMaDate" column="P_MA_DATE"></result>
+		<result property="pExDate" column="P_EX_DATE"></result>
+		<result property="pCapacity" column="P_CAPACITY"></result>
+		<result property="pType" column="P_TYPE"></result>
+		<result property="pCategory" column="P_CATEGORY"></result>
+	</resultMap>
+	
+	<!-- 상품등록 -->
+	<insert id="insertProduct" parameterType="Product">
+		INSERT INTO PRODUCT 
+		(P_NUM, P_NAME, P_COST, P_IMAGE_NAME, P_IMAGE_PATH, P_CONTENT, P_MA_DATE, P_EX_DATE, 
+		P_CAPACITY, P_TYPE, P_CATEGORY) 
+		VALUES (PRODUCT_SEQ.NEXTVAL, #{pName}, #{pCost}, #{imageName}, #{imagePath}, #{pContent}, 
+		TO_DATE(#{pMaDate},'YYYY-MM-DD'), TO_DATE(#{pExDate},'YYYY-MM-DD'), #{pCapacity}, #{pType}, #{pCategory})
+	</insert>
+>>>>>>> refs/heads/master
 </mapper>

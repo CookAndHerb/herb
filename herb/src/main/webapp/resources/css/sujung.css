@@ -35,4 +35,48 @@
 	margin-top: 100px;
 	float: right;
 	color: black;
+<<<<<<< HEAD
 }
+=======
+}
+
+/* 상품관리페이지 */
+#productIns{
+	color: white;
+	background: #e7ab3c;
+	display: inline-block;
+}
+#productTable{
+	text-align: center;
+}
+#searchButton{
+	border: white;
+	width: 40px;
+	color: white;
+	background: #e7ab3c;
+}
+#searchDiv{
+	display: inline-block;
+	float: right;
+}
+
+/* 주문관리페이지 */
+#orderTable{
+	text-align: center;
+	font-size: small;
+}
+
+/* 회원관리 */
+#memberTable{
+	text-align: center;
+	font-size: small;
+}
+
+/* 상품등록페이지 */
+.insButton{
+	text-align: center;
+}
+/* #ImageName{
+	text-align: center;
+}  */
+>>>>>>> refs/heads/master

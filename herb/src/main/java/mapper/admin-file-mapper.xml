@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminFile">
+	<resultMap id="fileResult" type="ProductFile">
+		<id property="pInfoNum" column="P_INFO_NUM"></id>
+		<result property="pNum" column="P_NUM"></result>
+		<result property="pInfoFile" column="P_INFO_FILE"></result>
+		<result property="pInfoPath" column="P_INFO_PATH"></result>
+	</resultMap>
+	
+	<insert id="insertFile" parameterType="ProductFile">
+	<selectKey keyProperty="pNum" resultType="int" order="BEFORE">
+		SELECT MAX(P_NUM) FROM PRODUCT
+	</selectKey>
+		INSERT INTO PRODUCT_FILE VALUES (PRODUCT_FILE_SEQ.NEXTVAL, #{pNum}, #{pInfoFile}, #{pInfoPath})
+	</insert>
+</mapper>
