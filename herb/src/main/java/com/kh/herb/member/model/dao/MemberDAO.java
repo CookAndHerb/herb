@@ -23,4 +23,21 @@ public class MemberDAO {
 		return sqlSession.insert("Member.insertMember", member);
 	}
 	
+	public int idCheckMethod(String userId) {
+		return sqlSession.selectOne("Member.idCheck", userId);
+
+	}
+	
+	public String idSearch(Member member) {
+		return sqlSession.selectOne("Member.idSearch", member);
+
+	}
+	
+	public Member idEmail(Member member) {
+		return sqlSession.selectOne("Member.idEmail", member);
+	}
+	
+	public int updatePw(Member member) {
+		return sqlSession.update("Member.updatePw", member);
+	}
 }
