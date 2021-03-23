@@ -10,8 +10,9 @@ public class Product {
 	private int pNum; //상품번호
 	private String pName; //상품명
 	private int pCost; //상품가격
-	private String imageName; //이미지 이름
-	private String imagePath; //이미지 경로
+	private MultipartFile image;
+	private String imageName; //대표 이미지 이름
+	private String imagePath; //대표 이미지 경로
 	private String pContent; //상세설명
 	private int pStar; //별점
 	private int pSell; //수량(몇 개 살건지)
@@ -19,8 +20,6 @@ public class Product {
 	private String pExDate; //유통기한
 	private String pCapacity; //포장단위별용량
 	private String pType; //식품의유형(건강기능식픔, 홍삼제품, 기타가공식품)
-	private String infoImageName; //대표이미지 이름
-	private String infoImagePath; //대표이미지 경로
 	private String pCategory; //카테고리
 	
 	public int getpNum() {
@@ -41,18 +40,7 @@ public class Product {
 	public void setpCost(int pCost) {
 		this.pCost = pCost;
 	}
-	public String getImageName() {
-		return imageName;
-	}
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
-	}
-	public String getImagePath() {
-		return imagePath;
-	}
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
+	
 	public String getpContent() {
 		return pContent;
 	}
@@ -95,23 +83,29 @@ public class Product {
 	public void setpType(String pType) {
 		this.pType = pType;
 	}
-	public String getInfoImageName() {
-		return infoImageName;
-	}
-	public void setInfoImageName(String infoImageName) {
-		this.infoImageName = infoImageName;
-	}
-	public String getInfoImagePath() {
-		return infoImagePath;
-	}
-	public void setInfoImagePath(String infoImagePath) {
-		this.infoImagePath = infoImagePath;
-	}
 	public String getpCategory() {
 		return pCategory;
 	}
 	public void setpCategory(String pCategory) {
 		this.pCategory = pCategory;
+	}
+	public MultipartFile getImage() {
+		return image;
+	}
+	public void setImage(MultipartFile image) {
+		this.image = image;
+	}
+	public String getImageName() {
+		return imageName;
+	}
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
+	public String getImagePath() {
+		return imagePath;
+	}
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 	
 	

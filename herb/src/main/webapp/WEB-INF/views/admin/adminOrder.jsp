@@ -11,6 +11,8 @@
 	<title>어른허브</title>
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <!-- Icon -->
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     
     <!-- Css Styles -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" type="text/css">
@@ -53,7 +55,7 @@
             <div class="row">
             
             	<!-- 사이드바 -->
-                <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
+                <div class="col-lg-2 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
                     
                     <div class="filter-widget">
                         <h4 class="fw-title">Admin</h4>
@@ -66,15 +68,15 @@
                 </div>
                 
                 <!-- 내용 -->
-                <div class="col-lg-9 order-1 order-lg-2">
+                <div class="col-lg-10 order-1 order-lg-2">
 
-               	<h3>주문관리</h3>
-                <br><br>
+               	<h3><i class='fas fa-box-open' style='font-size:32px; color:#e7ab3c'></i> 주문관리</h3>
+                <br>
 				<div id="searchDiv">
                         <div class="form-inline serch">
                             <div class="input-group">
                                 <input type="text" class="control-sm" placeholder="주문번호 검색">
-                                <button type="button" id="searchButton" class="btn-warning"><i class="ti-search"></i></button>
+                                <button type="button" id="searchButton"><i class="ti-search"></i></button>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             </div>
                         </div>

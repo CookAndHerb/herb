@@ -17,6 +17,8 @@
      <typeAlias type="com.kh.herb.product.model.vo.Product" alias="Product" />
      <typeAlias type="com.kh.herb.review.model.vo.Review" alias="Review" />
      <typeAlias type="com.kh.herb.review.model.vo.ReviewFile" alias="ReviewFile" /> 
+     <typeAlias type="com.kh.herb.admin.model.vo.Search" alias="Search"/>
+     <typeAlias type="com.kh.herb.product.model.vo.ProductFile" alias="ProductFile" />
    </typeAliases>
    
 
@@ -32,6 +34,7 @@
       <mapper resource="mapper/order-mapper.xml" />
       <mapper resource="mapper/product-mapper.xml" />
       <mapper resource="mapper/qa-mapper.xml" />
-      <mapper resource="mapper/review-mapper.xml" />   
+      <mapper resource="mapper/review-mapper.xml" />  
+      <mapper resource="mapper/admin-file-mapper.xml" />
    </mappers>
 </configuration>

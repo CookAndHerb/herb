@@ -18,7 +18,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.herb.admin.model.service.AdminService;
+import com.kh.herb.admin.model.vo.Search;
+import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.product.model.vo.Product;
+import com.kh.herb.product.model.vo.ProductFile;
 
 @Controller
 public class AdminController {
@@ -37,11 +40,11 @@ public class AdminController {
 		return "admin/adminProduct";
 	}
 	
-	//회원관리 페이지
-	@RequestMapping("adminMember.do")
-	public String adminMember() {
-		return "admin/adminMember";
-	}
+//	//회원관리 페이지
+//	@RequestMapping("adminMember.do")
+//	public String adminMember() {
+//		return "admin/adminMember";
+//	}
 	
 	//주문관리 페이지
 	@RequestMapping("adminOrder.do")
@@ -55,50 +58,50 @@ public class AdminController {
 		return "product/productIns";
 	}
 	
-	//상품등록 컨트롤러
-	@RequestMapping(value="productIns.do", method=RequestMethod.POST)
-	public ModelAndView insertProduct(ModelAndView mav, Product product, MultipartHttpServletRequest request) throws Exception {
-		System.out.println("상품등록 메소드");
-		
-		String pName = request.getParameter("pName");
-		int pCost = Integer.parseInt(request.getParameter("pCost"));
-		List<MultipartFile> imagefileList = request.getFiles("imageName");
-		String imageName = null;
-		for(MultipartFile imagefile : imagefileList) {
-			imageName = imagefile.getOriginalFilename();
-			imageUplode(imagefile, product, request);
-		}
-		String imagePath;
-		String pContent = request.getParameter("pContent");
-		String pMaDate = request.getParameter("pMaDate");
-		String pExDate = request.getParameter("pExDate");
-		String pCapacity = request.getParameter("pCatacity");
-		String pType = request.getParameter("pType");
-		MultipartFile infoImageFile = request.getFile("infoImageName");
-		String infoImageName = infoImageFile.getOriginalFilename();
-		imageUplode(infoImageFile, product, request);
-		String infoImagePath;
-		String pCategory = request.getParameter("pCategory");
-			
-		product.setpName(pName);
-		product.setpCost(pCost);
-		product.setImageName(imageName);
-		//product.setImagePath(imagePath);
-		product.setpContent(pContent);
-		product.setpMaDate(pMaDate);
-		product.setpExDate(pExDate);
-		product.setpCapacity(pCapacity);
-		product.setpType(pType);
-		product.setInfoImageName(infoImageName);
-		//product.setInfoImagePath(infoImagePath);
-		product.setpCategory(pCategory);
-
-		
-		int result = as.insertProduct(product);
-		mav.addObject("result", result);
-		mav.setViewName("prduct/productInsComplete");
-		return mav;
-	}
+//	//상품등록 컨트롤러
+//	@RequestMapping(value="productIns.do", method=RequestMethod.POST)
+//	public ModelAndView insertProduct(ModelAndView mav, Product product, MultipartHttpServletRequest request) throws Exception {
+//		System.out.println("상품등록 메소드");
+//		
+////		String pName = request.getParameter("pName");
+////		int pCost = Integer.parseInt(request.getParameter("pCost"));
+//		List<MultipartFile> imagefileList = request.getFiles("imageName");
+//		String imageName = null;
+//		for(MultipartFile imagefile : imagefileList) {
+//			imageName = imagefile.getOriginalFilename();
+//			imageUplode(imagefile, product, request);
+//		}
+//		String imagePath;
+////		String pContent = request.getParameter("pContent");
+////		String pMaDate = request.getParameter("pMaDate");
+////		String pExDate = request.getParameter("pExDate");
+////		String pCapacity = request.getParameter("pCatacity");
+////		String pType = request.getParameter("pType");
+//		MultipartFile infoImageFile = request.getFile("infoImage");
+//		String infoImageName = infoImageFile.getOriginalFilename();
+//		imageUplode(infoImageFile, product, request);
+////		String infoImagePath;
+////		String pCategory = request.getParameter("pCategory");
+//			
+////		product.setpName(pName);
+////		product.setpCost(pCost);
+////		product.setImageName(imageName);
+//		//product.setImagePath(imagePath);
+////		product.setpContent(pContent);
+////		product.setpMaDate(pMaDate);
+////		product.setpExDate(pExDate);
+////		product.setpCapacity(pCapacity);
+////		product.setpType(pType);
+////		product.setInfoImageName(infoImageName);
+//		//product.setInfoImagePath(infoImagePath);
+////		product.setpCategory(pCategory);
+//
+//		
+//		int result = as.insertProduct(product);
+//		mav.addObject("result", result);
+//		mav.setViewName("prduct/productInsComplete");
+//		return mav;
+//	}
 //	@RequestMapping(value="productIns.do", method=RequestMethod.POST)
 //	public ModelAndView insertProduct(ModelAndView mav, Product product, MultipartHttpServletRequest request) throws Exception{	
 //		MultipartFile imageName[] = request.getFile("imageName");
@@ -113,22 +116,113 @@ public class AdminController {
 //		return mav;
 //	}
 	
-	//상품 정보 이미지 업로드
-	private void imageUplode(MultipartFile image, Product product, HttpServletRequest request) {
+	@RequestMapping(value="productIns.do", method=RequestMethod.POST)
+	public ModelAndView insertProduct(ModelAndView mav, Product product, ProductFile pf, 
+			@RequestParam("pInfoFiles") MultipartFile pInfoFiles[], MultipartHttpServletRequest request) throws Exception {
+		Product fileProduct = imageUplode(product, request);
+		
+		product.setImageName(fileProduct.getImageName());
+		product.setImagePath(fileProduct.getImagePath());
+
+		
+		int result1 = as.insertProduct(product);
+		//System.out.println(product.getpNum());
+		
+		ProductFile infoFile = new ProductFile();
+		
+;
+		for(MultipartFile productInfo : pInfoFiles) {
+			 infoFile = infoImage(productInfo, request);
+			 pf.setpInfoFile(infoFile.getpInfoFile());
+			 pf.setpInfoPath(infoFile.getpInfoPath());
+			 int cnt = as.insertFile(pf);
+		}
+		
+		
+//		pf.setpInfoFile(infoFile.getpInfoFile());
+//		pf.setpInfoPath(infoFile.getpInfoPath());
+//		
+//		int result2 = as.insertFile(pf);
+		
+		mav.addObject("result1", result1);
+		mav.setViewName("product/productInsComplete");
+		return mav;
+	}
+	
+	//상품 대표 이미지 업로드
+	private Product imageUplode(Product product, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resource");
+		//String root = "C:\\finalproject\\herb\\herb\\herb\\src\\main\\webapp\\resources";
 		String savePath = root+"\\productImg";
 		String filePath = null;
+		MultipartFile image = product.getImage();
 		File folder = new File(savePath);
 		if(!folder.exists())
 			folder.mkdir();
-		filePath = folder+"\\"+image.getOriginalFilename();
-		product.setImagePath(filePath);
-		product.setInfoImagePath(filePath);
+		filePath = savePath+"\\"+image.getOriginalFilename();
+		//product.setImagePath(filePath);
+		//product.setInfoImagePath(filePath);
 		try {
 			image.transferTo(new File(filePath));
 		} catch (IllegalStateException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		product = new Product();
+		product.setImageName(image.getOriginalFilename());
+		product.setImagePath(savePath);
+		return product;
+	}
+	
+	//상품 정보 이미지 업로드
+	private ProductFile infoImage(MultipartFile infoImage, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resource");
+		//String root = "C:\\finalproject\\herb\\herb\\herb\\src\\main\\webapp\\resources";
+		String savePath = root+"\\productImg";
+		String filePath = null;
+		MultipartFile image = infoImage;
+		File folder = new File(savePath);
+		if(!folder.exists())
+			folder.mkdir();
+		
+		//product.setImagePath(filePath);
+		//product.setInfoImagePath(filePath);
+		try {
+			filePath = savePath+"\\"+image.getOriginalFilename();
+			image.transferTo(new File(filePath));
+		} catch (IllegalStateException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ProductFile pf = new ProductFile();
+		pf.setpInfoFile(image.getOriginalFilename());
+		pf.setpInfoPath(savePath);
+		return pf;
+	}
+	
+	
+	//회원관리
+	@RequestMapping("adminMember.do")
+	public ModelAndView memberList(ModelAndView mav) throws Exception{
+		List<Member> memberList = as.memberList();
+		mav.addObject("memberList", memberList);
+		mav.setViewName("admin/adminMember");
+		return mav;
+	}
+	
+	//회원 검색
+	@RequestMapping("searchMember.do")
+	public ModelAndView searchMember(ModelAndView mav, @RequestParam(value="select") String select, 
+			@RequestParam(value="keyword") String keyword, Search search) throws Exception{
+		System.out.println("select : "+select);
+		System.out.println("keyword : "+keyword);
+		search.setSelect(select);
+		search.setKeyword(keyword);
+		List<Member> searchMember = as.searchMember(search);
+		mav.addObject("searchMember", searchMember);
+		mav.setViewName("admin/searchMember");
+		return mav;
 	}
 }

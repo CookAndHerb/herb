@@ -72,7 +72,7 @@
 
                	<h3><i class='fas fa-house-user' style='font-size:32px; color:#e7ab3c'></i> 회원관리</h3>
                 <br>
-                <form action="searchMember.do">
+				 <form action="searchMember.do">
 				<div id="searchDiv">
                         <div class="form-inline serch">
                             <select name="select" class="custom-select-sm">
@@ -106,7 +106,7 @@
 								</tr>
 							</thead>
 							<tbody>
-							<c:forEach var="member" items="${memberList }">
+							<c:forEach var="member" items="${searchMember }">
 								<tr>
 									<td>${member.userNum }</td>
 									<td>${member.userId }</td>

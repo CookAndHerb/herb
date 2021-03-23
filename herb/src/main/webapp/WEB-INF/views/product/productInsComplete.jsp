@@ -9,7 +9,7 @@
 </head>
 <body>
 	<c:choose>
-		<c:when test="${result==1}">
+		<c:when test="${result1==1}">
 			<script>
 				alert('상품 등록 완료');
 				location.href = 'adminProduct.do';

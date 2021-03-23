@@ -37,6 +37,7 @@
 /* 상품관리페이지 */
 #productIns{
 	color: white;
+	background: #e7ab3c;
 	display: inline-block;
 }
 #productTable{
@@ -46,6 +47,7 @@
 	border: white;
 	width: 40px;
 	color: white;
+	background: #e7ab3c;
 }
 #searchDiv{
 	display: inline-block;
@@ -54,6 +56,12 @@
 
 /* 주문관리페이지 */
 #orderTable{
+	text-align: center;
+	font-size: small;
+}
+
+/* 회원관리 */
+#memberTable{
 	text-align: center;
 	font-size: small;
 }

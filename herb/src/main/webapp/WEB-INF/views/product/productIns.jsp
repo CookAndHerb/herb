@@ -77,8 +77,8 @@
 					<br>
 					<form action="productIns.do" method="post" enctype="multipart/form-data">
 						  <div class="custom-file col-sm-12">
-    						<input type="file" class="custom-file-input" name="infoImageName" id="infoImageName">
-    						<label class="custom-file-label" for="infoImageName">상품 대표 이미지</label>
+    						<input type="file" class="custom-file-input" name="image" id="image">
+    						<label class="custom-file-label" for="image">상품 대표 이미지</label>
   						</div>
   						<br><br>
   						<div class="form-inline">
@@ -117,7 +117,7 @@
 						</div><br>
 						<div class="form-inline">
 							<label for="ImageName">상품 정보 이미지 </label>&nbsp;&nbsp;&nbsp; 
-    						<input type="file" class="col-sm-10" name="imageName" id="imageName" multiple="multiple">
+    						<input type="file" class="col-sm-10" name="pInfoFiles" id="pInfoFiles" multiple="multiple">
   						</div><br>
   						<textarea id="pContent" name="pContent"></textarea><br>
   						<div class="insButton">
