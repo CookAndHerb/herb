@@ -39,4 +39,11 @@ public class AdminDAO {
 		return sqlSession.insert("adminFile.insertFile", pf);
 	}
 
+	
+	//상품 조회
+	public List<Product> productList() throws Exception{
+		List<Product> productList = sqlSession.selectList("adminProduct.productList");
+		return productList;
+	}
+
 }

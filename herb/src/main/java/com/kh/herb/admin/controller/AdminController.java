@@ -33,11 +33,11 @@ public class AdminController {
 		return "admin/adminMain";
 	}
 	
-	//상품관리 페이지
-	@RequestMapping("adminProduct.do")
-	public String adminProduct() {
-		return "admin/adminProduct";
-	}
+//	//상품관리 페이지
+//	@RequestMapping("adminProduct.do")
+//	public String adminProduct() {
+//		return "admin/adminProduct";
+//	}
 	
 //	//회원관리 페이지
 //	@RequestMapping("adminMember.do")
@@ -94,7 +94,7 @@ public class AdminController {
 	
 	//상품 대표 이미지 업로드
 	private Product imageUplode(Product product, HttpServletRequest request) {
-		String root = request.getSession().getServletContext().getRealPath("resource");
+		String root = request.getSession().getServletContext().getRealPath("resources");
 		//String root = "C:\\finalproject\\herb\\herb\\herb\\src\\main\\webapp\\resources";
 		String savePath = root+"\\productImg";
 		String filePath = null;
@@ -120,7 +120,7 @@ public class AdminController {
 	
 	//상품 정보 이미지 업로드
 	private ProductFile infoImage(MultipartFile infoImage, HttpServletRequest request) {
-		String root = request.getSession().getServletContext().getRealPath("resource");
+		String root = request.getSession().getServletContext().getRealPath("resources");
 		//String root = "C:\\finalproject\\herb\\herb\\herb\\src\\main\\webapp\\resources";
 		String savePath = root+"\\productImg";
 		String filePath = null;
@@ -169,4 +169,13 @@ public class AdminController {
 		return mav;
 	}
 
+	
+	//상품 조회
+	@RequestMapping("adminProduct.do")
+	public ModelAndView productList(ModelAndView mav) throws Exception{
+		List<Product> productList = as.productList();
+		mav.addObject("productList", productList);
+		mav.setViewName("admin/adminProduct");
+		return mav;
+	}
 }

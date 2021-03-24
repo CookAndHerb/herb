@@ -14,4 +14,6 @@ public interface AdminService {
 	public List<Member> searchMember(Search search) throws Exception;
 	public int insertFile(ProductFile pf) throws Exception;
 
+	public List<Product> productList() throws Exception;
+
 }

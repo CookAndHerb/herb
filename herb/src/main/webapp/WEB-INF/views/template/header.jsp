@@ -133,14 +133,14 @@
                             </li>
                             -->
                          <c:choose>
-							<c:when test="${not empty member}">
-							<span style="color:black;">[${member.userName}]님 환영합니다.</span>
+							<c:when test="${not empty sessionScope.member}">
+							<span style="color:black;">[${sessionScope.member.userName}]님 환영합니다.</span>
                              <li class="cart-price"><a href="memberLogout.do" style="color:black;">Logout</a></li>
                             </c:when>
                             <c:otherwise>
                              <li class="cart-price"><a href="memberLogin.do" style="color:black;">Login</a></li>
                              <li class="cart-price">|</li>
-                             <li class="cart-price"><a href="#" style="color:black;">Join</a></li>
+                             <li class="cart-price"><a href="memberJoin.do" style="color:black;">Join</a></li>
                             </c:otherwise>
                            </c:choose>
                         </ul>
@@ -184,7 +184,7 @@
                         
                      
                     	<c:choose>
-                    	<c:when test="${member.userNum > 0 && member.userNum <= 999}">
+                    	<c:when test="${sessionScope.member.userNum > 0 && sessionScope.member.userNum <= 999}">
                         <li><a href="adminMain.do">admin</a>
                             <ul class="dropdown">
                                 <li><a href="#">상품관리</a></li>
@@ -193,7 +193,7 @@
                             </ul>
                         </li>
                        </c:when>
-                       <c:when  test="${member.userNum >999}">
+                       <c:when  test="${sessionScope.member.userNum >999}">
                            <li><a href="memberOrder.do">MY HERB</a>
                             <ul class="dropdown">
                                 <li><a href="memberOrder.do">주문 조회</a></li>

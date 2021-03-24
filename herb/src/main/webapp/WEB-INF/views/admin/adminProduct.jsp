@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -111,17 +113,19 @@
 								</tr>
 							</thead>
 							<tbody>
+							<c:forEach var="product" items="${productList }">
 								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td>${product.pNum}</td>
+									<td style="width: 180px;">${product.pName}</td>
+									<td>${product.pCategory}</td>
+									<td>${product.pType}</td>
+									<td>${product.pCost}</td>
+									<td>${product.pMaDate} </td>
+									<td>${product.pExDate}</td>
 									<td>수정</td>
 									<td>삭제</td>
 								</tr>
+							</c:forEach>
 						</table>
 					</div>
 

@@ -27,22 +27,20 @@
 	<header>
 		<%@ include file="../template/header.jsp" %>
 	</header>
-	    <!-- ##### Hero Area Start ##### -->
-
-    <!-- Breadcrumb Section Begin -->
+   <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="index.do"><i class="fa fa-home"></i> Home</a>
-                        <span>Login</span>
+                        <span>아이디 찾기</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Breadcrumb Form Section Begin -->
+    <!-- Breadcrumb Form Section Begin -->	
 
     <!-- Register Section Begin -->
     <div class="register-login-section spad">
@@ -50,36 +48,29 @@
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
                     <div class="login-form">
-                        <h2>Login</h2>
-                        <form action="memberLogin.do" method="post">
+                        <h2>아이디 찾기</h2>
+                        <form action="memberIdSearch.do" method="post">
                             <div class="group-input">
-                                <label for="userId" style="font-weight:bold;">아이디 *</label>
-                                <input type="text" id="userId" name="userId">
+                                <label for="userName" style="font-weight:bold;">이름 *</label>
+                                <input type="text" name="userName" id="userName" placeholder="이름을 입력해주세요." required>
                             </div>
                             <div class="group-input">
-                                <label for="userPw" style="font-weight:bold;">비밀번호 *</label>
-                                <input type="password" id="userId" name="userPw">
+                                <label for="userPhone" style="font-weight:bold;">휴대폰 번호 *</label>
+                                <input type="text" name="userPhone" id="userPhone" placeholder="휴대폰 번호를 입력해주세요." required>
                             </div>
                             <div class="group-input gi-check">
                                 <div class="gi-more">
-                                   <a href="memberPwSearch.do" class="forget-pass">비밀번호 찾기</a>
-                                   <span class="forget-pass">&nbsp;&nbsp;/&nbsp;&nbsp;</span>
-                                   <a href="memberIdSearch.do" class="forget-pass">아이디 찾기  </a>
+                                    <a href="memberPwSearch.do" class="forget-pass">비밀번호 찾기</a>
                                 </div>
                             </div>
-                            <button type="submit" class="site-btn login-btn">로그인</button>
+                            <button type="submit" class="site-btn login-btn">아이디 찾기</button>
                         </form>
-                        <div class="switch-login">
-                            <a href="memberJoin.do" class="or-login">회원가입</a>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Register Form Section End -->
-
-
 	<!-- 하단 -->
 	<footer>
 		<%@ include file="../template/footer.jsp" %>
@@ -94,7 +85,7 @@
     <script src="${pageContext.request.contextPath}/resources/js/jquery.dd.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/jquery.slicknav.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/owl.carousel.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>   	
+    <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>   
 
 </body>
 </html>

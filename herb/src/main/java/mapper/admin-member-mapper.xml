@@ -25,6 +25,14 @@
 	<!-- 검색 쿼리 -->
 	<select id="searchMember" resultMap="resultMember" parameterType="Search">
 		SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY USER_NUM DESC)AS ROW_NUM, MEMBER.* 
-		FROM MEMBER WHERE #{select} LIKE '%'||#{keyword}||'%') WHERE ROW_NUM BETWEEN 1 AND 10
+		FROM MEMBER <where>
+		<if test="userId != null">
+			USER_ID = #{userId}
+		</if>
+		<if test="userName != null">
+			OR USER_NAME = #{userName}
+		</if>
+		</where> 
+		LIKE '%'||#{keyword}||'%') WHERE ROW_NUM BETWEEN 1 AND 10
 	</select>
 </mapper>

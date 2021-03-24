@@ -29,4 +29,10 @@
 		TO_DATE(#{pMaDate},'YYYY-MM-DD'), TO_DATE(#{pExDate},'YYYY-MM-DD'), #{pCapacity}, #{pType}, #{pCategory})
 	</insert>
 
+	
+	<!-- 상품 조회 -->
+	<select id="productList" resultMap="proResult">
+		SELECT * FROM PRODUCT ORDER BY P_NUM DESC
+	</select>
+	
 </mapper>

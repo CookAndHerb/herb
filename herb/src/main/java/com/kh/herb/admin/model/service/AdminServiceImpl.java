@@ -36,4 +36,10 @@ public class AdminServiceImpl implements AdminService {
 		return ad.insertFile(pf);
 	}
 
+	@Override
+	public List<Product> productList() throws Exception {
+		return ad.productList();
+	}
+
 }
+
