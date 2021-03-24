@@ -16,8 +16,8 @@ public class Product {
 	private String pContent; //상세설명
 	private int pStar; //별점
 	private int pSell; //수량(몇 개 살건지)
-	private String pMaDate; //제조일
-	private String pExDate; //유통기한
+	private Date pMaDate; //제조일
+	private Date pExDate; //유통기한
 	private String pCapacity; //포장단위별용량
 	private String pType; //식품의유형(건강기능식픔, 홍삼제품, 기타가공식품)
 	private String pCategory; //카테고리
@@ -59,16 +59,16 @@ public class Product {
 	public void setpSell(int pSell) {
 		this.pSell = pSell;
 	}
-	public String getpMaDate() {
+	public Date getpMaDate() {
 		return pMaDate;
 	}
-	public void setpMaDate(String pMaDate) {
+	public void setpMaDate(Date pMaDate) {
 		this.pMaDate = pMaDate;
 	}
-	public String getpExDate() {
+	public Date getpExDate() {
 		return pExDate;
 	}
-	public void setpExDate(String pExDate) {
+	public void setpExDate(Date pExDate) {
 		this.pExDate = pExDate;
 	}
 	public String getpCapacity() {
