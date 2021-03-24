@@ -33,13 +33,14 @@
 	    <!-- ##### Hero Area Start ##### -->
 
     <!-- Breadcrumb Section Begin -->
+    <c:set var="vo" value="${vo }"></c:set>
     <div class="breacrumb-section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
-                        <a href="#"><i class="fa fa-home"></i> 게시판 적기</a>
-                        <span>카테고리 적기</span>
+                        <a href="product.do"><i class="fa fa-home"></i>상품 목록</a>
+                        <span>${vo.pCategory }</span>
                     </div>
                 </div>
             </div>
@@ -56,12 +57,14 @@
                 <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
                     
                     <div class="filter-widget">
-                        <h4 class="fw-title">게시판 적기 ex.고객 센터</h4>
-                        <ul class="filter-catagories" style="font-weight: bold;">
-                            <li><a href="#" >카테고리 적기 ex.공지사항</a></li>
-                            <li><a href="#" >자주 묻는 질문</a></li>
-                            <li><a href="#" >질문 게시판</a></li>
-                        </ul>
+                        <h4 class="fw-title">상품 목록</h4>
+						<ul class="filter-catagories" style="font-weight: bold;">
+							<li><a href="product.do">상품 전체</a></li>
+							<li><a href="#">비타민</a></li>
+							<li><a href="#">장 건강</a></li>
+							<li><a href="#">눈 건강</a></li>
+							<li><a href="#">기타</a></li>
+						</ul>
                     </div>
 
                 </div>

@@ -42,4 +42,14 @@ public class ReviewDAO {
 		}
 
 	}
+	
+	// 별점 평균
+	public int reviewAvg(int pNum) {
+		return sqlSession.selectOne("Review.reviewAvg",pNum);
+	}
+	// 리뷰 개수
+	public int reviewCount(int pNum) {
+		return sqlSession.selectOne("Review.reviewCount",pNum);
+	}
+	
 }

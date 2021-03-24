@@ -26,4 +26,14 @@ public class ReviewServiceImpl implements ReviewService {
 		return list;
 	}
 
+	@Override
+	public int reviewAvg(int pNum) throws Exception {
+		return dao.reviewAvg(pNum);
+	}
+
+	@Override
+	public int reviewCount(int pNum) throws Exception {
+		return dao.reviewCount(pNum);
+	}
+
 }

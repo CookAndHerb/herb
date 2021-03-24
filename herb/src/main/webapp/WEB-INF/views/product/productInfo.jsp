@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -64,6 +65,8 @@
 	}
 	#reWriteBtn{
 		margin-top: 20px;
+		background-color: #252525;
+		border-color: #252525;
 	}
 /* 	[type=radio] { 
 	  position: absolute;
@@ -91,13 +94,14 @@
 	<!-- ##### Hero Area Start ##### -	->
 
 	<!-- Breadcrumb Section Begin -->
+	
 	<div class="breacrumb-section">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="breadcrumb-text">
-						<a href="#"><i class="fa fa-home"></i> 게시판 적기</a> <span>카테고리
-							적기</span>
+						<a href="product.do"><i class="fa fa-home">
+						</i>상품 목록</a> <span>${vo.pCategory }</span>
 					</div>
 				</div>
 			</div>
@@ -109,49 +113,102 @@
 	<section class="product-shop spad">
 		<div class="container">
 			<div class="row">
-
 				<!-- 사이드바 -->
-				<div
-					class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
-
+				<div class="col-lg-3"	>
 					<div class="filter-widget">
-						<h4 class="fw-title">게시판 적기 ex.고객 센터</h4>
+						<h4 class="fw-title">상품 목록</h4>
 						<ul class="filter-catagories" style="font-weight: bold;">
-							<li><a href="#">카테고리 적기 ex.공지사항</a></li>
-							<li><a href="#">자주 묻는 질문</a></li>
-							<li><a href="#">질문 게시판</a></li>
+							<li><a href="product.do">상품 전체</a></li>
+							<li><a href="#">비타민</a></li>
+							<li><a href="#">장 건강</a></li>
+							<li><a href="#">눈 건강</a></li>
+							<li><a href="#">기타</a></li>
 						</ul>
 					</div>
+					
+				</div><!-- 사이드바 끝 -->
+			
+			<!-- 상품 영역 -->
+			<div class="col-lg-9">
+				<div class="row">
+				<!-- 상품 이미지 -->
+					<div class="col-lg-6">
+                            <div class="product-pic-zoom">
+                                <img class="product-big-img" src="img/product-single/product-1.jpg" alt="">
+                                <div class="zoom-icon">
+                                    <i class="fa fa-search-plus"></i>
+                                </div>
+                            </div>
+                            <div class="product-thumbs">
+                                <div class="product-thumbs-track ps-slider owl-carousel">
+                                    <div class="pt active" data-imgbigurl="img/product-single/product-1.jpg"><img
+                                            src="img/product-single/product-1.jpg" alt=""></div>
+                                    <div class="pt" data-imgbigurl="img/product-single/product-2.jpg"><img
+                                            src="img/product-single/product-2.jpg" alt=""></div>
+                                    <div class="pt" data-imgbigurl="img/product-single/product-3.jpg"><img
+                                            src="img/product-single/product-3.jpg" alt=""></div>
+                                    <div class="pt" data-imgbigurl="img/product-single/product-3.jpg"><img
+                                            src="img/product-single/product-3.jpg" alt=""></div>
+                                </div>
+                            </div>
+                    </div>
+                    <!-- 상품 이름, 가격, 장바구니 -->
+     
+                        <div class="col-lg-6">
+                            <div class="product-details">
+                                <div class="pd-title">
+                                    <span>${vo.pCategory}</span>
+                                    <h3>${vo.pName }</h3>
+                                </div>
+                                <!-- 별점 평균 -->
+ 								<div class="pd-rating">
+									<c:forEach var="rStar" begin="0" end="${reAvg - 1}">
+										<i class="fa fa-star"></i>
+									</c:forEach>
+									<c:if test="${reAbg != 5}">
+										<c:forEach var="rStar" begin="0" end="${5-(reAvg+1)}">
+											<i class="fa fa-star-o"></i>
+										</c:forEach>
+									</c:if>
+									<span>(${reAvg})</span>
+								</div> 
 
-
-				</div>
-
-				<!-- 내용 -->
-				<div class="col-lg-9 order-1 order-lg-2">
-					<h3>상품인포</h3>
-					<c:set var="vo" value="${vo }"></c:set>
-
-					<table border="1">
-						<tr>
-							<th>${vo.pName }</th>
-							<th>${vo.pCost }</th>
-							<th>별점 ${vo.pStar }</th>
-						</tr>
-						<tr>
-							<td Colspan="3">${vo.pContent}</td>
-						</tr>
-					</table>
-
-
+								<div class="pd-desc">
+		                           	<h4><fmt:formatNumber value="${vo.pCost }" pattern="#,###" />원</h4>
+                                </div>
+                                <div class="pd-size-choose">
+									배송비 <b>2,500원</b><br/>
+									<c:set var="delivery_date" value="<%=new Date(new Date().getTime() + 2000 * 60 * 60 * 24)%>"/>
+									<fmt:formatDate value="${delivery_date}" pattern="E요일  MM/dd" var="delivery_date"/>
+									<p>${delivery_date} 도착 예정</p>
+                                </div>
+                               
+                                <div class="quantity">
+                                	 <!-- 상품 수량 선택-->
+                                    <div class="pro-qty">
+                                        <input type="text" value="1">
+                                    </div>
+                                    <a href="#" class="primary-btn pd-cart">장바구니 담기</a>
+                                </div>
+                                
+                                <ul class="pd-tags">
+                                    <li><span>상품번호</span>: ${vo.pNum }</li>
+                                    <li><span>개당 용량/중량/정</span>: ${vo.pCapacity }</li>
+                                    <li><span>식품 유형</span>: ${vo.pType }</li>
+                                </ul>
+                                
+                            </div>
+                        </div>
+                    </div><!-- row 끝 -->
+                    
 					<div class="product-tab">
 						<div class="tab-item">
 							<ul class="nav" role="tablist">
 								<li><a class="active" data-toggle="tab" href="#tab-1"
-									role="tab">DESCRIPTION</a></li>
-								<li><a data-toggle="tab" href="#tab-2" role="tab">SPECIFICATIONS</a>
+									role="tab">&emsp;&emsp;&nbsp;상품 소개&nbsp;&emsp;&emsp;</a></li>
+								<li><a data-toggle="tab" href="#tab-2" role="tab">&emsp;&emsp;&nbsp;상품 상세&nbsp;&emsp;&emsp;</a>
 								</li>
-								<li><a data-toggle="tab" href="#tab-3" role="tab">Customer
-										Reviews (02)</a></li>
+								<li><a data-toggle="tab" href="#tab-3" role="tab">&ensp;&emsp;&emsp;상품 후기(${reCount})&ensp;&emsp;&emsp;</a></li>
 							</ul>
 						</div>
 						<div class="tab-item-content">
@@ -160,21 +217,7 @@
 									<div class="product-content">
 										<div class="row">
 											<div class="col-lg-7">
-												<h5>Introduction</h5>
-												<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-													elit, sed do eiusmod tempor incididunt ut labore et dolore
-													magna aliqua. Ut enim ad minim veniam, quis nostrud
-													exercitation ullamco laboris nisi ut aliquip ex ea commodo
-													consequat. Duis aute irure dolor in</p>
-												<h5>Features</h5>
-												<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-													elit, sed do eiusmod tempor incididunt ut labore et dolore
-													magna aliqua. Ut enim ad minim veniam, quis nostrud
-													exercitation ullamco laboris nisi ut aliquip ex ea commodo
-													consequat. Duis aute irure dolor in</p>
-											</div>
-											<div class="col-lg-5">
-												<img src="img/product-single/tab-desc.jpg" alt="">
+												<p>${vo.pContent }</p>
 											</div>
 										</div>
 									</div>
@@ -183,53 +226,33 @@
 									<div class="specification-table">
 										<table>
 											<tr>
-												<td class="p-catagory">Customer Rating</td>
+												<td class="p-catagory">상품명</td>
 												<td>
-													<div class="pd-rating">
-														<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-															class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-															class="fa fa-star-o"></i> <span>(5)</span>
-													</div>
+													<div class="p-code">${vo.pName}</div>
 												</td>
 											</tr>
 											<tr>
-												<td class="p-catagory">Price</td>
+												<td class="p-catagory">제조일자</td>
 												<td>
-													<div class="p-price">$495.00</div>
+													<div class="p-code">${vo.pMaDate }</div>
 												</td>
 											</tr>
 											<tr>
-												<td class="p-catagory">Add To Cart</td>
+												<td class="p-catagory">유통기한</td>
 												<td>
-													<div class="cart-add">+ add to cart</div>
+													<div class="p-code">${vo.pExDate}</div>
 												</td>
 											</tr>
 											<tr>
-												<td class="p-catagory">Availability</td>
+												<td class="p-catagory">포장단위별 용량</td>
 												<td>
-													<div class="p-stock">22 in stock</div>
+													<div class="p-code">${vo.pCapacity }</div>
 												</td>
 											</tr>
 											<tr>
-												<td class="p-catagory">Weight</td>
+												<td class="p-catagory">식품의 유형</td>
 												<td>
-													<div class="p-weight">1,3kg</div>
-												</td>
-											</tr>
-											<tr>
-												<td class="p-catagory">Size</td>
-												<td>
-													<div class="p-size">Xxl</div>
-												</td>
-											</tr>
-											<tr>
-												<td class="p-catagory">Color</td>
-												<td><span class="cs-color"></span></td>
-											</tr>
-											<tr>
-												<td class="p-catagory">Sku</td>
-												<td>
-													<div class="p-code">00012</div>
+													<div class="p-code">${vo.pType }</div>
 												</td>
 											</tr>
 										</table>
@@ -238,7 +261,9 @@
 								
 								
 								<div class="tab-pane fade" id="tab-3" role="tabpanel">
-								<div class="review_btn"><input type="button" id="reWriteBtn" class="site-btn" value="리뷰 등록하기" onclick="reWriteBtn();"></div>
+								<div class="review_btn">
+									<input type="button" id="reWriteBtn" class="site-btn" value="리뷰 등록하기" onclick="reWriteBtn();" style="display:none;">
+								</div>
 									<div class="customer-review-option">
 										
 										<!-- 리뷰 쓰기 -->
@@ -268,8 +293,7 @@
 														<div style="margin-bottom: 20px;">
 															<input type="file" id="userFile" value="사진 업로드">
 														</div>
-														<button class="site-btn" id="reSumitBtn" style="margin-bottom: 40px;">Send
-															message</button>
+														<button class="site-btn" id="reSumitBtn" style="margin-bottom: 40px;">리뷰 등록</button>
 													</div>
 												</div>
 										</div><!-- 리뷰 쓰기 끝 -->
@@ -297,7 +321,8 @@
 															<div class="at-reply">${review.rContent }</div>
 															<div class="img-reply">
 																<c:forEach var="fileName" items="${review.mFileList}">
-																	<img class="reImg" src="/Temp/${fileName.rFile}"/>
+																	<img class="reImg" src="${pageContext.request.contextPath}/resources/img/sujung/banner1.JPG"/>
+																	<img class="reImg" src="${pageContext.request.contextPath}/filepath/${fileName.rFile}"/>
 																</c:forEach>
 															</div>
 													</div>
@@ -312,6 +337,14 @@
 							</div>
 						</div>
 					</div> <!-- 리뷰 탭 끝 -->
+                  </div>
+				
+				<!-- 내용 -->
+				
+				
+				<!-- 탭 -->
+				<div class="col-lg-9 order-1 order-lg-2">
+
 
 				</div>
 
@@ -322,19 +355,20 @@
 	<!-- content 끝 -->
 	<script>
 		var fileList = []; // 리뷰 사진객체  list
-		
+		var id = $('input[name=rWriter]').val();
 		// 리뷰 추가
 		$('#reSumitBtn').on('click', reviewList);
 		
-		function reWriteBtn() {
-			// 리뷰쓰기 버튼 클릭 시, 로그인 체크
-			var id = $('input[name=rWriter]').val();
-			if (id != "") {
-				$('#reWrite').show();
-			} else {
-				alert("로그인 해야 작성할 수 있습니다.");
+		$(function(){
+			if(id != null){
+				$('#reWriteBtn').show();
 			}
-		}
+		});
+		
+		// 리뷰쓰기 버튼 클릭 시 배송상태 체크 예정
+		function reWriteBtn() {
+			$('#reWrite').show();
+		 }
 
 		var userfile = '';
 		$('#userFile').on('change', function() {

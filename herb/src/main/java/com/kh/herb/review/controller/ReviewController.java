@@ -53,7 +53,7 @@ public class ReviewController {
 				
 				// 중복 제거를 위해 난수 발생 후 파일명을 db테이블에 저장
 				UUID random = UUID.randomUUID();	
-				String saveDirectory = "C:/Temp/";
+				String saveDirectory = "C:\\Temp";
 				
 				// temp 폴더 없는 경우 만들기
 				File fe = new File(saveDirectory);

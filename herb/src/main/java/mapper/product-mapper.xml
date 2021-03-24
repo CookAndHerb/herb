@@ -29,4 +29,5 @@
 	<select id="proInfo" parameterType="int" resultMap="proResult">
 		select * from product where p_num = #{pNum}
 	</select>
+
 </mapper>

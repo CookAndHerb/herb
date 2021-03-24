@@ -171,7 +171,7 @@
                 <nav class="nav-menu mobile-menu">
                     <ul>
                         <li class="active"><a href="index.do">Home</a></li>
-                        <li><a href="./shop.html">Shop</a></li>
+                        <li><a href="product.do">Shop</a></li>
                         <li><a href="./blog.html">Cart</a></li>
                         <li><a href="#">Service Center</a>
                             <ul class="dropdown">

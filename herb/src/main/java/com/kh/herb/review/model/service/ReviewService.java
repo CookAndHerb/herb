@@ -9,4 +9,8 @@ public interface ReviewService {
 	public List<Review> reviewAllList(int pNum) throws Exception;
 	
 	public void reviewInsert(Review review) throws Exception;
+	
+	public int reviewAvg(int pNum) throws Exception;
+	
+	public int reviewCount(int pNum) throws Exception;
 }

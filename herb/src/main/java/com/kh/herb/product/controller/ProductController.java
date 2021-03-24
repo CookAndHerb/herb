@@ -39,10 +39,14 @@ public class ProductController {
 	
 		Product product = proSe.productInfo(num);	// 상품 정보
 		List<Review> review = reSe.reviewAllList(num);	// 리뷰 리스트
+		int reAvg = reSe.reviewAvg(num);	// 리뷰 평균값
+		int reCount = reSe.reviewCount(num);	// 리뷰 총 개수
 
 		modelAndView.addObject("num",num);
 		modelAndView.addObject("vo",product);
 		modelAndView.addObject("review",review);
+		modelAndView.addObject("reAvg", reAvg);
+		modelAndView.addObject("reCount", reCount);
 		modelAndView.setViewName("product/productInfo");
 
 		return modelAndView;

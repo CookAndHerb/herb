@@ -35,4 +35,12 @@
 		<select id="reviewNum" resultType="int">
 			SELECT MAX(R_NUM) FROM REVIEW
 		</select>
+		<!-- 리뷰 평균-->
+		<select id="reviewAvg" parameterType="review" resultType="int">
+			select round(avg(r_star)) from review where p_num = #{pNum}
+		</select>
+		<!-- 리뷰 총 개수 -->
+		<select id="reviewCount" parameterType="review" resultType="int">
+			select count(r_num) from review where p_num = #{pNum}
+		</select>
 </mapper>
