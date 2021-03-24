@@ -45,6 +45,13 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/style.css"
 	type="text/css">
+<!-- 별점용 -->
+<!-- bar-rating -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/fontawesome-stars.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
+
+
 <style>
 	#rContent {
 	width: 100%;
@@ -274,20 +281,15 @@
 														<c:set var="pNum" value="${num }"></c:set>
 														<input type="hidden" name="pNum"  id="pNum" value="${pNum }">
 														<input type="hidden" id="rWriter" name="rWriter" value="${sessionScope.member.getUserId()}">
-												<!-- 		별점: <div if="star" >
-																<a href="#" value="1"><i class="fa fa-star"></i></a>
-																<a href="#" value="2"><i class="fa fa-star"></i></a>
-																<a href="#" value="3"><i class="fa fa-star"></i></a>
-																<a href="#" value="4"><i class="fa fa-star"></i></a>
-																<a href="#" value="5"><i class="fa fa-star"></i></a>
-															</div> -->
-														별점: <select id="rStar" name="rStar">
-																<option value="1">1점</option>
-																<option value="2">2점</option>
-																<option value="3">3점</option>
-																<option value="4">4점</option>
-																<option value="5">5점</option>
-															</select>
+			
+														<select id="rStar" name="rStar">
+															<option value="1">1</option>
+															<option value="2">2</option>
+															<option value="3">3</option>
+															<option value="4">4</option>
+															<option value="5">5</option>
+														</select>
+														
   														
 														<textarea name="rContent" id="rContent"></textarea>
 														<div style="margin-bottom: 20px;">
@@ -356,6 +358,8 @@
 	<script>
 		var fileList = []; // 리뷰 사진객체  list
 		var id = $('input[name=rWriter]').val();
+		var userfile = '';
+		
 		// 리뷰 추가
 		$('#reSumitBtn').on('click', reviewList);
 		
@@ -363,20 +367,24 @@
 			if(id != null){
 				$('#reWriteBtn').show();
 			}
+
+		});
+		$('#rStar').barrating({
+			theme: 'fontawesome-stars'
+			, onSelect: function(value, text, event){
+				// 별점 클릭 후 처리는 여기서 코드
+				// 선택한 별점 값을 value로 받음
+			}
 		});
 		
 		// 리뷰쓰기 버튼 클릭 시 배송상태 체크 예정
 		function reWriteBtn() {
 			$('#reWrite').show();
-		 }
-
-		var userfile = '';
+		}
+		
 		$('#userFile').on('change', function() {
 			userfile = $('#userFile');
 			console.log($(userfile[0]).val());
-
-			/* 		var partname = $(userfile[0]).val().substring($(userfile[0]).val().lastIndexOf("\\") + 1);
-					console.log(partname); */
 			fileList.push(userfile[0].files[0]);
 		});
 		
@@ -398,7 +406,8 @@
 			formData.append('rWriter', $("#rWriter").val());
 			formData.append('rStar', $("#rStar").val());
 			formData.append('rContent', $("#rContent").val());
-
+			
+			console.log($("#rStar").val());
 			// 다중첨부파일
 			if (fileList) {
 				for ( var index in fileList) {
