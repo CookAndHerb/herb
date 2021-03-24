@@ -252,7 +252,7 @@
 																<a href="#" value="4"><i class="fa fa-star"></i></a>
 																<a href="#" value="5"><i class="fa fa-star"></i></a>
 															</div> -->
-														별점: <select name="rStar">
+														별점: <select id="rStar" name="rStar">
 																<option value="1">1점</option>
 																<option value="2">2점</option>
 																<option value="3">3점</option>
@@ -262,7 +262,7 @@
   														
 														<textarea name="rContent" id="rContent"></textarea>
 														<div style="margin-bottom: 20px;">
-															<input type="file" id="userFile" value="사진 업로드">
+															<input type="file" id="userFile" value="사진 업로드" multiple />
 														</div>
 														<button class="site-btn" id="reSumitBtn" style="margin-bottom: 40px;">Send
 															message</button>
@@ -314,7 +314,10 @@
 	<!-- content 끝 -->
 	<script>
 		var fileList = []; // 리뷰 사진객체  list
-
+		
+		// 리뷰 추가
+		$('#reSumitBtn').on('click', reviewList);
+		
 		function reWriteBtn() {
 			// 리뷰쓰기 버튼 클릭 시, 로그인 체크
 			var id = $('input[name=rWriter]').val();
@@ -342,8 +345,8 @@
 				return false;
 			}
 
-			if (fileList.length > 3) {
-				alert("사진은 최대 3개까지 첨부할 수 있습니다.");
+			if (fileList.length <= 5) {
+				alert("사진은 최대 5개까지 첨부할 수 있습니다.");
 				return false;
 			}
 
@@ -375,15 +378,12 @@
 				},
 				error : function(request, status, error) {
 					alert('리뷰 등록을 실패하였습니다.');
-					location.href= data.moveUrl + "?num=" + data.num ;
+					//location.href= data.moveUrl + "?num=" + data.num ;
 					console.log("code = " + request.status + " message = "
 							+ request.responseText + " error = " + error);
 				}
 			});
-			
-			
-			// 리뷰 추가
-			$('#reSumitBtn').on('click', reviewList);
+
 		}
 	</script>
 
