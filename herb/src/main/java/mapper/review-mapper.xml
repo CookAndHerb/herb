@@ -13,13 +13,15 @@
 			<!-- 리뷰 파일 -->
 			<collection property="mFileList" javaType="java.util.List"
 			ofType="ReviewFile" autoMapping="true">
+			<result column="R_FILE_PATH" property="rFile" />
 			</collection>
 		</resultMap>
 
 	
 		<!-- 리뷰 리스트 -->
 		<select id="reviewAllList" parameterType="int" resultMap="reResult">
-			select * from review where p_num = #{pNum}
+			select r.*, f.r_file_path from review r, review_file f
+			where r.r_num = f.r_num and r.p_num = #{pNum} order by r.r_num desc
 		</select>
 		<!-- 리뷰 쓰기 -->
 		<insert id="reviewInsert" parameterType="review">

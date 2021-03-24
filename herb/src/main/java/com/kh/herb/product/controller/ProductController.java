@@ -39,7 +39,7 @@ public class ProductController {
 	
 		Product product = proSe.productInfo(num);	// 상품 정보
 		List<Review> review = reSe.reviewAllList(num);	// 리뷰 리스트
-		
+
 		modelAndView.addObject("num",num);
 		modelAndView.addObject("vo",product);
 		modelAndView.addObject("review",review);

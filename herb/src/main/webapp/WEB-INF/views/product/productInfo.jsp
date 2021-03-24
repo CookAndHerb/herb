@@ -75,6 +75,10 @@
 		color: #e7ab3c;
 		font-size: 40px;
 	}
+	.reImg{
+		width: 100px;
+		height: 100px;
+	}
 	
 </style>
 
@@ -262,7 +266,7 @@
   														
 														<textarea name="rContent" id="rContent"></textarea>
 														<div style="margin-bottom: 20px;">
-															<input type="file" id="userFile" value="사진 업로드" multiple />
+															<input type="file" id="userFile" value="사진 업로드">
 														</div>
 														<button class="site-btn" id="reSumitBtn" style="margin-bottom: 40px;">Send
 															message</button>
@@ -274,7 +278,6 @@
 										<div class="comment-option">
 											<c:forEach var="review" items="${review }">
 												<div class="co-item">
-													<!-- 별점 출력 -->
 													<div class="avatar-text">
 	                                                	<div class="at-rating">
 				      											<c:forEach var="rStar" begin="0" end="${review.rStar - 1}">
@@ -292,6 +295,11 @@
 																		pattern="yyyy/MM/dd" /></span>
 															</h5>
 															<div class="at-reply">${review.rContent }</div>
+															<div class="img-reply">
+																<c:forEach var="fileName" items="${review.mFileList}">
+																	<img class="reImg" src="/Temp/${fileName.rFile}"/>
+																</c:forEach>
+															</div>
 													</div>
 												</div>
 											</c:forEach>
@@ -345,7 +353,7 @@
 				return false;
 			}
 
-			if (fileList.length <= 5) {
+			if (fileList.length > 5) {
 				alert("사진은 최대 5개까지 첨부할 수 있습니다.");
 				return false;
 			}
