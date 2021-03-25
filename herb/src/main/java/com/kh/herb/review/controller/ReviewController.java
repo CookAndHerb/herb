@@ -81,7 +81,7 @@ public class ReviewController {
 				// 파일 경로, 상품번호, 댓글번호 저장 후 mFilelist로 넘김
 				ReviewFile reFile = new ReviewFile();
 				reFile.setpNum(review.getpNum());
-				reFile.setrFile(saveDirectory+random +"_"+fileName);
+				reFile.setrFile(random +"_"+fileName);
 				reFile.setrNum(review.getrNum());
 				
 				fList.add(reFile);
