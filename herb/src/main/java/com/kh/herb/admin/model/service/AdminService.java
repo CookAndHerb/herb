@@ -9,10 +9,12 @@ import com.kh.herb.product.model.vo.ProductFile;
 
 public interface AdminService {
 	public int insertProduct(Product product) throws Exception;
-	public List<Member> memberList() throws Exception;
-	public List<Member> searchMember(Search search) throws Exception;
+	public int memberCount() throws Exception;
+	public List<Member> memberList(int startPage, int limit) throws Exception;
+	public List<Member> searchMember(int startPage, int limit, String selectType, String keyword) throws Exception;
 	public int insertFile(ProductFile pf) throws Exception;
-	public List<Product> productList() throws Exception;
+	public int productCount() throws Exception;
+	public List<Product> productList(int startPage, int limit) throws Exception;
 	public Product selectProduct(int pNum) throws Exception;
 	public List<ProductFile> selectFile(int pNum) throws Exception;
 	public int updateProduct(Product product) throws Exception;

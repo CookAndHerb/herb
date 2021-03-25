@@ -20,15 +20,20 @@ public class AdminServiceImpl implements AdminService {
 	public int insertProduct(Product product) throws Exception {
 		return ad.insertProduct(product);
 	}
-
+	
 	@Override
-	public List<Member> memberList() throws Exception {
-		return ad.memberList();
+	public int memberCount() throws Exception {
+		return ad.memberCount();
+	}
+	
+	@Override
+	public List<Member> memberList(int startPage, int limit) throws Exception {
+		return ad.memberList(startPage, limit);
 	}
 
 	@Override
-	public List<Member> searchMember(Search search) throws Exception {
-		return ad.searchMember(search);
+	public List<Member> searchMember(int startPage, int limit, String selectType, String keyword) throws Exception {
+		return ad.searchMember(startPage, limit, selectType, keyword);
 	}
 
 	@Override
@@ -37,8 +42,8 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<Product> productList() throws Exception {
-		return ad.productList();
+	public List<Product> productList(int startPage, int limit) throws Exception {
+		return ad.productList(startPage, limit);
 	}
 
 	@Override
@@ -70,5 +75,12 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteFile(int pNum) throws Exception {
 		return ad.deleteFile(pNum);
 	}
+
+	@Override
+	public int productCount() throws Exception {
+		return ad.productCount();
+	}
+
+
 
 }

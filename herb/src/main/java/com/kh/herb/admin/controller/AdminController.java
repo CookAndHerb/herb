@@ -25,6 +25,8 @@ import com.kh.herb.product.model.vo.ProductFile;
 
 @Controller
 public class AdminController {
+	public static final int LIMIT = 10; //한 페이지에 보여질 정보의 수
+	
 	@Autowired
 	private AdminService as;
 	
@@ -116,12 +118,13 @@ public class AdminController {
 		ProductFile infoFile = new ProductFile();
 		pf.setpNum(pNum);
 		
-		if(pInfoFiles.length > 0) {
+		if(pInfoFiles.length > 1) {
 			for(MultipartFile productInfo : pInfoFiles) {
-				System.out.println("확장 for문");
 				infoFile = infoImage(productInfo, request);
-				pf.setpInfoFile(infoFile.getpInfoFile());
-				pf.setpInfoPath(infoFile.getpInfoPath());
+				pf.setpInfoFile(infoFile.getpInfoFile());				
+				System.out.println("파일업데이트 : "+infoFile.getpInfoFile());				
+				pf.setpInfoPath(infoFile.getpInfoPath());				
+				System.out.println("경로업데이트 : "+infoFile.getpInfoPath());				
 				int cnt = as.updateFile(pf);
 			}
 		}else {
@@ -197,32 +200,64 @@ public class AdminController {
 	
 	//회원관리
 	@RequestMapping("adminMember.do")
-	public ModelAndView memberList(ModelAndView mav) throws Exception{
-		List<Member> memberList = as.memberList();
-		mav.addObject("memberList", memberList);
+	public ModelAndView memberList(@RequestParam(name = "page", defaultValue = "1") int page, ModelAndView mav) throws Exception{
+//		List<Member> memberList = as.memberList();
+//		mav.addObject("memberList", memberList);
+//		mav.setViewName("admin/adminMember");
+//		return mav;
+		
+		int currentPage = page;
+		//한 페이지당 출력할 목록 갯수
+		int listCount = as.memberCount();
+		int maxPage = (int) ((double)listCount/LIMIT + 0.9);
+		mav.addObject("memberList", as.memberList(currentPage, LIMIT));
+		mav.addObject("currentPage", currentPage);
+		mav.addObject("maxPage", maxPage);
+		mav.addObject("listCount", listCount);
 		mav.setViewName("admin/adminMember");
 		return mav;
 	}
 	
 	//회원 검색
 	@RequestMapping("searchMember.do")
-	public ModelAndView searchMember(ModelAndView mav, @RequestParam(value="select") String select, 
-			@RequestParam(value="keyword") String keyword, Search search) throws Exception{
-		System.out.println("select : "+select);
-		System.out.println("keyword : "+keyword);
-		search.setSelect(select);
-		search.setKeyword(keyword);
-		List<Member> searchMember = as.searchMember(search);
-		mav.addObject("searchMember", searchMember);
+	public ModelAndView searchMember(ModelAndView mav, @RequestParam(value="selectType") String selectType, 
+			@RequestParam(value="keyword") String keyword, @RequestParam(name = "page", defaultValue = "1") int page) throws Exception{
+//		System.out.println("select : "+select);
+//		System.out.println("keyword : "+keyword);
+//		search.setSelect(select);
+//		search.setKeyword(keyword);
+//		List<Member> searchMember = as.searchMember(search);
+//		mav.addObject("searchMember", searchMember);
+//		mav.setViewName("admin/searchMember");
+		
+		int currentPage = page;
+		//한 페이지당 출력할 목록 갯수
+		int listCount = as.memberCount();
+		int maxPage = (int) ((double)listCount/LIMIT + 0.9);
+		mav.addObject("memberList", as.searchMember(currentPage, LIMIT, selectType, keyword));
+		mav.addObject("currentPage", currentPage);
+		mav.addObject("maxPage", maxPage);
+		mav.addObject("listCount", listCount);
 		mav.setViewName("admin/searchMember");
 		return mav;
 	}
 	
 	//상품 조회
 	@RequestMapping("adminProduct.do")
-	public ModelAndView productList(ModelAndView mav) throws Exception{
-		List<Product> productList = as.productList();
-		mav.addObject("productList", productList);
+	public ModelAndView productList(@RequestParam(name = "page", defaultValue = "1") int page, ModelAndView mav) throws Exception{
+//		List<Product> productList = as.productList();
+//		mav.addObject("productList", productList);
+//		mav.setViewName("admin/adminProduct");
+//		return mav;
+		
+		int currentPage = page;
+		//한 페이지당 출력할 목록 갯수
+		int listCount = as.productCount();
+		int maxPage = (int) ((double)listCount/LIMIT + 0.9);
+		mav.addObject("productList", as.productList(currentPage, LIMIT));
+		mav.addObject("currentPage", currentPage);
+		mav.addObject("maxPage", maxPage);
+		mav.addObject("listCount", listCount);
 		mav.setViewName("admin/adminProduct");
 		return mav;
 	}

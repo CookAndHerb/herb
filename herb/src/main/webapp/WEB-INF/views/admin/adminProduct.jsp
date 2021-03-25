@@ -113,22 +113,54 @@
 								</tr>
 							</thead>
 							<tbody>
-							<c:forEach var="product" items="${productList }">
-								<tr>
-									<td>${product.pNum}</td>
-									<td style="width: 180px;">${product.pName}</td>
-									<td>${product.pCategory}</td>
-									<td>${product.pType}</td>
-									<td>${product.pCost}</td>
-									<td>${product.pMaDate} </td>
-									<td>${product.pExDate}</td>
-									<td><a href="productUpt.do?pNum=${product.pNum }">수정</a></td>
-									<td><a href="productDel.do?pNum=${product.pNum }" onclick="return delchk();">삭제</a></td>
-								</tr>
-							</c:forEach>
+								<c:forEach var="product" items="${productList }">
+									<tr>
+										<td>${product.pNum}</td>
+										<td style="width: 180px;">${product.pName}</td>
+										<td>${product.pCategory}</td>
+										<td>${product.pType}</td>
+										<td>${product.pCost}</td>
+										<td>${product.pMaDate}</td>
+										<td>${product.pExDate}</td>
+										<td><a href="productUpt.do?pNum=${product.pNum }&page=${currentPage}">수정</a></td>
+										<td><a href="productDel.do?pNum=${product.pNum }&page=${currentPage}" onclick="return delchk();">삭제</a></td>
+									</tr>
+								</c:forEach>
 						</table>
 					</div>
-
+					
+					<!-- 앞 페이지 번호 처리 -->
+						<c:if test="${currentPage <= 1}"> 
+  								[이전]&nbsp;
+ 						</c:if> 
+ 						<c:if test="${currentPage > 1}">
+						<!-- 페이지 많아지면 5로 처리하는게 맞음 ( ex)6페이지에서 [이전] 버튼 클릭 ) -->
+							<c:url var="proST" value="adminProduct.do">
+								<!-- blist.do?page=?  파라미터 자동으로 전달 -->
+								<c:param name="page" value="${currentPage-1}" />
+							</c:url>
+							<a href="${proST}">[이전]</a>
+						</c:if> <!-- 끝 페이지 번호 처리 --> <c:set var="endPage" value="${maxPage}" />
+						<c:forEach var="p" begin="${startPage+1}" end="${endPage}">
+							<c:if test="${p eq currentPage}">
+								<font color="red" size="4"><b>[${p}]</b></font>
+							</c:if>
+							<c:if test="${p ne currentPage}">
+								<c:url var="prostchk" value="adminProduct.do">
+									<c:param name="page" value="${p}" />
+								</c:url>
+								<a href="${prostchk}">${p}</a>
+							</c:if>
+						</c:forEach> 
+						<c:if test="${currentPage >= maxPage}">
+ 							[다음]
+ 						</c:if> 
+ 						<c:if test="${currentPage < maxPage}">
+							<c:url var="proEND" value="adminProduct.do">
+								<c:param name="page" value="${currentPage+1}" />
+							</c:url>
+							<a href="${proEND}">[다음]</a>
+						</c:if>
 				</div>
             </div>
         </div>

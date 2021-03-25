@@ -26,6 +26,20 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
     <!-- sujung css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sujung.css" type="text/css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<c:url var="searchMemberURL" value="searchMember.do"></c:url>
+<script>
+	$(document).on('click', '#searchButton', function(e){
+		e.preventDefault();
+		var url = "${searchMemberURL}";
+		url = url + "?searchType=" + $('#searchType').val();
+		url = url + "&keyword=" + $('#keyword').val();
+		location.href = url;
+		console.log(url);
+	});
+</script>
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -72,24 +86,20 @@
 
                	<h3><i class='fas fa-house-user' style='font-size:32px; color:#e7ab3c'></i> 회원관리</h3>
                 <br>
-                <form action="searchMember.do">
 				<div id="searchDiv">
                         <div class="form-inline serch">
-                            <select name="select" class="custom-select-sm">
+                            <select name="selectType" class="custom-select-sm">
                             <option value="userId">아이디</option>
                             <option value="userName">이름</option>
                             </select>
                             <div class="input-group">
                                 <input type="text" class="control-sm" name="keyword">
-                                <%-- <button type="button" id="searchButton" class="btn-warning" 
-                                	onclick="location.href = 'searchMember.do?select=${select}&keyword=${keyword }';">
-                                	<i class="ti-search"></i></button> --%>
-                                <input type="submit" id="searchButton" class="btn-warning" value="&#xf002;">
+                                <button type="button" id="searchButton" name="searchButton" class="btn-warning">
+                                	<i class="ti-search"></i></button>
                             &nbsp;&nbsp;
                             </div>
                         </div>
                     </div>
-                   </form>
 				
 				<br><br>
 					<div class="container ">
@@ -119,6 +129,39 @@
 							</c:forEach>
 						</table>
 					</div>
+					
+						<!-- 앞 페이지 번호 처리 -->
+						<c:if test="${currentPage <= 1}"> 
+  								[이전]&nbsp;
+ 						</c:if> 
+ 						<c:if test="${currentPage > 1}">
+						<!-- 페이지 많아지면 5로 처리하는게 맞음 ( ex)6페이지에서 [이전] 버튼 클릭 ) -->
+							<c:url var="proST" value="adminMember.do">
+								<!-- blist.do?page=?  파라미터 자동으로 전달 -->
+								<c:param name="page" value="${currentPage-1}" />
+							</c:url>
+							<a href="${proST}">[이전]</a>
+						</c:if> <!-- 끝 페이지 번호 처리 --> <c:set var="endPage" value="${maxPage}" />
+						<c:forEach var="p" begin="${startPage+1}" end="${endPage}">
+							<c:if test="${p eq currentPage}">
+								<font color="red" size="4"><b>[${p}]</b></font>
+							</c:if>
+							<c:if test="${p ne currentPage}">
+								<c:url var="prostchk" value="adminMember.do">
+									<c:param name="page" value="${p}" />
+								</c:url>
+								<a href="${prostchk}">${p}</a>
+							</c:if>
+						</c:forEach> 
+						<c:if test="${currentPage >= maxPage}">
+ 							[다음]
+ 						</c:if> 
+ 						<c:if test="${currentPage < maxPage}">
+							<c:url var="proEND" value="adminMember.do">
+								<c:param name="page" value="${currentPage+1}" />
+							</c:url>
+							<a href="${proEND}">[다음]</a>
+						</c:if>
 
 				</div>
             </div>
