@@ -1,5 +1,21 @@
 package com.kh.herb.cart.model.service;
 
-public interface CartService {
+import java.util.List;
 
+import com.kh.herb.cart.model.vo.Cart;
+import com.kh.herb.cart.model.vo.CartList;
+
+public interface CartService {
+	
+	// 카트 담기
+	public int addCart(Cart cart) throws Exception;
+	
+	// 카트 리스트
+	public List<CartList> cartList(String userId) throws Exception;
+
+	// 카드 옵션 수정
+	public int updateCart(Cart cart) throws Exception;
+	
+	// 카트 삭제
+	public int deleteCart(Cart cart) throws Exception;
 }
