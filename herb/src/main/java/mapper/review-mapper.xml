@@ -43,4 +43,5 @@
 		<select id="reviewCount" parameterType="review" resultType="int">
 			select count(r_num) from review where p_num = #{pNum}
 		</select>
+		
 </mapper>

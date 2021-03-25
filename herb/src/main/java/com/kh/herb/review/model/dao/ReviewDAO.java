@@ -14,7 +14,7 @@ public class ReviewDAO {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	// 리뷰 리스트 보기
+	// 리뷰 리스트
 	public List<Review> reviewAllList(int pNum) {
 		List<Review> list = sqlSession.selectList("Review.reviewAllList", pNum);
 		return list;
@@ -26,21 +26,23 @@ public class ReviewDAO {
 		System.out.println("===reNum 넣기 전===");
 		// 리뷰 추가
 		sqlSession.insert("Review.reviewInsert", review);
-		// 방금 추가한 리뷰 번호
-		int reNum = sqlSession.selectOne("Review.reviewNum");
 		
-		System.out.println("reNum: "+reNum);
-		System.out.println("===rNum 넣기===");
-
-		for (ReviewFile reFile : review.getmFileList()) {
-			reFile.setrNum(reNum);
-			System.out.println("rFile" + reFile.getrFile());
-			System.out.println("rNum : " + reFile.getrNum());
-			System.out.println("pNum : " + reFile.getpNum());
+		if(review.getmFileList() != null) {
+			// 방금 추가한 리뷰 번호
+			int reNum = sqlSession.selectOne("Review.reviewNum");
 			
-			sqlSession.insert("Review.reviewFileInsert", reFile);
+			System.out.println("reNum: "+reNum);
+			System.out.println("===rNum 넣기===");
+	
+			for (ReviewFile reFile : review.getmFileList()) {
+				reFile.setrNum(reNum);
+				System.out.println("rFile" + reFile.getrFile());
+				System.out.println("rNum : " + reFile.getrNum());
+				System.out.println("pNum : " + reFile.getpNum());
+				
+				sqlSession.insert("Review.reviewFileInsert", reFile);
+			}
 		}
-
 	}
 	
 	// 별점 평균

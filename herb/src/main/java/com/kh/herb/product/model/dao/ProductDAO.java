@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.herb.product.model.vo.Product;
+import com.kh.herb.product.model.vo.ProductFile;
 
 @Repository
 public class ProductDAO {
@@ -25,4 +26,8 @@ public class ProductDAO {
 		return vo;
 	}
 	
+	public List<ProductFile> productInfoFile(int pNum) {
+		List<ProductFile> file = sqlSession.selectList("ProductFile.selectFile", pNum);
+		return file;
+	}
 }

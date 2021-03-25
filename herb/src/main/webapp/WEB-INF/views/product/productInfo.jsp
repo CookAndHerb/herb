@@ -204,22 +204,24 @@
 				<div class="row">
 				<!-- 상품 이미지 -->
 					<div class="col-lg-6">
+							<!-- 상품 대표 이미지 -->
                             <div class="product-pic-zoom">
                                 <img class="product-big-img" src="${pageContext.request.contextPath}/resources/productImg/${vo.imageName}" alt="">
                                 <div class="zoom-icon">
                                     <i class="fa fa-search-plus"></i>
                                 </div>
                             </div>
+                            <!-- 상품 인포 이미지 -->
                             <div class="product-thumbs">
                                 <div class="product-thumbs-track ps-slider owl-carousel">
-                                    <div class="pt active" data-imgbigurl="img/product-single/product-1.jpg"><img
-                                            src="img/product-single/product-1.jpg" alt=""></div>
-                                    <div class="pt" data-imgbigurl="img/product-single/product-2.jpg"><img
-                                            src="img/product-single/product-2.jpg" alt=""></div>
-                                    <div class="pt" data-imgbigurl="img/product-single/product-3.jpg"><img
-                                            src="img/product-single/product-3.jpg" alt=""></div>
-                                    <div class="pt" data-imgbigurl="img/product-single/product-3.jpg"><img
-                                            src="img/product-single/product-3.jpg" alt=""></div>
+                                 <div class="pt active" data-imgbigurl="${pageContext.request.contextPath}/resources/productImg/${vo.imageName}">
+                                    	<img src="${pageContext.request.contextPath}/resources/productImg/${vo.imageName}" alt="">
+                                </div>
+                                <c:forEach var="file" items="${file}">
+                                    <div class="pt active" data-imgbigurl="${pageContext.request.contextPath}/resources/productImg/${file.pInfoFile}">
+                                    	<img src="${pageContext.request.contextPath}/resources/productImg/${file.pInfoFile}" alt="">
+                                	</div>
+								</c:forEach>
                                 </div>
                             </div>
                     </div>
@@ -377,7 +379,8 @@
 										
 										<!-- 리뷰 리스트 출력 -->
 										<div class="comment-option">
-											<c:if test="${!empty review}">
+										<!-- 사진 리뷰 리스트 -->
+										<c:if test="${!empty review}">
 											<c:forEach var="review" items="${review }">
 												<div class="co-item">
 													<div class="avatar-text">
@@ -389,7 +392,7 @@
 				      											<c:forEach var="rStar" begin="0" end="${5 - (review.rStar+1)}">
 				      												<i class="fa fa-star-o"></i>
 				      											</c:forEach>
-			      										</c:if>
+			      											</c:if>
 	                                                    </div>
 	          
 															<h5>${review.rWriter }
@@ -397,9 +400,9 @@
 																		pattern="yyyy/MM/dd" /></span>
 															</h5>
 															<div class="at-reply">${review.rContent }</div>
+															<!-- 리뷰 파일 출력-->
 															<div class="img-reply">
 																<c:forEach var="fileName" items="${review.mFileList}">
-																	<!-- 리뷰 파일 출력-->
 																	<img class="reImg" src="${pageContext.request.contextPath}/resources/reviewImg/${fileName.rFile}"/>
 																</c:forEach>
 															</div>
@@ -407,7 +410,7 @@
 												</div>
 											</c:forEach>
 										</c:if>
-										
+							
 										<c:if test="${empty review}">
 			      							<div id="review_none" class="co-item">
 			      								<h3 id="reTest_none"><b>등록된 리뷰가 없습니다.</b></h3>
@@ -473,10 +476,10 @@
 		});
 		// 리뷰 제출 전 예외처리
 		function reviewList() {
-			if (fileList.length == 0) {
+ 			if (fileList.length == 0) {
 				alert("후기 사진을 첨부해주세요.");
 				return false;
-			}
+			} 
 
 			if (fileList.length > 5) {
 				alert("사진은 최대 5개까지 첨부할 수 있습니다.");
