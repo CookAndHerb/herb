@@ -173,6 +173,8 @@
                         <li class="active"><a href="index.do">Home</a></li>
                         <li><a href="product.do">Shop</a></li>
                         <li><a href="./blog.html">Cart</a></li>
+                        <li><a href="./shop.html">Shop</a></li>
+                        <li><a href="cartList.do">Cart</a></li>
                         <li><a href="#">Service Center</a>
                             <ul class="dropdown">
                                 <li><a href="#">공지사항</a></li>
