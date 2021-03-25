@@ -74,6 +74,7 @@
 		margin-top: 20px;
 		background-color: #252525;
 		border-color: #252525;
+		
 	}
 /* 	[type=radio] { 
 	  position: absolute;
@@ -88,6 +89,16 @@
 	.reImg{
 		width: 100px;
 		height: 100px;
+	}
+	#review_none{
+		padding: 80px;
+		width: 100%;
+		border: 1px solid #ebebeb;
+	}
+	#reTest_none{
+		display: flex;
+  		justify-content: center;
+		color: #e7ab3c; 
 	}
 	
 </style>
@@ -311,19 +322,18 @@
 										
 										<!-- 리뷰 리스트 출력 -->
 										<div class="comment-option">
+											<c:if test="${!empty review}">
 											<c:forEach var="review" items="${review }">
 												<div class="co-item">
 													<div class="avatar-text">
 	                                                	<div class="at-rating">
-	                                                	<c:if test="${not empty review.rStar}">
-				      											<c:forEach var="rStar" begin="0" end="${review.rStar - 1}">
-			      													<i class="fa fa-star"></i>
-			      												</c:forEach>
-			      												<c:if test="${review.rStar != 5}">
-				      												<c:forEach var="rStar" begin="0" end="${5 - (review.rStar+1)}">
-				      													 <i class="fa fa-star-o"></i>
-				      												</c:forEach>
-			      												</c:if>
+				      										<c:forEach var="rStar" begin="0" end="${review.rStar - 1}">
+			      												<i class="fa fa-star"></i>
+			      											</c:forEach>
+			      											<c:if test="${review.rStar != 5}">
+				      											<c:forEach var="rStar" begin="0" end="${5 - (review.rStar+1)}">
+				      												<i class="fa fa-star-o"></i>
+				      											</c:forEach>
 			      										</c:if>
 	                                                    </div>
 	          
@@ -343,7 +353,14 @@
 													</div>
 												</div>
 											</c:forEach>
-										</div>
+										</c:if>
+										
+										<c:if test="${empty review}">
+			      							<div id="review_none" class="co-item">
+			      								<h3 id="reTest_none"><b>등록된 리뷰가 없습니다.</b></h3>
+			      							</div>			
+			      						</c:if>
+									</div>
 										<!-- 리뷰 리스트 끝 -->
 									
 									</div>
