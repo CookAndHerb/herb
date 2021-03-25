@@ -168,19 +168,28 @@
                                     <h3>${vo.pName }</h3>
                                 </div>
                                 <!-- 별점 평균 -->
- 								<div class="pd-rating">
-									<c:forEach var="rStar" begin="0" end="${reAvg - 1}">
-										<i class="fa fa-star"></i>
-									</c:forEach>
-									<c:if test="${reAbg != 5}">
-										<c:forEach var="rStar" begin="0" end="${5-(reAvg+1)}">
+ 								<%-- <div class="pd-rating">
+ 								<c:choose>
+ 									<c:when test="${review.rStar != '' || review.rStar.rStar ne null}">
+										<c:forEach var="rSta" begin="0" end="${reAvg - 1}">
+											<i class="fa fa-star"></i>
+										</c:forEach>
+										<c:if test="${reAbg != 5}">
+											<c:forEach var="rSta" begin="0" end="${5-(reAvg+1)}">
+												<i class="fa fa-star-o"></i>
+											</c:forEach>
+										</c:if>
+										<span>(${reAvg})</span>
+									</c:when>
+									
+									<c:otherwise>
+										<c:forEach var="rStar" begin="0" end="5">
 											<i class="fa fa-star-o"></i>
 										</c:forEach>
-									</c:if>
-									<span>(${reAvg})</span>
+									</c:otherwise>
+								</c:choose>
 								</div> 
-
-								<div class="pd-desc">
+ --%>								<div class="pd-desc">
 		                           	<h4><fmt:formatNumber value="${vo.pCost }" pattern="#,###" />원</h4>
                                 </div>
                                 <div class="pd-size-choose">
@@ -306,6 +315,7 @@
 												<div class="co-item">
 													<div class="avatar-text">
 	                                                	<div class="at-rating">
+	                                                	<c:if test="${not empty review.rStar}">
 				      											<c:forEach var="rStar" begin="0" end="${review.rStar - 1}">
 			      													<i class="fa fa-star"></i>
 			      												</c:forEach>
@@ -314,6 +324,7 @@
 				      													 <i class="fa fa-star-o"></i>
 				      												</c:forEach>
 			      												</c:if>
+			      										</c:if>
 	                                                    </div>
 	          
 															<h5>${review.rWriter }
@@ -323,14 +334,15 @@
 															<div class="at-reply">${review.rContent }</div>
 															<div class="img-reply">
 																<c:forEach var="fileName" items="${review.mFileList}">
+																	<!-- 이미지 테스트 -->
 																	<img class="reImg" src="${pageContext.request.contextPath}/resources/img/sujung/banner1.JPG"/>
-																	<img class="reImg" src="${pageContext.request.contextPath}/filepath/${fileName.rFile}"/>
+																	<!-- 리뷰 파일 출력-->
+																	<img class="reImg" src="/${fileName.rFile}"/>
 																</c:forEach>
 															</div>
 													</div>
 												</div>
 											</c:forEach>
-
 										</div>
 										<!-- 리뷰 리스트 끝 -->
 									
@@ -357,18 +369,24 @@
 	<!-- content 끝 -->
 	<script>
 		var fileList = []; // 리뷰 사진객체  list
-		var id = $('input[name=rWriter]').val();
 		var userfile = '';
+		var id = $('input[name=rWriter]').val();
 		
 		// 리뷰 추가
 		$('#reSumitBtn').on('click', reviewList);
 		
 		$(function(){
-			if(id != null){
+			if(id != ""){
 				$('#reWriteBtn').show();
 			}
-
+			
 		});
+		
+		// 리뷰쓰기 버튼 클릭 시 배송상태 체크 예정
+		function reWriteBtn() {
+			$('#reWrite').show();
+		}
+		
 		$('#rStar').barrating({
 			theme: 'fontawesome-stars'
 			, onSelect: function(value, text, event){
@@ -377,10 +395,6 @@
 			}
 		});
 		
-		// 리뷰쓰기 버튼 클릭 시 배송상태 체크 예정
-		function reWriteBtn() {
-			$('#reWrite').show();
-		}
 		
 		$('#userFile').on('change', function() {
 			userfile = $('#userFile');
@@ -434,7 +448,6 @@
 							+ request.responseText + " error = " + error);
 				}
 			});
-
 		}
 	</script>
 

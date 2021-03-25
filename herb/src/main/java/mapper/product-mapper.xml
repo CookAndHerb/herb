@@ -23,11 +23,11 @@
 	
 	<!-- 상품 리스트 가져오기  -->
 	<select id="proAllList" resultMap="proResult">
-		select * from product
+		select * from product where p_del = 'N'
 	</select>
 	<!-- 상품 인포 -->
 	<select id="proInfo" parameterType="int" resultMap="proResult">
-		select * from product where p_num = #{pNum}
+		select * from product where p_del = 'N' and p_num = #{pNum}
 	</select>
 
 </mapper>

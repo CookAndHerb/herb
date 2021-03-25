@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +36,7 @@ public class ReviewController {
 	// 리뷰 등록
 	@ResponseBody
 	@RequestMapping(value="reviewInsert.do", method=RequestMethod.POST)
-	public String reInsert(Review review) throws Exception{	
+	public String reInsert(Review review, HttpServletRequest request) throws Exception{	
 		
 		//Review review = new Review();
 		System.out.println(review.getrWriter());
@@ -52,10 +54,11 @@ public class ReviewController {
 				System.out.println("fileName: "+fileName);
 				
 				// 중복 제거를 위해 난수 발생 후 파일명을 db테이블에 저장
-				UUID random = UUID.randomUUID();	
-				String saveDirectory = "C:\\Temp";
+				UUID random = UUID.randomUUID();
+				String filePath = request.getSession().getServletContext().getRealPath("resources");
+				String saveDirectory = filePath + File.separator + "reviewImg";
+				System.out.println("파일 루트: "+saveDirectory);
 				
-				// temp 폴더 없는 경우 만들기
 				File fe = new File(saveDirectory);
 				if(!fe.exists()) {
 					System.out.println("폴더 생성");
@@ -78,16 +81,15 @@ public class ReviewController {
 				// 파일 경로, 상품번호, 댓글번호 저장 후 mFilelist로 넘김
 				ReviewFile reFile = new ReviewFile();
 				reFile.setpNum(review.getpNum());
-				reFile.setrFile(random +"_"+fileName);
+				reFile.setrFile(saveDirectory+random +"_"+fileName);
 				reFile.setrNum(review.getrNum());
 				
 				fList.add(reFile);
-				review.setmFileList(fList);
+				review.setmFileList(fList); 
 			}
 		}
 		reSe.reviewInsert(review);
-		//modelAndView.addObject("num", review.getpNum()); // 상품인포 주소에 들어갈 번호
-		//modelAndView.setViewName("product/reviewComplete");
+		
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("num", review.getpNum());
 		jsonObject.put("moveUrl", "productInfo.do");

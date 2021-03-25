@@ -36,11 +36,16 @@ public class ProductController {
 	// 상품 상세페이지
 	@RequestMapping("productInfo.do")
 	public ModelAndView shopInfo(HttpServletRequest request, ModelAndView modelAndView, @RequestParam("num") int num) throws Exception{
-	
+		int reAvg = 0;
+		int reCount = 0;
+		
 		Product product = proSe.productInfo(num);	// 상품 정보
 		List<Review> review = reSe.reviewAllList(num);	// 리뷰 리스트
-		int reAvg = reSe.reviewAvg(num);	// 리뷰 평균값
-		int reCount = reSe.reviewCount(num);	// 리뷰 총 개수
+		if(review.size() > 0) {
+			reAvg = reSe.reviewAvg(num);	// 리뷰 평균값
+			reCount = reSe.reviewCount(num);	// 리뷰 총 개수
+		}
+		
 
 		modelAndView.addObject("num",num);
 		modelAndView.addObject("vo",product);
