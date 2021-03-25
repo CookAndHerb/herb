@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -181,5 +182,18 @@ public class CartController {
 		return obj.toJSONString();
 	}
 	
+	// 쇼핑 페이지로
+	// template.jsp로 가는 주소
+	@RequestMapping(value="goShop.do", method=RequestMethod.GET)
+	public ModelAndView goShop(HttpSession session, ModelAndView mv) {
+		Member member = (Member)session.getAttribute("member");
+		if(member != null) {
+			mv.setViewName("cart/login");
+		}else {
+			
+			mv.setViewName("cart/noLogin");
+		}
+		return mv;
+	}	
 	
 }
