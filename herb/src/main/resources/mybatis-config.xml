@@ -36,5 +36,6 @@
       <mapper resource="mapper/qa-mapper.xml" />
       <mapper resource="mapper/review-mapper.xml" />  
       <mapper resource="mapper/admin-file-mapper.xml" />
+      <mapper resource="mapper/product-file-mapper.xml" />
    </mappers>
 </configuration>

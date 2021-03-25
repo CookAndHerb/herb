@@ -44,9 +44,10 @@ public class ProductController {
 		if(review.size() > 0) {
 			reAvg = reSe.reviewAvg(num);	// 리뷰 평균값
 			reCount = reSe.reviewCount(num);	// 리뷰 총 개수
+			System.out.println("리뷰 평균: "+reAvg);
+			System.out.println("리뷰 개수: "+reCount);
 		}
 		
-
 		modelAndView.addObject("num",num);
 		modelAndView.addObject("vo",product);
 		modelAndView.addObject("review",review);

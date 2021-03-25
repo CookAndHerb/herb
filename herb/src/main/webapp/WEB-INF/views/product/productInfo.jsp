@@ -152,7 +152,7 @@
 				<!-- 상품 이미지 -->
 					<div class="col-lg-6">
                             <div class="product-pic-zoom">
-                                <img class="product-big-img" src="img/product-single/product-1.jpg" alt="">
+                                <img class="product-big-img" src="${pageContext.request.contextPath}/resources/productImg/${vo.imageName}" alt="">
                                 <div class="zoom-icon">
                                     <i class="fa fa-search-plus"></i>
                                 </div>
@@ -179,28 +179,29 @@
                                     <h3>${vo.pName }</h3>
                                 </div>
                                 <!-- 별점 평균 -->
- 								<%-- <div class="pd-rating">
- 								<c:choose>
- 									<c:when test="${review.rStar != '' || review.rStar.rStar ne null}">
-										<c:forEach var="rSta" begin="0" end="${reAvg - 1}">
+ 							<div class="pd-rating">
+ 									<!-- 리뷰가 있을 경우 -->
+ 									<c:if test="${!empty review}">
+										<c:forEach var="star" begin="0" end="${reAvg-1	}" step="1">
 											<i class="fa fa-star"></i>
 										</c:forEach>
-										<c:if test="${reAbg != 5}">
+										
+										<c:if test="${reAvg ne 5}">
 											<c:forEach var="rSta" begin="0" end="${5-(reAvg+1)}">
 												<i class="fa fa-star-o"></i>
 											</c:forEach>
 										</c:if>
-										<span>(${reAvg})</span>
-									</c:when>
-									
-									<c:otherwise>
-										<c:forEach var="rStar" begin="0" end="5">
+										<span>(${reCount})</span>
+									</c:if>
+									<!-- 리뷰가 없을 경우 -->
+									<c:if test="${empty review}">
+										<c:forEach var="rStar" begin="0" end="4">
 											<i class="fa fa-star-o"></i>
 										</c:forEach>
-									</c:otherwise>
-								</c:choose>
+										<span>(0)</span>
+									</c:if>
 								</div> 
- --%>								<div class="pd-desc">
+								<div class="pd-desc">
 		                           	<h4><fmt:formatNumber value="${vo.pCost }" pattern="#,###" />원</h4>
                                 </div>
                                 <div class="pd-size-choose">
@@ -344,10 +345,8 @@
 															<div class="at-reply">${review.rContent }</div>
 															<div class="img-reply">
 																<c:forEach var="fileName" items="${review.mFileList}">
-																	<!-- 이미지 테스트 -->
-																	<img class="reImg" src="${pageContext.request.contextPath}/resources/img/sujung/banner1.JPG"/>
 																	<!-- 리뷰 파일 출력-->
-																	<img class="reImg" src="/${fileName.rFile}"/>
+																	<img class="reImg" src="${pageContext.request.contextPath}/resources/reviewImg/${fileName.rFile}"/>
 																</c:forEach>
 															</div>
 													</div>
@@ -418,9 +417,8 @@
 			console.log($(userfile[0]).val());
 			fileList.push(userfile[0].files[0]);
 		});
-		
+		// 리뷰 제출 전 예외처리
 		function reviewList() {
-			//예외처리를 해줌
 			if (fileList.length == 0) {
 				alert("후기 사진을 첨부해주세요.");
 				return false;
@@ -428,6 +426,10 @@
 
 			if (fileList.length > 5) {
 				alert("사진은 최대 5개까지 첨부할 수 있습니다.");
+				return false;
+			}
+			if($("#rContent").val().trim() == "" || $("#rContent").val() == null){
+				alert("내용을 적어주세요");
 				return false;
 			}
 
