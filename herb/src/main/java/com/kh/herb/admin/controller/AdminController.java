@@ -73,7 +73,6 @@ public class AdminController {
 		
 		ProductFile infoFile = new ProductFile();
 		
-;
 		for(MultipartFile productInfo : pInfoFiles) {
 			 infoFile = infoImage(productInfo, request);
 			 pf.setpInfoFile(infoFile.getpInfoFile());
@@ -89,6 +88,56 @@ public class AdminController {
 		
 		mav.addObject("result1", result1);
 		mav.setViewName("product/productInsComplete");
+		return mav;
+	}
+	
+	//상품 수정
+	@RequestMapping(value="productUpt.do", method=RequestMethod.POST)
+	public ModelAndView updateProduct(ModelAndView mav, Product product, ProductFile pf,
+			@RequestParam("pInfoFiles") MultipartFile pInfoFiles[], MultipartHttpServletRequest request) throws Exception {
+		String image = request.getParameter("image");
+		int pNum = Integer.parseInt(request.getParameter("pNum"));
+
+		product.setpNum(pNum);
+		
+		if(image != null) {
+			Product fileProduct = imageUplode(product, request);
+			product.setImageName(fileProduct.getImageName());
+			product.setImagePath(fileProduct.getImagePath());
+		}else {
+			String existImage = request.getParameter("existImage");
+			String existImagePath = request.getParameter("existImagePath");
+			product.setImageName(existImage);
+			product.setImagePath(existImagePath);
+		}
+		
+		int result = as.updateProduct(product);
+
+		ProductFile infoFile = new ProductFile();
+		pf.setpNum(pNum);
+		
+		if(pInfoFiles.length > 0) {
+			for(MultipartFile productInfo : pInfoFiles) {
+				System.out.println("확장 for문");
+				infoFile = infoImage(productInfo, request);
+				pf.setpInfoFile(infoFile.getpInfoFile());
+				pf.setpInfoPath(infoFile.getpInfoPath());
+				int cnt = as.updateFile(pf);
+			}
+		}else {
+			String[] existInfoFile = request.getParameterValues("existInfoFile");
+			String[] existInfoPath = request.getParameterValues("existInfoPath");
+			for(int i = 0; i<existInfoFile.length; i++) {
+				System.out.println(i+"번 기존 파일 이름 : "+existInfoFile[i]);		
+				pf.setpInfoFile(existInfoFile[i]);
+				System.out.println(i+"번 기존 파일 경로 : "+existInfoPath[i]);
+				pf.setpInfoPath(existInfoPath[i]);
+				int cnt = as.updateFile(pf);
+			}
+		}
+			
+		mav.addObject("result", result);
+		mav.setViewName("product/productUptComplete");
 		return mav;
 	}
 	
@@ -175,6 +224,27 @@ public class AdminController {
 		List<Product> productList = as.productList();
 		mav.addObject("productList", productList);
 		mav.setViewName("admin/adminProduct");
+		return mav;
+	}
+	
+	//상품 수정 페이지
+	@RequestMapping("productUpt.do")
+	public ModelAndView updateProductPage(ModelAndView mav, int pNum) throws Exception{
+		Product product = as.selectProduct(pNum);
+		List<ProductFile> pfList = as.selectFile(pNum);
+		mav.addObject("product", product);
+		mav.addObject("productFile", pfList);
+		mav.setViewName("product/productUpt");
+		return mav;
+	}
+	
+	//상품 삭제
+	@RequestMapping("productDel.do")
+	public ModelAndView deleteProduct(ModelAndView mav, int pNum) throws Exception{
+		int result = as.deleteProduct(pNum);
+		
+		mav.addObject("result", result);
+		mav.setViewName("product/productDelComplete");
 		return mav;
 	}
 }

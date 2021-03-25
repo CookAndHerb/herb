@@ -30,6 +30,24 @@
 	
 	<!-- 상품 조회 -->
 	<select id="productList" resultMap="proResult">
-		SELECT * FROM PRODUCT ORDER BY P_NUM DESC
+		SELECT * FROM PRODUCT WHERE P_DEL='N' ORDER BY P_NUM DESC
 	</select>
+	
+	<!-- 상품 하나만 조회 -->
+	<select id="selectProduct" parameterType="int" resultMap="proResult">
+		SELECT * FROM PRODUCT WHERE P_NUM=#{pNum}
+	</select>
+	
+	<!-- 상품 수정 -->
+	<update id="updateProduct" parameterType="Product">
+		UPDATE PRODUCT SET P_NAME=#{pName}, P_COST=#{pCost}, P_IMAGE_NAME=#{imageName}, 
+		P_IMAGE_PATH=#{imagePath}, P_CONTENT=#{pContent}, P_MA_DATE=#{pMaDate}, 
+		P_EX_DATE=#{pExDate}, P_CAPACITY=#{pCapacity}, P_TYPE=#{pType}, P_CATEGORY=#{pCategory}
+		WHERE P_NUM=#{pNum}
+	</update>
+	
+	<!-- 상품 삭제 -->
+	<delete id="deleteProduct" parameterType="int">
+		UPDATE PRODUCT SET P_DEL='Y' WHERE P_NUM=#{pNum}
+	</delete>
 </mapper>

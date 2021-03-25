@@ -41,4 +41,34 @@ public class AdminServiceImpl implements AdminService {
 		return ad.productList();
 	}
 
+	@Override
+	public Product selectProduct(int pNum) throws Exception {
+		return ad.selectProduct(pNum);
+	}
+
+	@Override
+	public List<ProductFile> selectFile(int pNum) throws Exception {
+		return ad.selectFile(pNum);
+	}
+
+	@Override
+	public int updateProduct(Product product) throws Exception {
+		return ad.updateProudct(product);
+	}
+
+	@Override
+	public int updateFile(ProductFile pf) throws Exception {
+		return ad.updateFile(pf);
+	}
+
+	@Override
+	public int deleteProduct(int pNum) throws Exception {
+		return ad.deleteProduct(pNum);
+	}
+
+	@Override
+	public int deleteFile(int pNum) throws Exception {
+		return ad.deleteFile(pNum);
+	}
+
 }

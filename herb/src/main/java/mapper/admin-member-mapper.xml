@@ -19,7 +19,7 @@
 	</resultMap>
 	
 	<select id="memberList" resultMap="resultMember">
-		SELECT * FROM MEMBER
+		SELECT * FROM MEMBER ORDER BY USER_NUM DESC
 	</select> 
 	
 	<!-- 검색 쿼리 -->

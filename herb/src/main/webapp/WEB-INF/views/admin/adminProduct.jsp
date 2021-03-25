@@ -27,6 +27,13 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
     <!-- sujung css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sujung.css" type="text/css">
+
+	<script>
+		//삭제 확인 버튼
+		function delchk(){
+			return confirm("삭제하시겠습니까?");
+		}
+	</script>
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -115,8 +122,8 @@
 									<td>${product.pCost}</td>
 									<td>${product.pMaDate} </td>
 									<td>${product.pExDate}</td>
-									<td>수정</td>
-									<td>삭제</td>
+									<td><a href="productUpt.do?pNum=${product.pNum }">수정</a></td>
+									<td><a href="productDel.do?pNum=${product.pNum }" onclick="return delchk();">삭제</a></td>
 								</tr>
 							</c:forEach>
 						</table>
