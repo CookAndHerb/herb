@@ -114,7 +114,7 @@
 						
 						<div class="ment3">
 							<div style="padding-top:15px;">
-								<a href="#" style="color:white; font-weight: bold;" class="text-align-center">
+								<a href="product.do" style="color:white; font-weight: bold;" class="text-align-center">
 									나만의 영양제 찾으러 가기
 								</a>
 							</div>

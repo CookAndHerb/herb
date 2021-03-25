@@ -101,6 +101,11 @@
 		color: #e7ab3c; 
 	}
 	
+	
+	.addCart_btn:active {
+		background-color : #252525;
+		
+	}
 </style>
 
 <!-- 주연 장바구니 ajax 부분 -->

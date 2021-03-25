@@ -244,7 +244,7 @@
                    
                         <div class="col-lg-4">
                             <div class="cart-buttons">
-                                <a href="#" class="primary-btn continue-shop">쇼핑 계속하기</a>
+                                <a href="product.do" class="primary-btn continue-shop">쇼핑 계속하기</a>
                             </div>
                         </div>
                         
