@@ -20,6 +20,16 @@ public class CartDAO {
 		return sqlSession.insert("Cart.addCart", cart);
 	}
 	
+	// 카트에 있는 상품인지 확인
+	public boolean searchCart(Cart cart) throws Exception{
+		boolean result = false;
+		int count = sqlSession.selectOne("Cart.searchCart", cart);
+		if(count == 1)
+			result = true;
+		
+		return result;
+	}
+	
 	// 카트 리스트
 	public List<CartList> cartList(String userId) throws Exception{
 		return sqlSession.selectList("Cart.cartList", userId);
@@ -34,4 +44,6 @@ public class CartDAO {
 	public int deleteCart(Cart cart) throws Exception{
 		return sqlSession.delete("Cart.deleteCart", cart);
 	}
+	
+	
 }

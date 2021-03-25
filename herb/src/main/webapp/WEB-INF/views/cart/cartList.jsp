@@ -252,8 +252,8 @@
                             <div class="proceed-checkout">
                                 <ul>
                                     <li class="subtotal">총 가격 <span><fmt:formatNumber pattern="###,###,###" value="${sum}" />원</span></li>
-                                    <li class="subtotal">배송비 <span>3,000원</span></li>
-                                    <li class="cart-total">합계 가격 <span><fmt:formatNumber pattern="###,###,###" value="${sum + 3000}" />원</span></li>
+                                    <li class="subtotal">배송비 <span>2,500원</span></li>
+                                    <li class="cart-total">합계 가격 <span><fmt:formatNumber pattern="###,###,###" value="${sum + 2500}" />원</span></li>
                                 </ul>
                                 <a href="orderForm.do" class="proceed-btn">결제하기</a>
                             </div>

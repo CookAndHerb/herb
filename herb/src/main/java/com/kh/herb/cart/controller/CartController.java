@@ -27,21 +27,48 @@ public class CartController {
 	
 	// 카트 담기
 	@ResponseBody
-	@RequestMapping(value="addCart.do", method=RequestMethod.POST)
-	public int addCart(Cart cart, HttpSession session) throws Exception {
+	@RequestMapping(value="addCart.do", method=RequestMethod.GET)
+	public String addCart(@RequestParam int cartPnum, int cartStock,HttpSession session) throws Exception {
 		
-		int result = 0;
-		
+		System.out.println("여기까지옴?");
+		JSONObject obj = new JSONObject();
+		System.out.println(cartPnum);
+		System.out.println(cartStock);
 		// session에 저장된 member 꺼내기
 		Member member = (Member)session.getAttribute("member");
 		
 		if(member != null) { // 로그인 돼 있을 경우
+			Cart cart = new Cart();
+			
 			cart.setCartUserId(member.getUserId());
-			cartService.addCart(cart); 
-			result = 1;
+			cart.setCartPnum(cartPnum);
+			cart.setCartStock(cartStock);
+			
+			boolean data = cartService.searchCart(cart);
+			
+			if(data) { // 이미 카트에 같은 상품이 있을 때
+
+				obj.put("result","dup");
+			}else {
+				
+				int result = cartService.addCart(cart); 
+				
+				if(result > 0) { // 카트에 담겼다면
+					
+					obj.put("result", "ok");
+				
+				}else { // 안담김
+					obj.put("result", "no");
+				
+				}
+			}
+			
+			
+		}else { // 로그인 안한 경우
+			obj.put("result", "login");
 		}
 		
-		return result;
+		return obj.toJSONString();
 		
 	}
 	

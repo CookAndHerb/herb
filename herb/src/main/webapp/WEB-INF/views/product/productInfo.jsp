@@ -103,6 +103,54 @@
 	
 </style>
 
+<!-- 주연 장바구니 ajax 부분 -->
+<script>
+	$(function(){
+			
+		$(document).on('click', '.addCart_btn', addfunction);	
+		function addfunction(){
+			
+			var cartPnum2 = $("#productNumber").val();
+			var cartStock2 = $(".numBox").val();
+			if(cartStock2 > 0){
+				
+				$.ajax({
+					
+					type : "get",
+					url: "addCart.do?cartPnum="+cartPnum2+'&cartStock='+cartStock2,
+					dataType : 'json',
+					success : function(data){
+						if(data.result == "ok"){
+							alert("카트에 상품이 추가되었습니다.");
+							$(".numBox").val("1");
+						}else{
+							if(data.result == "login"){
+								alert("로그인 해주세요.");
+								$(".numBox").val("1");
+							
+							}else if(data.result == "dup"){
+								alert("이미 카트에 상품이 존재합니다.");
+								$(".numBox").val("1");
+							}
+						}
+					},
+					error : function(){
+						alert("카트에 상품 담기 실패")
+					}
+					
+				}); // ajax 끝
+				
+			}else{
+				alert("수량을 1개 이상 선택해주세요.");
+			}
+			
+		}; // function 끝
+		
+	})
+
+</script>
+
+<!-- 주연 끝 -->
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -213,9 +261,10 @@
                                 <div class="quantity">
                                 	 <!-- 상품 수량 선택-->
                                     <div class="pro-qty">
-                                        <input type="text" value="1">
+                                        <input type="text" value="1" class="numBox">
                                     </div>
-                                    <a href="#" class="primary-btn pd-cart">장바구니 담기</a>
+                                    <button class="addCart_btn primary-btn pd-cart" style="border-style:none;">장바구니 담기</button>
+                                    <input type="hidden" id="productNumber" value="${vo.pNum}">
                                 </div>
                                 
                                 <ul class="pd-tags">
