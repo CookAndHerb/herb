@@ -133,8 +133,8 @@
                                     <c:set var="sum" value="${sum + (cartList.pCost * cartList.cartStock)}"/> 
                                     </c:forEach>
                                     <!-- 반복 끝 -->
-                                    <li class="fw-normal" style="color:gray; font-weight:bold;">배송비 <span>3,000원</span></li>
-                                    <li class="total-price">총 합계 <span><fmt:formatNumber pattern="###,###,###" value="${sum + 3000}" />원</span></li>
+                                    <li class="fw-normal" style="color:gray; font-weight:bold;">배송비 <span>2,500원</span></li>
+                                    <li class="total-price">총 합계 <span><fmt:formatNumber pattern="###,###,###" value="${sum + 2500}" />원</span></li>
                                 </ul>
                                 
                                 <div class="order-btn">

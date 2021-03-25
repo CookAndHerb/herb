@@ -23,11 +23,19 @@
 		<result property="pImagePath" column="P_IMAGE_PATH"/>
 	</resultMap>
 	
+	
+	<!-- 카트에 이미 있는 상품인지 확인 -->
+	<select id="searchCart" parameterType="Cart" resultType="int">
+		 SELECT COUNT(*) FROM CART WHERE CART_USER_ID = #{cartUserId} AND  CART_P_NUM = #{cartPnum}
+	</select>
+	
+	
 	<!-- 카트 담기 -->
 	<insert id="addCart" parameterType="Cart">
 		INSERT INTO CART (CART_NUM, CART_STOCK, CART_USER_ID, CART_P_NUM)
 			VALUES (CART_SEQ.NEXTVAL, #{cartStock}, #{cartUserId}, #{cartPnum})
 	</insert>
+	
 	
 	<!-- 카트 리스트 -->
 	<select id="cartList" parameterType="String" resultMap="resultCartList">

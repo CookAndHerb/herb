@@ -33,9 +33,16 @@ public class CartServiceImpl implements CartService {
 		return cartDAO.updateCart(cart);
 	}
 
+	// 카트 삭제
 	@Override
 	public int deleteCart(Cart cart) throws Exception {
 		return cartDAO.deleteCart(cart);
+	}
+
+	// 카트에 있는 상품인가 확인
+	@Override
+	public boolean searchCart(Cart cart) throws Exception {
+		return cartDAO.searchCart(cart);
 	}
 
 	
