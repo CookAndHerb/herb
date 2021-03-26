@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.herb.admin.model.dao.AdminDAO;
-import com.kh.herb.admin.model.vo.Search;
 import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.product.model.vo.Product;
 import com.kh.herb.product.model.vo.ProductFile;
@@ -20,15 +19,24 @@ public class AdminServiceImpl implements AdminService {
 	public int insertProduct(Product product) throws Exception {
 		return ad.insertProduct(product);
 	}
-
+	
 	@Override
-	public List<Member> memberList() throws Exception {
-		return ad.memberList();
+	public int memberCount() throws Exception {
+		return ad.memberCount();
+	}
+	
+	@Override
+	public List<Member> memberList(int startPage, int limit) throws Exception {
+		return ad.memberList(startPage, limit);
 	}
 
 	@Override
-	public List<Member> searchMember(Search search) throws Exception {
-		return ad.searchMember(search);
+	public List<Member> searchMember(int startPage, int limit, String selectType, String keyword) throws Exception {
+		return ad.searchMember(startPage, limit, selectType, keyword);
+	}
+	
+	public int searchMemberCount (String selectType, String keyword) throws Exception{
+		return ad.searchMemberCount(selectType, keyword);
 	}
 
 	@Override
@@ -37,8 +45,8 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<Product> productList() throws Exception {
-		return ad.productList();
+	public List<Product> productList(int startPage, int limit) throws Exception {
+		return ad.productList(startPage, limit);
 	}
 
 	@Override
@@ -71,5 +79,9 @@ public class AdminServiceImpl implements AdminService {
 		return ad.deleteFile(pNum);
 	}
 
+	@Override
+	public int productCount() throws Exception {
+		return ad.productCount();
+	}
 }
 

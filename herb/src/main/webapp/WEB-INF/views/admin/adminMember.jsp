@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -72,19 +73,17 @@
 
                	<h3><i class='fas fa-house-user' style='font-size:32px; color:#e7ab3c'></i> 회원관리</h3>
                 <br>
-                <form action="searchMember.do">
+				<form action="searchMember.do">
 				<div id="searchDiv">
                         <div class="form-inline serch">
-                            <select name="select" class="custom-select-sm">
+                            <select name="selectType" class="custom-select-sm">
                             <option value="userId">아이디</option>
                             <option value="userName">이름</option>
                             </select>
                             <div class="input-group">
                                 <input type="text" class="control-sm" name="keyword">
-                                <%-- <button type="button" id="searchButton" class="btn-warning" 
-                                	onclick="location.href = 'searchMember.do?select=${select}&keyword=${keyword }';">
-                                	<i class="ti-search"></i></button> --%>
-                                <input type="submit" id="searchButton" class="btn-warning" value="&#xf002;">
+                                <button type="submit" id="searchButton" class="btn-warning" >
+                                	<i class="ti-search"></i></button>
                             &nbsp;&nbsp;
                             </div>
                         </div>
@@ -102,7 +101,7 @@
 									<th style="padding-bottom:20px">연락처</th>
 									<th style="padding-bottom:20px">주소</th>
 									<th style="padding-bottom:20px">이메일</th>
-									<th>탈퇴여부(N/Y)</th>
+									<th style="width: 80px">탈퇴여부(N/Y)</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -119,7 +118,41 @@
 							</c:forEach>
 						</table>
 					</div>
-
+					
+					<div class="pageDiv">
+						<!-- 앞 페이지 번호 처리 -->
+						<c:if test="${currentPage <= 1}"> 
+  								<span id="notPrev">[이전]&nbsp;</span>
+ 						</c:if> 
+ 						<c:if test="${currentPage > 1}">
+						<!-- 페이지 많아지면 5로 처리하는게 맞음 ( ex)6페이지에서 [이전] 버튼 클릭 ) -->
+							<c:url var="proST" value="adminMember.do">
+								<!-- blist.do?page=?  파라미터 자동으로 전달 -->
+								<c:param name="page" value="${currentPage-1}" />
+							</c:url>
+							<a class="paging" href="${proST}">[이전]</a>
+						</c:if> <!-- 끝 페이지 번호 처리 --> <c:set var="endPage" value="${maxPage}" />
+						<c:forEach var="p" begin="${startPage+1}" end="${endPage}">
+							<c:if test="${p eq currentPage}">
+								<font color="#e7ab3c" size="4"><b>[${p}]</b></font>
+							</c:if>
+							<c:if test="${p ne currentPage}">
+								<c:url var="prostchk" value="adminMember.do">
+									<c:param name="page" value="${p}" />
+								</c:url>
+								<a class="paging" href="${prostchk}">${p}</a>
+							</c:if>
+						</c:forEach> 
+						<c:if test="${currentPage >= maxPage}">
+ 							<span id=notEnd>[다음]</span>
+ 						</c:if> 
+ 						<c:if test="${currentPage < maxPage}">
+							<c:url var="proEND" value="adminMember.do">
+								<c:param name="page" value="${currentPage+1}" />
+							</c:url>
+							<a class="paging" href="${proEND}">[다음]</a>
+						</c:if>
+					</div>
 				</div>
             </div>
         </div>

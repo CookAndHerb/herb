@@ -6,7 +6,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import com.kh.herb.admin.model.vo.Search;
+import com.kh.herb.admin.model.vo.Pagination;
 import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.product.model.vo.Product;
 import com.kh.herb.product.model.vo.ProductFile;
@@ -22,16 +22,37 @@ public class AdminDAO {
 		return sqlSession.insert("adminProduct.insertProduct", product);
 	}
 	
+	//전체 회원 수
+	public int memberCount() throws Exception{
+		return sqlSession.selectOne("adminMember.memberCount");
+	}
+	
 	//회원관리(조회)
-	public List<Member> memberList() throws Exception{
-		List<Member> memberList = sqlSession.selectList("adminMember.memberList");
-		return memberList;
+	public List<Member> memberList(int startPage, int limit) throws Exception{
+		int startRow = (startPage-1)*limit;
+		Pagination page = new Pagination();
+		page.setStart(startRow+1);
+		page.setEnd(startRow+10);
+		return sqlSession.selectList("adminMember.memberList", page);
 	}
 	
 	//회원검색
-	public List<Member> searchMember(Search search) throws Exception{
-		List<Member> searchMember = sqlSession.selectList("adminMember.searchMember", search);
-		return searchMember;
+	public List<Member> searchMember(int startPage, int limit, String selectType, String keyword) throws Exception{
+		int startRow = (startPage-1)*limit;
+		Pagination page = new Pagination();
+		page.setStart(startRow+1);
+		page.setEnd(startRow+10);
+		page.setSelectType(selectType);
+		page.setKeyword(keyword);
+		return sqlSession.selectList("adminMember.searchMember", page);
+	}
+	
+	//검색 결과 개수
+	public int searchMemberCount (String selectType, String keyword) throws Exception {
+		Pagination page = new Pagination();
+		page.setSelectType(selectType);
+		page.setKeyword(keyword);
+		return sqlSession.selectOne("adminMember.searchMemberCount", page);
 	}
 	
 	//파일 등록
@@ -40,10 +61,18 @@ public class AdminDAO {
 	}
 
 	
+	//상품 총 갯수 조회
+	public int productCount() throws Exception {
+		return sqlSession.selectOne("adminProduct.productCount");
+	}
+	
 	//상품 조회
-	public List<Product> productList() throws Exception{
-		List<Product> productList = sqlSession.selectList("adminProduct.productList");
-		return productList;
+	public List<Product> productList(int startPage, int limit) throws Exception{
+		int startRow = (startPage-1)*limit;
+		Pagination page = new Pagination();
+		page.setStart(startRow+1);
+		page.setEnd(startRow+10);
+		return sqlSession.selectList("adminProduct.productList", page);
 	}
 
 	
@@ -55,8 +84,7 @@ public class AdminDAO {
 	
 	//선택 상품에 해당하는 파일 조회
 	public List<ProductFile> selectFile(int pNum) throws Exception{
-		List<ProductFile> pfList = sqlSession.selectList("adminFile.selectFile", pNum);
-		return pfList;
+		return sqlSession.selectList("adminFile.selectFile", pNum);
 	}
 	
 	//상품 수정
@@ -78,4 +106,7 @@ public class AdminDAO {
 	public int deleteFile(int pNum) throws Exception{
 		return sqlSession.update("adminFile.deleteFile", pNum);
 	}
+	
+
+	
 }
