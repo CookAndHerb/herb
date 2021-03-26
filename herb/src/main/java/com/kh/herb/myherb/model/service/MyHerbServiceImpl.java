@@ -1,10 +1,14 @@
 package com.kh.herb.myherb.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.myherb.model.dao.MyHerbDAO;
+import com.kh.herb.myherb.model.vo.OrderDetailList;
+import com.kh.herb.myherb.model.vo.OrderList;
 
 @Service
 public class MyHerbServiceImpl implements MyHerbService {
@@ -32,4 +36,20 @@ public class MyHerbServiceImpl implements MyHerbService {
 		return myHerbDAO.deleteMember(member);
 	}
 
+	@Override
+	public int listCount(String userId) throws Exception {
+		return myHerbDAO.listCount(userId);
+	}
+
+	@Override
+	public List<OrderList> orderList(String userId, int startPage, int limit) throws Exception {
+		return myHerbDAO.orderList(userId, startPage, limit);
+	}
+
+	@Override
+	public List<OrderDetailList> orderDetailList(OrderDetailList orderDetailList) throws Exception {
+		return myHerbDAO.orderDetailList(orderDetailList);
+	}
+
+	
 }
