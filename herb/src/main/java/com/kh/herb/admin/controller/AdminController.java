@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.herb.admin.model.service.AdminService;
-import com.kh.herb.admin.model.vo.Search;
 import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.product.model.vo.Product;
 import com.kh.herb.product.model.vo.ProductFile;
@@ -220,8 +219,8 @@ public class AdminController {
 	
 	//회원 검색
 	@RequestMapping("searchMember.do")
-	public ModelAndView searchMember(ModelAndView mav, @RequestParam(value="selectType") String selectType, 
-			@RequestParam(value="keyword") String keyword, @RequestParam(name = "page", defaultValue = "1") int page) throws Exception{
+	public ModelAndView searchMember(ModelAndView mav, @RequestParam(value="selectType", required=false) String selectType, 
+			@RequestParam(value="keyword", required=false) String keyword, @RequestParam(name = "page", defaultValue = "1") int page) throws Exception{
 //		System.out.println("select : "+select);
 //		System.out.println("keyword : "+keyword);
 //		search.setSelect(select);
@@ -232,12 +231,14 @@ public class AdminController {
 		
 		int currentPage = page;
 		//한 페이지당 출력할 목록 갯수
-		int listCount = as.memberCount();
+		int listCount = as.searchMemberCount(selectType, keyword);
 		int maxPage = (int) ((double)listCount/LIMIT + 0.9);
 		mav.addObject("memberList", as.searchMember(currentPage, LIMIT, selectType, keyword));
 		mav.addObject("currentPage", currentPage);
 		mav.addObject("maxPage", maxPage);
 		mav.addObject("listCount", listCount);
+		mav.addObject("keyword", keyword);
+		mav.addObject("selectType", selectType);
 		mav.setViewName("admin/searchMember");
 		return mav;
 	}

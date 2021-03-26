@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.herb.admin.model.dao.AdminDAO;
-import com.kh.herb.admin.model.vo.Search;
 import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.product.model.vo.Product;
 import com.kh.herb.product.model.vo.ProductFile;
@@ -34,6 +33,10 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<Member> searchMember(int startPage, int limit, String selectType, String keyword) throws Exception {
 		return ad.searchMember(startPage, limit, selectType, keyword);
+	}
+	
+	public int searchMemberCount (String selectType, String keyword) throws Exception{
+		return ad.searchMemberCount(selectType, keyword);
 	}
 
 	@Override

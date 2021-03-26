@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.herb.admin.model.vo.Pagination;
-import com.kh.herb.admin.model.vo.Search;
 import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.product.model.vo.Product;
 import com.kh.herb.product.model.vo.ProductFile;
@@ -45,6 +44,14 @@ public class AdminDAO {
 		page.setSelectType(selectType);
 		page.setKeyword(keyword);
 		return sqlSession.selectList("adminMember.searchMember", page);
+	}
+	
+	//검색 결과 개수
+	public int searchMemberCount (String selectType, String keyword) throws Exception {
+		Pagination page = new Pagination();
+		page.setSelectType(selectType);
+		page.setKeyword(keyword);
+		return sqlSession.selectOne("adminMember.searchMemberCount", page);
 	}
 	
 	//파일 등록

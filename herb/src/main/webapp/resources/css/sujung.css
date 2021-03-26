@@ -2,6 +2,30 @@
 .font{
 	color: white;
 }
+.paging{
+	color: black;
+}
+.paging:hover{
+	color: red;
+}
+.pageDiv{
+	text-align: center;
+}
+#notPrev{
+	color: gray;
+}
+#notEnd{
+	color: gray;
+}
+.aTag:hover{
+	color: #e7ab3c;
+}
+.aDel{
+	color: red;
+}
+.aDel:hover{
+	color: #e7ab3c;
+}
 
 /* 관리자페이지 메인 */
 .totalSales{

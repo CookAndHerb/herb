@@ -17,7 +17,6 @@
      <typeAlias type="com.kh.herb.product.model.vo.Product" alias="Product" />
      <typeAlias type="com.kh.herb.review.model.vo.Review" alias="Review" />
      <typeAlias type="com.kh.herb.review.model.vo.ReviewFile" alias="ReviewFile" /> 
-     <typeAlias type="com.kh.herb.admin.model.vo.Search" alias="Search"/>
      <typeAlias type="com.kh.herb.admin.model.vo.Pagination" alias="Pagination"/>
      <typeAlias type="com.kh.herb.product.model.vo.ProductFile" alias="ProductFile" />
    </typeAliases>
