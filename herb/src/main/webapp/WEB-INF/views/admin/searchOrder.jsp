@@ -170,8 +170,8 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
 							<tbody>
 							<c:forEach var="order" items="${orderList}">
 								<tr>
-									<td id="orderDetailNum">${order.orderDetailNum }</td>
-									<td><a href="adminOrderDetail.do?orderNum=${order.orderNum }">${order.orderNum }</a></td>
+									<td><a href="adminOrderDetail.do?orderDetailNum=${order.orderDetailNum }">${order.orderDetailNum }</a></td>
+									<td>${order.orderNum }</td>
 									<td>${order.orderDate }</td>
 									<td>${order.userName }</td>
 									<td>${order.orderRecvName }</td>

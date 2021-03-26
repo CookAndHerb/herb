@@ -9,6 +9,7 @@
 		<result property="orderDate" column="ORDER_DATE"/>
 		<result property="orderRecvName" column="ORDER_RECV_NAME" />
 		<result property="userName" column="USER_NAME"/>
+		<result property="userId" column="USER_ID" />
 		<result property="orderRecvAddress1" column="ORDER_RECV_ADDRESS1"/>
 		<result property="orderRecvAddress2" column="ORDER_RECV_ADDRESS2"/>
 		<result property="orderRecvAddress3" column="ORDER_RECV_ADDRESS3"/>
@@ -17,6 +18,7 @@
 		<result property="orderDetailStock" column="ORDER_DETAIL_STOCK"/>
 		<result property="orderAmount" column="ORDER_AMOUNT"/>
 		<result property="orderStatus" column="ORDER_STATUS"/>
+		<result property="orderMessage" column="ORDER_MESSAGE" />
 		<result property="orderDel" column="ORDER_DEL"/>
 	</resultMap>
 	
@@ -59,7 +61,7 @@
 	
 	<!-- 주문 상세 -->
 	<select id="selectOrder" parameterType="int" resultMap="resultOrder">
-		SELECT * FROM ADMIN_ORDER WHERE ORDER_NUM=#{orderNum}
+		SELECT * FROM ADMIN_ORDER WHERE ORDER_DETAIL_NUM=#{orderDetailNum}
 	</select>
 	
 	<!-- 배송상태 수정 -->

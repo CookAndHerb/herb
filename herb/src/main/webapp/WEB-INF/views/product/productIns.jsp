@@ -11,7 +11,8 @@
 <title>어른허브</title>
 <!-- Google Font -->
 <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-
+    <!-- Icon -->
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 <!-- Css Styles -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" type="text/css">
@@ -72,7 +73,7 @@
 				<!-- 내용 -->
 				<div class="col-lg-9 order-1 order-lg-2">
 
-					<h3>상품 등록</h3>
+					<h3><i class='fas fa-copy' style='font-size:32px; color:#e7ab3c'></i> 상품 등록</h3>
 					<br>
 					<br>
 					<form action="productIns.do" method="post" enctype="multipart/form-data">

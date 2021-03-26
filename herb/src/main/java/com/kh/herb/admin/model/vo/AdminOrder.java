@@ -17,6 +17,7 @@ public class AdminOrder {
 	private int orderDetailStock;		//주문 수량
 	private int orderAmount;			//총 주문금액
 	private String orderStatus;			//배송상태
+	private String orderMessage;
 	private String orderDel;			//주문 취소 여부
 	
 	public AdminOrder() {}
@@ -129,6 +130,12 @@ public class AdminOrder {
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+	public String getOrderMessage() {
+		return orderMessage;
+	}
+	public void setOrderMessage(String orderMessage) {
+		this.orderMessage = orderMessage;
 	}
 	
 	

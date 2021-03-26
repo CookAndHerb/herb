@@ -104,3 +104,19 @@ table tr td{
 /* #ImageName{
 	text-align: center;
 }  */
+
+
+/* 주문 상세 페이지 */
+#orderNum{
+	border: 3px solid lightgray;
+	height: 40px;
+	padding-top: 5px;
+}
+#spanNum{
+	color: #e7ab3c;
+	font-weight: bold;
+}
+#orderBtn{
+	color: white;
+	background: #e7ab3c;
+}

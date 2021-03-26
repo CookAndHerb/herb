@@ -31,6 +31,12 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+<style>
+	table th{
+		background: WhiteSmoke;
+	}
+</style>
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -75,42 +81,66 @@
                 <!-- 내용 -->
                 <div class="col-lg-10 order-1 order-lg-2">
 
-               	<h3>상품 주문 정보 조회</h3>
-                <br>
-
+               	<h3><i class='fas fa-box' style='font-size:32px; color:#e7ab3c'></i> 상품 주문 정보 조회</h3>
+                <br><br>
+				<div id="orderNum">&nbsp;&nbsp; 상품주문번호 : <span id="spanNum">${order.orderNum} </span></div>
+					<br>
 					<div class="container">
+					<h5><b>주문 상세 정보</b></h5>
 						<table class="table table-bordered">
-							<thead>
 								<tr>
-									<th>아이디</th>
-									<td>${order[0].userId}</td>
-									<td>${order[0].orderNum }</td>
-									<td>${order[0].pName }</td>
-
-									<th>Email</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>John</td>
-									<td>Doe</td>
-									<td>john@example.com</td>
+									<th width="225px;">상품명</th>
+									<td colspan="3">
+										${order.pName}
+									</td>
 								</tr>
 								<tr>
-									<td>Mary</td>
-									<td>Moe</td>
-									<td>mary@example.com</td>
+									<th>상품 주문 상태</th>
+									<td width="225px;">결제 완료</td>
+									<th width="225px;">주문 취소 여부(N/Y)</th>
+									<td>${order.orderDel }</td>
 								</tr>
 								<tr>
-									<td>July</td>
-									<td>Dooley</td>
-									<td>july@example.com</td>
+									<th>구매자 명</th>
+									<td>${order.userName }</td>
+									<th>구매자 ID</th>
+									<td>${order.userId }
 								</tr>
-							</tbody>
+								<tr>
+									<th>주문 수량</th>
+									<td>${order.orderDetailStock }</td>
+									<th>총 주문 금액</th>
+									<td>${order.orderAmount }</td>					
+								</tr>
+						</table>
+						
+						<h5><b>배송 상세 정보</b></h5>
+						<table class="table table-bordered">
+								<tr>
+									<th width="225px;">수취인명 </th>
+									<td colspan="3">${order.orderRecvName}</td>
+									
+								</tr>
+								<tr>
+									<th>연락처</th>
+									<td width="225px;" >${order.orderRecvPhone }</td>
+									<th width="225px;">배송상태</th>
+									<td>${order.orderStatus }</td>
+	
+								</tr>
+								<tr>
+									<th>배송지</th>
+									<td colspan="3">(${order.orderRecvAddress1 }) ${order.orderRecvAddress2} ${order.orderRecvAddress3}</td>
+								</tr>
+								<tr>
+									<th>배송 메세지</th>
+									<td colspan="3">${order.orderMessage }</td>
+								</tr>
 						</table>
 					</div>
-
-
+					<div style="text-align: right;">
+						<button class="btn btn-sm" id="orderBtn" onclick="location.href = 'adminOrder.do';">주문 목록</button>
+					</div>
 				</div>
             </div>
         </div>

@@ -29,34 +29,40 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sujung.css" type="text/css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
+
 	//테이블 스크롤 설정
-	$(document).ready(function() {
-		$('#dtHorizontalExample').DataTable({
-			"scrollX" : true
+	$(function() {
+		$(document).ready(function() {
+			$('#dtHorizontalExample').DataTable({
+				"scrollX" : true
+			});
+			$('.dataTables_length').addClass('bs-select');
 		});
-		$('.dataTables_length').addClass('bs-select');
 	});
-	
-	$(function(){
-		$('#orderUpt').on('click',function(){
+
+	$(function() {
+		$('#orderUpt').on('click', function() {
 			var orderStr = $('#orderStatus').val();
-			var orderDetailNum = $('#orderDetailNum').text();
+			var orderDetailNum = $('#orderDetailNum').val();
 			$.ajax({
-				url: 'orderUpt.do',
-				data: {'orderStatus' : orderStr, 'orderDetailNum' : orderDetailNum},
-				type: 'POST', 
-				dataType: 'json',
-				success: function(data){
-					if(data.ok=='dup'){
+				url : 'orderUpt.do',
+				data : {
+					'orderStatus' : orderStr,
+					'orderDetailNum' : orderDetailNum
+				},
+				type : 'POST',
+				dataType : 'json',
+				success : function(data) {
+					if (data.ok == 'dup') {
 						alert('배송상태 업데이트 실패');
-					}else{
+					} else {
 						alert('배송상태 업데이트 성공');
 					}
 				},
-				error: function(request, status, errorData){ 
-					alert("error code: "+request.status+"\n"	// 오류 번호 나옴 ex)500 404
-							+"message: "+request.responseText+"\n"	//오류 원인(기술 용어로 나옴)
-							+"error: "+errorData);
+				error : function(request, status, errorData) {
+					alert("error code: " + request.status + "\n" // 오류 번호 나옴 ex)500 404
+							+ "message: " + request.responseText + "\n" //오류 원인(기술 용어로 나옴)
+							+ "error: " + errorData);
 				}
 			});
 		})
@@ -169,8 +175,11 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
 							<tbody>
 							<c:forEach var="order" items="${orderList}">
 								<tr>
-									<td id="orderDetailNum">${order.orderDetailNum }</td>
-									<td><a href="adminOrderDetail.do?orderNum=${order.orderNum }">${order.orderNum }</a></td>
+									<td>
+										<a href="adminOrderDetail.do?orderDetailNum=${order.orderDetailNum }" class="aTag">
+										${order.orderDetailNum }</a>
+									</td>
+									<td>${order.orderNum }</td>
 									<td>${order.orderDate }</td>
 									<td>${order.userName }</td>
 									<td>${order.orderRecvName }</td>
@@ -187,7 +196,10 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
                             			</select>
                            			</td>
 									<td>${order.orderDel }</td>
-									<td><button id="orderUpt">수정</button></td>
+									<td>
+										<input type="hidden" id="orderDetailNum" value="${order.orderDetailNum }"> 
+										<button id="orderUpt" style="border: white; background: #e7ab3c; color: white;">수정</button>
+									</td>
 								</tr>
 							</c:forEach>
 						</table>
