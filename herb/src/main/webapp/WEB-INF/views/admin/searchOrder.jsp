@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
     <!-- sujung css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sujung.css" type="text/css">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 	//테이블 스크롤 설정
@@ -81,7 +82,6 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
 	bottom: .5em;
 }
 </style>
-
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -128,12 +128,13 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
 
                	<h3><i class='fas fa-box-open' style='font-size:32px; color:#e7ab3c'></i> 주문관리</h3>
                 <br>
+                <!-- 검색 -->
 				<div id="searchDiv">
                  <form action="searchOrder.do">
                         <div class="form-inline serch">
                             <select name="selectType" class="custom-select-sm">
-                            <option value="orderNum">주문번호</option>
-                            <option value="userName">주문자</option>
+                            <option ${(param.selectType)=="orderNum" ? "selected" : "" } value="orderNum">주문번호</option>
+                            <option ${(param.selectType)=="userName" ? "selected" : "" } value="userName">주문자</option>
                             </select>
                             <div class="input-group">
                                 <input type="text" class="control-sm" name="keyword">
@@ -151,17 +152,17 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
 							cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<th>상품주문번호</th>
-									<th>주문 번호</th>
-									<th>주문 일자</th>
-									<th>주문자</th>
-									<th>수령인</th>
-									<th>수령 주소</th>
+									<th style="width:50px;">상품주문번호</th>
+									<th>주문번호</th>
+									<th>주문일자</th>
+									<th style="width:70px;">주문자</th>
+									<th style="width:70px;">수령인</th>
+									<th>수령주소</th>
 									<th>연락처</th>
-									<th>주문 상품</th>
-									<th>주문 수량</th>
+									<th>주문상품</th>
+									<th>주문수량</th>
 									<th>총 주문금액</th>
-									<th>배송 상태</th>
+									<th style="width:100px;">배송상태</th>
 									<th>취소여부(N/Y)</th>
 									<th>수정</th>
 								</tr>
@@ -200,9 +201,10 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
  						</c:if> 
  						<c:if test="${currentPage > 1}">
 						<!-- 페이지 많아지면 5로 처리하는게 맞음 ( ex)6페이지에서 [이전] 버튼 클릭 ) -->
-							<c:url var="proST" value="adminOrder.do">
-								<!-- blist.do?page=?  파라미터 자동으로 전달 -->
+							<c:url var="proST" value="searchOrder.do">
 								<c:param name="page" value="${currentPage-1}" />
+								<c:param name="selectType" value="${selectType }" />
+								<c:param name="keyword" value="${keyword }" />
 							</c:url>
 							<a class="paging" href="${proST}">[이전]</a>
 						</c:if> <!-- 끝 페이지 번호 처리 --> <c:set var="endPage" value="${maxPage}" />
@@ -211,8 +213,10 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
 								<font color="#e7ab3c" size="4"><b>[${p}]</b></font>
 							</c:if>
 							<c:if test="${p ne currentPage}">
-								<c:url var="prostchk" value="adminOrder.do">
+								<c:url var="prostchk" value="searchOrder.do">
 									<c:param name="page" value="${p}" />
+									<c:param name="selectType" value="${selectType }" />
+									<c:param name="keyword" value="${keyword }" />
 								</c:url>
 								<a class="paging" href="${prostchk}">${p}</a>
 							</c:if>
@@ -221,8 +225,10 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
  							<span id=notEnd>[다음]</span>
  						</c:if> 
  						<c:if test="${currentPage < maxPage}">
-							<c:url var="proEND" value="adminOrder.do">
+							<c:url var="proEND" value="searchOrder.do">
 								<c:param name="page" value="${currentPage+1}" />
+								<c:param name="selectType" value="${selectType }" />
+								<c:param name="keyword" value="${keyword }" />
 							</c:url>
 							<a class="paging" href="${proEND}">[다음]</a>
 						</c:if>

@@ -8,15 +8,18 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import com.kh.herb.admin.model.service.AdminService;
+import com.kh.herb.admin.model.vo.AdminOrder;
 import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.product.model.vo.Product;
 import com.kh.herb.product.model.vo.ProductFile;
@@ -46,11 +49,11 @@ public class AdminController {
 //		return "admin/adminMember";
 //	}
 	
-	//주문관리 페이지
-	@RequestMapping("adminOrder.do")
-	public String adminOrder() {
-		return "admin/adminOrder";
-	}
+//	//주문관리 페이지
+//	@RequestMapping("adminOrder.do")
+//	public String adminOrder() {
+//		return "admin/adminOrder";
+//	}
 	
 	//상품등록 페이지
 	@RequestMapping("productIns.do")
@@ -302,5 +305,64 @@ public class AdminController {
 		mav.addObject("selectType", selectType);
 		mav.setViewName("admin/searchProduct");
 		return mav;
+	}
+	
+	//주문 조회
+	@RequestMapping("adminOrder.do")
+	public ModelAndView orderList(@RequestParam(name = "page", defaultValue = "1") int page, ModelAndView mav) throws Exception{
+		int currentPage = page;
+		//한 페이지당 출력할 목록 갯수
+		int listCount = as.orderCount();
+		int maxPage = (int) ((double)listCount/LIMIT + 0.9);
+		mav.addObject("orderList", as.orderList(currentPage, LIMIT));
+		mav.addObject("currentPage", currentPage);
+		mav.addObject("maxPage", maxPage);
+		mav.addObject("listCount", listCount);
+		mav.setViewName("admin/adminOrder");
+		return mav;
+	}
+	
+	//주문 검색
+	@RequestMapping("searchOrder.do")
+	public ModelAndView searchOrder(ModelAndView mav, @RequestParam(value="selectType", required=false) String selectType, 
+			@RequestParam(value="keyword", required=false) String keyword, @RequestParam(name = "page", defaultValue = "1") int page) throws Exception{
+	
+		int currentPage = page;
+		//한 페이지당 출력할 목록 갯수
+		int listCount = as.searchOrderCount(selectType, keyword);
+		int maxPage = (int) ((double)listCount/LIMIT + 0.9);
+		mav.addObject("orderList", as.searchOrder(currentPage, LIMIT, selectType, keyword));
+		mav.addObject("currentPage", currentPage);
+		mav.addObject("maxPage", maxPage);
+		mav.addObject("listCount", listCount);
+		mav.addObject("keyword", keyword);
+		mav.addObject("selectType", selectType);
+		mav.setViewName("admin/searchOrder");
+		return mav;
+	}
+	
+	//주문 상세 페이지
+	@RequestMapping("adminOrderDetail.do")
+	public ModelAndView selectOrder(ModelAndView mav, int orderNum) throws Exception {
+		List<AdminOrder> order = as.selectOrder(orderNum);
+		mav.addObject("order", order);
+		mav.setViewName("admin/adminOrderDetail");
+		return mav;
+	}
+	
+	//배송상태수정
+	@RequestMapping("orderUpt.do")
+	@ResponseBody
+	public String updateOrder( AdminOrder ao) throws Exception{
+		int result = as.updateOrder(ao);
+		
+		JSONObject jsonData = new JSONObject();
+		if(result==0){
+			jsonData.put("ok", "");
+		} else {
+			jsonData.put("ok", "dup");
+		}
+		
+		return jsonData.toJSONString();
 	}
 }

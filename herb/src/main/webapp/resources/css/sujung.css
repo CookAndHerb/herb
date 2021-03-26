@@ -26,6 +26,13 @@
 .aDel:hover{
 	color: #e7ab3c;
 }
+table th{
+	text-align: center;
+}
+table tr td{
+	text-align: center;
+}
+
 
 /* 관리자페이지 메인 */
 .totalSales{
@@ -64,9 +71,6 @@
 	background: #e7ab3c;
 	display: inline-block;
 }
-#productTable{
-	text-align: center;
-}
 #searchButton{
 	border: white;
 	width: 40px;
@@ -79,15 +83,18 @@
 }
 
 /* 주문관리페이지 */
-#orderTable{
-	text-align: center;
-	font-size: small;
+#orderDel{
+	color: #e7ab3c;
+	font-weight: bold;
+}
+#orderDel:hover{
+	color: red;
+	font-weight: bold;
 }
 
 /* 회원관리 */
 #memberTable{
-	text-align: center;
-	font-size: small;
+	font-size: 15px;
 }
 
 /* 상품등록페이지 */

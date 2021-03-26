@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
     <!-- Icon -->
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    
     <!-- Css Styles -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" type="text/css">
@@ -27,6 +27,10 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
     <!-- sujung css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sujung.css" type="text/css">
+    
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -42,7 +46,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="adminMain.do"><i class="fa fa-home"></i> Admin</a>
-                        <span>회원관리</span>
+                        <span>주문관리</span>
                     </div>
                 </div>
             </div>
@@ -62,8 +66,8 @@
                         <h4 class="fw-title">Admin</h4>
                         <ul class="filter-catagories" style="font-weight: bold;">
                             <li><a href="adminProduct.do" >상품관리</a></li>
-                            <li><a href="adminOrder.do" >주문관리</a></li>
-                            <li><a href="adminMember.do" style="color: #e7ab3c">회원관리</a></li>
+                            <li><a href="adminOrder.do" style="color: #e7ab3c">주문관리</a></li>
+                            <li><a href="adminMember.do" >회원관리</a></li>
                         </ul>
                     </div>              
                 </div>
@@ -71,88 +75,42 @@
                 <!-- 내용 -->
                 <div class="col-lg-10 order-1 order-lg-2">
 
-               	<h3><i class='fas fa-house-user' style='font-size:32px; color:#e7ab3c'></i> 회원관리</h3>
+               	<h3>상품 주문 정보 조회</h3>
                 <br>
-				<form action="searchMember.do">
-				<div id="searchDiv">
-                        <div class="form-inline serch">
-                            <select name="selectType" class="custom-select-sm">
-                            <option value="userId">아이디</option>
-                            <option value="userName">이름</option>
-                            </select>
-                            <div class="input-group">
-                                <input type="text" class="control-sm" name="keyword">
-                                <button type="submit" id="searchButton" class="btn-warning" >
-                                	<i class="ti-search"></i></button>
-                            &nbsp;&nbsp;
-                            </div>
-                        </div>
-                    </div>
-                   </form>
-				
-				<br><br>
-					<div class="container ">
-						<table id="memberTable" class="table table-bordered col-sm-12">
+
+					<div class="container">
+						<table class="table table-bordered">
 							<thead>
 								<tr>
-									<th style="padding-bottom:20px">번호</th>
-									<th style="padding-bottom:20px">아이디</th>
-									<th style="padding-bottom:20px">이름</th>
-									<th style="padding-bottom:20px">연락처</th>
-									<th style="padding-bottom:20px;">주소</th>
-									<th style="padding-bottom:20px;">이메일</th>
-									<th style="width: 85px">탈퇴여부(N/Y)</th>
+									<th>아이디</th>
+									<td>${order[0].userId}</td>
+									<td>${order[0].orderNum }</td>
+									<td>${order[0].pName }</td>
+
+									<th>Email</th>
 								</tr>
 							</thead>
 							<tbody>
-							<c:forEach var="member" items="${memberList }">
 								<tr>
-									<td>${member.userNum }</td>
-									<td>${member.userId }</td>
-									<td style="width:70px">${member.userName }</td>
-									<td>${member.userPhone }</td>
-									<td>(${member.userAddress1 }) ${member.userAddress2 } ${member.userAddress3 }</td>
-									<td>${member.userEmail }</td>
-									<td>${member.userDel }</td>
+									<td>John</td>
+									<td>Doe</td>
+									<td>john@example.com</td>
 								</tr>
-							</c:forEach>
+								<tr>
+									<td>Mary</td>
+									<td>Moe</td>
+									<td>mary@example.com</td>
+								</tr>
+								<tr>
+									<td>July</td>
+									<td>Dooley</td>
+									<td>july@example.com</td>
+								</tr>
+							</tbody>
 						</table>
 					</div>
-					
-					<div class="pageDiv">
-						<!-- 앞 페이지 번호 처리 -->
-						<c:if test="${currentPage <= 1}"> 
-  								<span id="notPrev">[이전]&nbsp;</span>
- 						</c:if> 
- 						<c:if test="${currentPage > 1}">
-						<!-- 페이지 많아지면 5로 처리하는게 맞음 ( ex)6페이지에서 [이전] 버튼 클릭 ) -->
-							<c:url var="proST" value="adminMember.do">
-								<!-- blist.do?page=?  파라미터 자동으로 전달 -->
-								<c:param name="page" value="${currentPage-1}" />
-							</c:url>
-							<a class="paging" href="${proST}">[이전]</a>
-						</c:if> <!-- 끝 페이지 번호 처리 --> <c:set var="endPage" value="${maxPage}" />
-						<c:forEach var="p" begin="${startPage+1}" end="${endPage}">
-							<c:if test="${p eq currentPage}">
-								<font color="#e7ab3c" size="4"><b>[${p}]</b></font>
-							</c:if>
-							<c:if test="${p ne currentPage}">
-								<c:url var="prostchk" value="adminMember.do">
-									<c:param name="page" value="${p}" />
-								</c:url>
-								<a class="paging" href="${prostchk}">${p}</a>
-							</c:if>
-						</c:forEach> 
-						<c:if test="${currentPage >= maxPage}">
- 							<span id=notEnd>[다음]</span>
- 						</c:if> 
- 						<c:if test="${currentPage < maxPage}">
-							<c:url var="proEND" value="adminMember.do">
-								<c:param name="page" value="${currentPage+1}" />
-							</c:url>
-							<a class="paging" href="${proEND}">[다음]</a>
-						</c:if>
-					</div>
+
+
 				</div>
             </div>
         </div>

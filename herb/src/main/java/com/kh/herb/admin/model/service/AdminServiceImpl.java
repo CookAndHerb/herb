@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.herb.admin.model.dao.AdminDAO;
+import com.kh.herb.admin.model.vo.AdminOrder;
 import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.product.model.vo.Product;
 import com.kh.herb.product.model.vo.ProductFile;
@@ -92,6 +93,36 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<Product> searchProduct(int startPage, int limit, String selectType, String keyword) throws Exception {
 		return ad.searchProduct(startPage, limit, selectType, keyword);
+	}
+
+	@Override
+	public int orderCount() throws Exception {
+		return ad.orderCount();
+	}
+
+	@Override
+	public List<AdminOrder> orderList(int startPage, int limit) throws Exception {
+		return ad.orderList(startPage, limit);
+	}
+
+	@Override
+	public int searchOrderCount(String selectType, String keyword) throws Exception {
+		return ad.searchOrderCount(selectType, keyword);
+	}
+
+	@Override
+	public List<AdminOrder> searchOrder(int startPage, int limit, String selectType, String keyword) throws Exception {
+		return ad.searchOrder(startPage, limit, selectType, keyword);
+	}
+
+	@Override
+	public List<AdminOrder> selectOrder(int orderNum) throws Exception {
+		return ad.selectOrder(orderNum);
+	}
+
+	@Override
+	public int updateOrder(AdminOrder ao) throws Exception {
+		return ad.updateOrder(ao);
 	}
 }
 

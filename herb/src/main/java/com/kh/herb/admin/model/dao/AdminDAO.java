@@ -6,6 +6,8 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.kh.herb.admin.model.vo.AdminOrder;
 import com.kh.herb.admin.model.vo.Pagination;
 import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.product.model.vo.Product;
@@ -125,5 +127,47 @@ public class AdminDAO {
 		page.setKeyword(keyword);
 		return sqlSession.selectOne("adminProduct.searchProductCount", page);
 	}
+
+	//주문 총 갯수 조회
+	public int orderCount() throws Exception {
+		return sqlSession.selectOne("adminOrder.orderCount");
+	}
+
+	//주문 조회
+	public List<AdminOrder> orderList(int startPage, int limit) throws Exception{
+		int startRow = (startPage-1)*limit;
+		Pagination page = new Pagination();
+		page.setStart(startRow+1);
+		page.setEnd(startRow+10);
+		return sqlSession.selectList("adminOrder.orderList", page);
+	}
 	
+	//주문 검색 결과 개수
+	public int searchOrderCount (String selectType, String keyword) throws Exception {
+		Pagination page = new Pagination();
+		page.setSelectType(selectType);
+		page.setKeyword(keyword);
+		return sqlSession.selectOne("adminOrder.searchOrderCount", page);
+	}
+
+	//주문 검색
+	public List<AdminOrder> searchOrder(int startPage, int limit, String selectType, String keyword) throws Exception{
+		int startRow = (startPage-1)*limit;
+		Pagination page = new Pagination();
+		page.setStart(startRow+1);
+		page.setEnd(startRow+10);
+		page.setSelectType(selectType);
+		page.setKeyword(keyword);
+		return sqlSession.selectList("adminOrder.searchOrder", page);
+	}
+	
+	//주문 상세
+	public List<AdminOrder> selectOrder(int orderNum) throws Exception{
+		return sqlSession.selectList("adminOrder.selectOrder", orderNum);
+	}
+	
+	//배송 상태 수정
+	public int updateOrder(AdminOrder ao) throws Exception{
+		return sqlSession.update("adminOrder.updateOrder", ao);
+	}
 }

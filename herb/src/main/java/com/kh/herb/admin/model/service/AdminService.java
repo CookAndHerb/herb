@@ -2,6 +2,7 @@ package com.kh.herb.admin.model.service;
 
 import java.util.List;
 
+import com.kh.herb.admin.model.vo.AdminOrder;
 import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.product.model.vo.Product;
 import com.kh.herb.product.model.vo.ProductFile;
@@ -24,4 +25,10 @@ public interface AdminService {
 	public int deleteFile(int pNum) throws Exception;
 	public int searchProductCount (String selectType, String keyword) throws Exception;
 	public List<Product> searchProduct(int startPage, int limit, String selectType, String keyword) throws Exception;
+	public int orderCount() throws Exception;
+	public List<AdminOrder> orderList(int startPage, int limit) throws Exception;
+	public int searchOrderCount (String selectType, String keyword) throws Exception;
+	public List<AdminOrder> searchOrder(int startPage, int limit, String selectType, String keyword) throws Exception;
+	public List<AdminOrder> selectOrder(int orderNum) throws Exception;
+	public int updateOrder(AdminOrder ao) throws Exception;
 }
