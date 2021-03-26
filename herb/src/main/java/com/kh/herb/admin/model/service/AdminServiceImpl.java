@@ -83,5 +83,15 @@ public class AdminServiceImpl implements AdminService {
 	public int productCount() throws Exception {
 		return ad.productCount();
 	}
+
+	@Override
+	public int searchProductCount(String selectType, String keyword) throws Exception {
+		return ad.searchProductCount(selectType, keyword);
+	}
+
+	@Override
+	public List<Product> searchProduct(int startPage, int limit, String selectType, String keyword) throws Exception {
+		return ad.searchProduct(startPage, limit, selectType, keyword);
+	}
 }
 

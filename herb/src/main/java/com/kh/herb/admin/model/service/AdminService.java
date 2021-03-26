@@ -22,4 +22,6 @@ public interface AdminService {
 	public int updateFile(ProductFile pf) throws Exception;
 	public int deleteProduct(int pNum) throws Exception;
 	public int deleteFile(int pNum) throws Exception;
+	public int searchProductCount (String selectType, String keyword) throws Exception;
+	public List<Product> searchProduct(int startPage, int limit, String selectType, String keyword) throws Exception;
 }

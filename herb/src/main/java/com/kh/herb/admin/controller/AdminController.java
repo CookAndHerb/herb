@@ -284,4 +284,23 @@ public class AdminController {
 		mav.setViewName("product/productDelComplete");
 		return mav;
 	}
+	
+	//상품 검색
+	@RequestMapping("searchProduct.do")
+	public ModelAndView searchProduct(ModelAndView mav, @RequestParam(value="selectType", required=false) String selectType, 
+			@RequestParam(value="keyword", required=false) String keyword, @RequestParam(name = "page", defaultValue = "1") int page) throws Exception{
+	
+		int currentPage = page;
+		//한 페이지당 출력할 목록 갯수
+		int listCount = as.searchProductCount(selectType, keyword);
+		int maxPage = (int) ((double)listCount/LIMIT + 0.9);
+		mav.addObject("productList", as.searchProduct(currentPage, LIMIT, selectType, keyword));
+		mav.addObject("currentPage", currentPage);
+		mav.addObject("maxPage", maxPage);
+		mav.addObject("listCount", listCount);
+		mav.addObject("keyword", keyword);
+		mav.addObject("selectType", selectType);
+		mav.setViewName("admin/searchProduct");
+		return mav;
+	}
 }

@@ -107,6 +107,23 @@ public class AdminDAO {
 		return sqlSession.update("adminFile.deleteFile", pNum);
 	}
 	
-
+	//상품검색
+	public List<Product> searchProduct(int startPage, int limit, String selectType, String keyword) throws Exception{
+		int startRow = (startPage-1)*limit;
+		Pagination page = new Pagination();
+		page.setStart(startRow+1);
+		page.setEnd(startRow+10);
+		page.setSelectType(selectType);
+		page.setKeyword(keyword);
+		return sqlSession.selectList("adminProduct.searchProduct", page);
+	}
+	
+	//상품 검색 결과 개수
+	public int searchProductCount (String selectType, String keyword) throws Exception {
+		Pagination page = new Pagination();
+		page.setSelectType(selectType);
+		page.setKeyword(keyword);
+		return sqlSession.selectOne("adminProduct.searchProductCount", page);
+	}
 	
 }
