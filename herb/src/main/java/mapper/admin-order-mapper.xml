@@ -60,8 +60,8 @@
 	</select>
 	
 	<!-- 주문 상세 -->
-	<select id="selectOrder" parameterType="int" resultMap="resultOrder">
-		SELECT * FROM ADMIN_ORDER WHERE ORDER_DETAIL_NUM=#{orderDetailNum}
+	<select id="selectOrder" parameterType="_int" resultMap="resultOrder">
+		SELECT * FROM ADMIN_ORDER WHERE ORDER_NUM=#{orderNum}
 	</select>
 	
 	<!-- 배송상태 수정 -->

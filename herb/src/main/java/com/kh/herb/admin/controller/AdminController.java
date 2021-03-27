@@ -343,8 +343,8 @@ public class AdminController {
 	
 	//주문 상세 페이지
 	@RequestMapping("adminOrderDetail.do")
-	public ModelAndView selectOrder(ModelAndView mav, int orderDetailNum) throws Exception {
-		AdminOrder order = as.selectOrder(orderDetailNum);
+	public ModelAndView selectOrder(ModelAndView mav, int orderNum) throws Exception {
+		List<AdminOrder> order = as.selectOrder(orderNum);
 		mav.addObject("order", order);
 		mav.setViewName("admin/adminOrderDetail");
 		return mav;

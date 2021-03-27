@@ -116,8 +116,8 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public AdminOrder selectOrder(int orderDetailNum) throws Exception {
-		return ad.selectOrder(orderDetailNum);
+	public List<AdminOrder> selectOrder(int orderNum) throws Exception {
+		return ad.selectOrder(orderNum);
 	}
 
 	@Override

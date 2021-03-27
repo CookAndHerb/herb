@@ -81,9 +81,9 @@
                 <!-- 내용 -->
                 <div class="col-lg-10 order-1 order-lg-2">
 
-               	<h3><i class='fas fa-box' style='font-size:32px; color:#e7ab3c'></i> 상품 주문 정보 조회</h3>
+               <%-- 	<h3><i class='fas fa-box' style='font-size:32px; color:#e7ab3c'></i> 상품 주문 정보 조회</h3>
                 <br><br>
-				<div id="orderNum">&nbsp;&nbsp; 상품주문번호 : <span id="spanNum">${order.orderNum} </span></div>
+				<div id="orderNum">&nbsp;&nbsp; 상품주문번호 : <span id="spanNum">${order[0].orderNum} </span></div>
 					<br>
 					<div class="container">
 					<h5><b>주문 상세 정보</b></h5>
@@ -91,9 +91,11 @@
 								<tr>
 									<th width="225px;">상품명</th>
 									<td colspan="3">
-										${order.pName}
+										${order[0].pName}
 									</td>
 								</tr>
+						</table>
+						<table class="table table-bordered">
 								<tr>
 									<th>상품 주문 상태</th>
 									<td width="225px;">결제 완료</td>
@@ -102,15 +104,15 @@
 								</tr>
 								<tr>
 									<th>구매자 명</th>
-									<td>${order.userName }</td>
+									<td>${order[0].userName }</td>
 									<th>구매자 ID</th>
-									<td>${order.userId }
+									<td>${order[0].userId }
 								</tr>
 								<tr>
 									<th>주문 수량</th>
 									<td>${order.orderDetailStock }</td>
 									<th>총 주문 금액</th>
-									<td>${order.orderAmount }</td>					
+									<td>${order[0].orderAmount }</td>					
 								</tr>
 						</table>
 						
@@ -143,7 +145,7 @@
 					</div>
 				</div>
             </div>
-        </div>
+        </div> --%>
     </section>
     <!-- content 끝 -->
 

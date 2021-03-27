@@ -162,8 +162,8 @@ public class AdminDAO {
 	}
 	
 	//주문 상세
-	public AdminOrder selectOrder(int orderDetailNum) throws Exception{
-		return sqlSession.selectOne("adminOrder.selectOrder", orderDetailNum);
+	public List<AdminOrder> selectOrder(int orderNum) throws Exception{
+		return sqlSession.selectList("adminOrder.selectOrder", orderNum);
 	}
 	
 	//배송 상태 수정
