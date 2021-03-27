@@ -64,5 +64,9 @@ public class MyHerbDAO {
 		 return sqlSession.selectList("Myherb.orderDetailList", orderDetailList);
 	 }
 	 
+	 // 주문 취소하기
+	public int orderDel(int orderNum)throws Exception{
+			return sqlSession.update("Myherb.orderDel", orderNum);
+		}
 	 
 }

@@ -109,8 +109,8 @@
   					
   							<li>
  								 <div>
- 								 <c:set var="num" value="${orderList.orderNum}"/>
   									 <p><span>주문번호</span><a href="memberOrderDetail.do?orderNum=${orderList.orderNum}" style="font-weight:bold ; color:#e7ab3c; ">${orderList.orderNum}</a></p>
+  									 <p><span>주문일자</span><fmt:formatDate value="${orderList.orderDate}" type="date"/></p>
   									 <p><span>수령인</span>${orderList.orderRecvName}</p>
    									 <p><span>주소</span>(${orderList.orderRecvAddress1}) ${orderList.orderRecvAddress2} ${orderList.orderRecvAddress3}</p>
      							     <p><span>가격</span><fmt:formatNumber pattern="###,###,###" value="${orderList.orderAmount}" /> 원</p>

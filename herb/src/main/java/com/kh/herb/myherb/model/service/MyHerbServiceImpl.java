@@ -51,5 +51,10 @@ public class MyHerbServiceImpl implements MyHerbService {
 		return myHerbDAO.orderDetailList(orderDetailList);
 	}
 
+	@Override
+	public int orderDel(int orderNum) throws Exception {
+		return myHerbDAO.orderDel(orderNum);
+	}
+
 	
 }

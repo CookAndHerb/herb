@@ -21,4 +21,6 @@ public interface MyHerbService {
 	public List<OrderList> orderList(String userId, int startPage, int limit) throws Exception;
 	
 	public List<OrderDetailList> orderDetailList(OrderDetailList orderDetailList) throws Exception;
+	
+	public int orderDel(int orderNum) throws Exception;
 }

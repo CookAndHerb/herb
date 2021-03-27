@@ -108,4 +108,11 @@
             	 on d.ORDER_DETAIL_P_NUM = g.P_NUM
      	WHERE o.ORDER_USER_ID = #{orderUserId} and o.ORDER_NUM = #{orderNum}
 	</select>
+	
+	<!-- 주문 취소 하기 -->
+	<update id="orderDel" parameterType="int">
+	UPDATE ORDER_TABLE
+		SET ORDER_DEL = 'Y'
+		WHERE ORDER_NUM = #{orderNum}
+	</update>
 </mapper>

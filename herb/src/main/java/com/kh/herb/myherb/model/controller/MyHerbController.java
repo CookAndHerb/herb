@@ -6,16 +6,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.hibernate.validator.internal.engine.messageinterpolation.el.MapBasedVariableMapper;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.myherb.model.service.MyHerbService;
 import com.kh.herb.myherb.model.vo.OrderDetailList;
+import com.kh.herb.myherb.model.vo.OrderList;
 
 @Controller
 public class MyHerbController {
@@ -49,7 +52,7 @@ public class MyHerbController {
 	// 회원 탈퇴 처리
 	@RequestMapping(value="memberDelete.do", method =RequestMethod.POST)
 	public ModelAndView memberDelete(Member member, ModelAndView mv, HttpServletRequest request) throws Exception{
-		
+		                      
 		boolean result = myHerbService.checkPw(member);
 		if(result == true) { // 비밀번호가 맞다면 삭제 후 메인페이지 이동
 			myHerbService.deleteMember(member);
@@ -72,6 +75,12 @@ public class MyHerbController {
 			int currentPage = page;
 			// 한 페이지당 출력할 목록 갯수
 			Member member = (Member)session.getAttribute("member");
+			if(member == null) { // 로그인 안됐을 경우
+				
+				mv.setViewName("cart/noLogin");
+			
+			} else {
+			
 			String userId = member.getUserId();
 			int listCount = myHerbService.listCount(userId); // 주문 총 개수
 			int maxPage = (int) ((double) listCount / LIMIT + 0.9);
@@ -88,14 +97,22 @@ public class MyHerbController {
 				endNavi = maxPage;
 			}
 			
+			List<OrderList> orderList =  myHerbService.orderList(userId, currentPage, LIMIT);
 			
-			mv.addObject("orderList", myHerbService.orderList(userId, currentPage, LIMIT));
-			mv.addObject("currentPage", currentPage); // 현재 페이지
-			mv.addObject("maxPage", maxPage); // 완전 마지막 페이지
-			mv.addObject("startNavi", startNavi);
-			mv.addObject("endNavi", endNavi); 
-			mv.addObject("listCount", listCount); // 주문 총 개수
-			mv.setViewName("myHerb/memberOrder");
+			if(orderList.size() == 0) { // 주문 내역 없을 경우
+				mv.setViewName("myHerb/noList");
+				
+			}else { // 주문 내역 있을 경우
+				mv.addObject("orderList", orderList);
+				mv.addObject("currentPage", currentPage); // 현재 페이지
+				mv.addObject("maxPage", maxPage); // 완전 마지막 페이지
+				mv.addObject("startNavi", startNavi);
+				mv.addObject("endNavi", endNavi); 
+				mv.addObject("listCount", listCount); // 주문 총 개수
+				mv.setViewName("myHerb/memberOrder");
+				}
+			}
+			
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
 			mv.setViewName("myHerb/errorPage");
@@ -103,11 +120,15 @@ public class MyHerbController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "memberOrderDetail.do", method=RequestMethod.GET)
-	public ModelAndView orderDetailList(@RequestParam(name = "orderNum") String orderNumStr, HttpSession session, ModelAndView mv) throws Exception{
-		System.out.println(orderNumStr);
-		int orderNum = Integer.parseInt(orderNumStr);
+	@RequestMapping(value = "memberOrderDetail.do", method=RequestMethod.GET) 
+	public ModelAndView orderDetailList(@RequestParam(name = "orderNum")int orderNum, HttpSession session, ModelAndView mv) throws Exception{
+		System.out.println("여기왔어요");
+		System.out.println(orderNum);
+		
 		Member member = (Member)session.getAttribute("member");
+		if(member == null) {
+			mv.setViewName("cart/noLogin");
+		}else {
 		String userId = member.getUserId();
 		
 		OrderDetailList odl = new OrderDetailList();
@@ -117,7 +138,29 @@ public class MyHerbController {
 		
 		mv.addObject("orderDetailList", myHerbService.orderDetailList(odl));
 		mv.setViewName("myHerb/memberOrderDetail");
+		}
 		return mv;
 	}
+	
+	
+	// 주문 취소
 
+	@RequestMapping(value="orderDel.do", method=RequestMethod.GET)
+	public @ResponseBody String orderDel(HttpSession session, int orderNum) throws Exception{
+		
+		
+		int result = myHerbService.orderDel(orderNum);
+		
+		JSONObject obj = new JSONObject();
+		
+		if(result > 0) { // 주문 취소 성공
+			obj.put("result", "ok");
+		
+		}else {
+			obj.put("result", "");
+		}
+		
+		return obj.toJSONString();
+	}
+	
 	}
