@@ -43,6 +43,7 @@ public class ReviewDAO {
 				sqlSession.insert("Review.reviewFileInsert", reFile);
 			}
 		}
+		
 	}
 	
 	// 별점 평균

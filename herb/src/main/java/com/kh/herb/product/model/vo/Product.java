@@ -16,7 +16,8 @@ public class Product {
 	private String imageName; //대표 이미지 이름
 	private String imagePath; //대표 이미지 경로
 	private String pContent; //상세설명
-	private int pStar; //별점
+	private int pStar; // 리뷰 총 개수
+	private int pStarAvg; // 리뷰 평균
 	private int pSell; //수량(몇 개 살건지)
 	private Date pMaDate; //제조일
 	private Date pExDate; //유통기한
@@ -108,6 +109,12 @@ public class Product {
 	}
 	public void setImage(MultipartFile image) {
 		this.image = image;
+	}
+	public int getpStarAvg() {
+		return pStarAvg;
+	}
+	public void setpStarAvg(int pStarAvg) {
+		this.pStarAvg = pStarAvg;
 	}
 
 	

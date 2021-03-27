@@ -3,7 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Product">
-	<resultMap id="proResult" type="Product"> 	
+	<resultMap id="proResult" type="Product">
 		<id property="pNum" column="P_NUM"></id>
 		<result property="pName" column="P_NAME"></result>
 		<result property="pCost" column="P_COST"></result>
@@ -18,14 +18,43 @@
 		<result property="pType" column="P_TYPE"></result>
 		<result property="pCategory" column="P_CATEGORY"></result>
 	</resultMap>
-	
-	<!-- 상품 리스트 가져오기  -->
-	<select id="proAllList" resultMap="proResult">
-		select * from product where p_del = 'N'
+
+	<!-- 상품 리스트 가져오기 -->
+	<select id="proAllList" parameterType="ProductPage" resultType="Product" resultMap="proResult">
+	<![CDATA[
+		select * from(select rownum rnum, p_num, p_name, p_cost, 
+		p_image_name, p_image_path, p_star, p_category 
+		from product where p_del = 'N')
+		where rnum >= #{startPage} and rnum <= #{endPage}
+	]]>
+	</select>
+	<!-- 상품 카테고리별 리스트 가져오기 -->
+	<select id="proCategoryList" parameterType="ProductPage" resultType="Product" resultMap="proResult">
+	<![CDATA[
+		select * from(select rownum rnum, p_num, p_name, p_cost, 
+		p_image_name, p_image_path, p_star, p_category 
+		from product where p_del = 'N' and p_category=#{pCategory})
+		where rnum >= #{startPage} and rnum <= #{endPage}
+	]]>
+	</select>
+	<!-- 상품 총 개수 -->
+	<select id="proCount" resultType="int">
+		select count(*) from product where p_del = 'N'
+	</select>
+	<!-- 상품 카테고리별 총 개수 -->
+	<select id="proCategoryCount" parameterType="String" resultType="int">
+		select count(*) from product where p_del = 'N' and p_category=#{pCategory}
 	</select>
 	<!-- 상품 인포 -->
 	<select id="proInfo" parameterType="int" resultMap="proResult">
-		select * from product where p_del = 'N' and p_num = #{pNum}
+		select * from
+		product where p_del = 'N' and p_num = #{pNum}
 	</select>
+	<!-- 리뷰 개수 업데이트 -->
+	<update id="proStarCount" parameterType="int">
+		update product set
+		p_star = (select count(r_num) from review where p_num = #{p_num})
+		where p_num = #{p_num}
+	</update>
 
 </mapper>
