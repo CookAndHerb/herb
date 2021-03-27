@@ -213,8 +213,8 @@
                             
                                 <tr>
                                 	<td><input type="checkbox" name="chBox" class="chBox" data-cartNum="${cartList.cartNum}"/></td>
-                                    <td class="cart-pic first-row"><img src="${pageContext.request.contextPath}/resources/img/cart-page/product-1.jpg" alt=""></td>
-                                    <td class="cart-title first-row"><h5 style="font-weight:bold;">${cartList.pName}</h5></td>
+                                    <td class="cart-pic first-row"><a href="productInfo.do?num=${cartList.cartPnum}"><img src="${pageContext.request.contextPath}/resources/img/cart-page/product-1.jpg" alt=""></a></td>
+                                    <td class="cart-title first-row"><h5 style="font-weight:bold; "><a style="color:black;" href="productInfo.do?num=${cartList.cartPnum}">${cartList.pName}</a></h5></td>
                                     <td class="p-price first-row"><fmt:formatNumber pattern="###,###,###" value="${cartList.pCost}" />원</td>
                                     <td class="qua-col first-row">
                                         <div class="quantity">

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -112,19 +113,30 @@ public class MemberController {
 	}
 	
 	// 아이디 중복확인
-	@RequestMapping("idCheck.do")
+	@RequestMapping(value="idCheck.do", method=RequestMethod.GET)
 	@ResponseBody
-	public String idCheck(@RequestBody String userId) throws Exception {
+	public String idCheck(@RequestParam(value= "userId") String userId) throws Exception {
 		int count = 0;
 		JSONObject obj = new JSONObject();
 
 		count = memberService.idCheckProcess(userId);
+		
+		
 		System.out.println(count);
-		obj.put("cnt", count);
-
+		
+		if(count > 0) {
+			obj.put("result", "ok");
+			
+		}else {
+		
+			obj.put("result", "");
+		
+		}
+		
 		return obj.toJSONString();
 	}// end idCheck()
 
+	
 	@RequestMapping(value="memberEmail.do", method=RequestMethod.GET)
 	@ResponseBody
 	public String mailCheckGET(String userEmail) throws Exception{
