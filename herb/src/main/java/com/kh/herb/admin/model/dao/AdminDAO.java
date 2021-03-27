@@ -167,7 +167,14 @@ public class AdminDAO {
 	}
 	
 	//배송 상태 수정
-	public int updateOrder(AdminOrder ao) throws Exception{
+	public int updateOrder(String orderStatus, int orderNum) throws Exception{
+		AdminOrder ao = new AdminOrder();
+		ao.setOrderStatus(orderStatus);
+		ao.setOrderNum(orderNum);
 		return sqlSession.update("adminOrder.updateOrder", ao);
+	}
+	
+	public int totalSales() throws Exception{
+		return sqlSession.selectOne("adminOrder.totalSales");
 	}
 }

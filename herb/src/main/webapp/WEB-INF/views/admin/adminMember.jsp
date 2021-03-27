@@ -119,20 +119,21 @@
 						</table>
 					</div>
 					
+					<!-- 앞 페이지 번호 처리 -->
 					<div class="pageDiv">
-						<!-- 앞 페이지 번호 처리 -->
-						<c:if test="${currentPage <= 1}"> 
+						<c:if test="${startPage == 1}"> 
   								<span id="notPrev">[이전]&nbsp;</span>
  						</c:if> 
- 						<c:if test="${currentPage > 1}">
+ 						<c:if test="${startPage > 1}">
 						<!-- 페이지 많아지면 5로 처리하는게 맞음 ( ex)6페이지에서 [이전] 버튼 클릭 ) -->
 							<c:url var="proST" value="adminMember.do">
 								<!-- blist.do?page=?  파라미터 자동으로 전달 -->
-								<c:param name="page" value="${currentPage-1}" />
+								<c:param name="page" value="${startPage-5}" />
 							</c:url>
 							<a class="paging" href="${proST}">[이전]</a>
-						</c:if> <!-- 끝 페이지 번호 처리 --> <c:set var="endPage" value="${maxPage}" />
-						<c:forEach var="p" begin="${startPage+1}" end="${endPage}">
+						</c:if> 
+						<!-- 끝 페이지 번호 처리 --> 
+						<c:forEach var="p" begin="${startPage}" end="${endPage}">
 							<c:if test="${p eq currentPage}">
 								<font color="#e7ab3c" size="4"><b>[${p}]</b></font>
 							</c:if>
@@ -143,16 +144,18 @@
 								<a class="paging" href="${prostchk}">${p}</a>
 							</c:if>
 						</c:forEach> 
-						<c:if test="${currentPage >= maxPage}">
+						<c:if test="${endPage >= maxPage}">
  							<span id=notEnd>[다음]</span>
  						</c:if> 
- 						<c:if test="${currentPage < maxPage}">
+ 						<c:if test="${endPage < maxPage}">
 							<c:url var="proEND" value="adminMember.do">
-								<c:param name="page" value="${currentPage+1}" />
+								<c:param name="page" value="${endPage+1}" />
 							</c:url>
 							<a class="paging" href="${proEND}">[다음]</a>
 						</c:if>
 					</div>
+					
+					
 				</div>
             </div>
         </div>

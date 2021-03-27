@@ -121,8 +121,14 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int updateOrder(AdminOrder ao) throws Exception {
-		return ad.updateOrder(ao);
+	public int updateOrder(String orderStatus, int orderNum) throws Exception {
+		return ad.updateOrder(orderStatus, orderNum);
 	}
+
+	@Override
+	public int totalSales() throws Exception {
+		return ad.totalSales();
+	}
+	
 }
 

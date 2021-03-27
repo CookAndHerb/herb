@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,34 +30,31 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sujung.css" type="text/css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
-
-	//테이블 스크롤 설정
-	$(function() {
-		$(document).ready(function() {
-			$('#dtHorizontalExample').DataTable({
-				"scrollX" : true
-			});
-			$('.dataTables_length').addClass('bs-select');
-		});
+$(document).ready(function() {
+	$('#dtHorizontalExample').DataTable({
+		"scrollX" : true
 	});
+	$('.dataTables_length').addClass('bs-select');
+});
+
 
 	$(function() {
 		$('#orderUpt').on('click', function() {
 			var orderStr = $('#orderStatus').val();
-			var orderDetailNum = $('#orderDetailNum').val();
+			var orderNum = $('#orderNum').val();
 			$.ajax({
 				url : 'orderUpt.do',
 				data : {
 					'orderStatus' : orderStr,
-					'orderDetailNum' : orderDetailNum
+					'orderNum' : orderNum
 				},
 				type : 'POST',
 				dataType : 'json',
 				success : function(data) {
 					if (data.ok == 'dup') {
-						alert('배송상태 업데이트 실패');
-					} else {
 						alert('배송상태 업데이트 성공');
+					} else {
+						alert('배송상태 업데이트 실패');
 					}
 				},
 				error : function(request, status, errorData) {
@@ -86,6 +84,11 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
 	{
 	bottom: .5em;
 }
+
+
+#content ul li { border:5px solid #eee; padding:10px 20px; margin-bottom:20px; }
+#content .orderList span { font-size:15px; font-weight:bold; display:inline-block; width:150px; margin-right:10px; }
+
 </style>
 
 </head>
@@ -152,20 +155,17 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
                     </div>
 				
 				<br><br>
-					<div class="table-responsive" id="orderDiv" style="overflow-x:scroll;">
+					 <div class="table-responsive" id="orderDiv" style="overflow-x:scroll;">
 						<table id="dtHorizontalExample" class="table table-bordered orderTable" 
 							cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<th>상품주문번호</th>
 									<th>주문 번호</th>
 									<th>주문 일자</th>
 									<th>주문자</th>
 									<th>수령인</th>
 									<th>수령 주소</th>
 									<th>연락처</th>
-									<th>주문 상품</th>
-									<th>주문 수량</th>
 									<th>총 주문금액</th>
 									<th>배송 상태</th>
 									<th>취소여부(N/Y)</th>
@@ -175,7 +175,6 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
 							<tbody>
 							<c:forEach var="order" items="${orderList}">
 								<tr>
-									<td>${order.orderDetailNum }</td>
 									<td>
 										<a href="adminOrderDetail.do?orderNum=${order.orderNum }">
 										${order.orderNum }</a>
@@ -185,40 +184,83 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
 									<td>${order.orderRecvName }</td>
 									<td>(${order.orderRecvAddress1}) ${order.orderRecvAddress2} ${order.orderRecvAddress3}</td>
 									<td>${order.orderRecvPhone }</td>
-									<td>${order.pName }</td>
-									<td>${order.orderDetailStock }</td>
 									<td>${order.orderAmount }</td>
 									<td>
-										<select name="orderStatus" id="orderStatus" class="custom-select-sm">
-										<option ${(param.orderStatus)=="배송 준비중" ? "selected" : "" } value="배송 준비중">배송 준비중</option>
-                            			<option ${(param.orderStatus)=="배송중" ? "selected" : "" } value="배송중">배송중</option>
-                            			<option ${(param.orderStatus)=="배송완료" ? "selected" : "" } value="배송완료">배송완료</option>
-                            			</select>
+										<c:choose>
+											<c:when test="${order.orderDel == 'Y'}">
+											구매 취소
+                            				</c:when>
+                            				<c:otherwise>
+                            					<select name="orderStatus" id="orderStatus" class="custom-select-sm">
+													<option ${(order.orderStatus)=="배송 준비중" ? "selected" : "" } value="배송 준비중">배송 준비중</option>
+                            						<option ${(order.orderStatus)=="배송중" ? "selected" : "" } value="배송중">배송중</option>
+                            						<option ${(order.orderStatus)=="배송완료" ? "selected" : "" } value="배송완료">배송완료</option>
+                            					</select>
+                            				</c:otherwise>
+                            			</c:choose>
                            			</td>
 									<td>${order.orderDel }</td>
 									<td>
-										<input type="hidden" id="orderDetailNum" value="${order.orderDetailNum }"> 
+										<input type="hidden" name="orderNum" id="orderNum" value="${order.orderNum }"> 
 										<button id="orderUpt" style="border: white; background: #e7ab3c; color: white;">수정</button>
 									</td>
 								</tr>
 							</c:forEach>
 						</table>
 					</div>
+					
+<%-- 					<!-- 주문 목록 시작 -->
+                
+                <div id="content">
+ 
+                <ul class="orderList" style="list-style:none;">
+                    <c:forEach items="${orderList}" var="order">
+                 	<c:forEach items="${orderList}" var="order2">
+                 	<c:if test="${order.orderNum != order2.orderNum }">
+                       <li>
+                          <div>
+                              <p><span>주문번호</span><a href="adminOrderDetail.do?orderNum=${order.orderNum }" style="font-weight:bold ; color:#e7ab3c; ">${order.orderNum}</a></p>
+                              <p><span>구매자</span>${order.userName}</p>
+                              <p><span>수령인</span>${order.orderRecvName}</p>
+                              <p><span>연락처</span>${order.orderRecvPhone}</p>
+                               <p><span>주소</span>(${order.orderRecvAddress1}) ${order.orderRecvAddress2} ${order.orderRecvAddress3}</p>
+                               <p><span>총 주문 금액</span><fmt:formatNumber pattern="###,###,###" value="${order.orderAmount}" /> 원</p>
+                               <p><span>취소 여부(N/Y)</span>${order.orderDel}</p>
+                               <p><span>주문 일자</span>${order.orderDate}</p>
+                               <p><span>배송 상태</span>${order.orderStatus}</p>
+                               	<input type="hidden" name="orderNum" id="orderNum" value="${order.orderNum }">
+                               	<select name="orderStatus" id="orderStatus" class="custom-select-sm">
+										<option ${(param.orderStatus)=="배송 준비중" ? "selected" : "" } value="배송 준비중">배송 준비중</option>
+                            			<option ${(param.orderStatus)=="배송중" ? "selected" : "" } value="배송중">배송중</option>
+                            			<option ${(param.orderStatus)=="배송완료" ? "selected" : "" } value="배송완료">배송완료</option>
+                            	</select>
+                            	<button id="orderUpt" style="border: white; background: #e7ab3c; color: white;">수정</button>
+                             </div>
+                       </li>
+                       </c:if>
+                      </c:forEach>
+                    </c:forEach>
+                </ul>
+
+            </div> 
+            <!-- 주문 목록 끝 --> --%>
+					
 
 					<!-- 앞 페이지 번호 처리 -->
 					<div class="pageDiv">
-						<c:if test="${currentPage <= 1}"> 
+						<c:if test="${startPage == 1}"> 
   								<span id="notPrev">[이전]&nbsp;</span>
  						</c:if> 
- 						<c:if test="${currentPage > 1}">
+ 						<c:if test="${startPage > 1}">
 						<!-- 페이지 많아지면 5로 처리하는게 맞음 ( ex)6페이지에서 [이전] 버튼 클릭 ) -->
 							<c:url var="proST" value="adminOrder.do">
 								<!-- blist.do?page=?  파라미터 자동으로 전달 -->
-								<c:param name="page" value="${currentPage-1}" />
+								<c:param name="page" value="${startPage-5}" />
 							</c:url>
 							<a class="paging" href="${proST}">[이전]</a>
-						</c:if> <!-- 끝 페이지 번호 처리 --> <c:set var="endPage" value="${maxPage}" />
-						<c:forEach var="p" begin="${startPage+1}" end="${endPage}">
+						</c:if> 
+						<!-- 끝 페이지 번호 처리 --> 
+						<c:forEach var="p" begin="${startPage}" end="${endPage}">
 							<c:if test="${p eq currentPage}">
 								<font color="#e7ab3c" size="4"><b>[${p}]</b></font>
 							</c:if>
@@ -229,12 +271,12 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
 								<a class="paging" href="${prostchk}">${p}</a>
 							</c:if>
 						</c:forEach> 
-						<c:if test="${currentPage >= maxPage}">
+						<c:if test="${endPage >= maxPage}">
  							<span id=notEnd>[다음]</span>
  						</c:if> 
- 						<c:if test="${currentPage < maxPage}">
+ 						<c:if test="${endPage < maxPage}">
 							<c:url var="proEND" value="adminOrder.do">
-								<c:param name="page" value="${currentPage+1}" />
+								<c:param name="page" value="${endPage+1}" />
 							</c:url>
 							<a class="paging" href="${proEND}">[다음]</a>
 						</c:if>

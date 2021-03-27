@@ -30,5 +30,6 @@ public interface AdminService {
 	public int searchOrderCount (String selectType, String keyword) throws Exception;
 	public List<AdminOrder> searchOrder(int startPage, int limit, String selectType, String keyword) throws Exception;
 	public List<AdminOrder> selectOrder(int orderNum) throws Exception;
-	public int updateOrder(AdminOrder ao) throws Exception;
+	public int updateOrder(String orderStatus, int orderNum) throws Exception;
+	public int totalSales() throws Exception;
 }

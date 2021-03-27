@@ -23,16 +23,20 @@
 	</resultMap>
 	
 	<select id="orderList" resultMap="resultOrder">
-	SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY ORDER_DETAIL_NUM DESC)AS ROW_NUM, ADMIN_ORDER.* 
+	SELECT DISTINCT ORDER_NUM, ORDER_RECV_NAME, ORDER_RECV_ADDRESS1, ORDER_RECV_ADDRESS2, ORDER_RECV_ADDRESS3, 
+    ORDER_RECV_PHONE, ORDER_DATE, ORDER_DEL, ORDER_AMOUNT, ORDER_STATUS, USER_NAME
+    FROM (SELECT ROW_NUMBER() OVER(ORDER BY ORDER_DETAIL_NUM DESC)AS ROW_NUM, ADMIN_ORDER.* 
 		FROM ADMIN_ORDER) WHERE ROW_NUM BETWEEN #{start} AND #{end}
 	</select>
 	<select id="orderCount" resultType="_int">
-	SELECT COUNT(*) FROM ADMIN_ORDER
+	SELECT COUNT(DISTINCT ORDER_NUM) FROM ADMIN_ORDER
 	</select>
 	
 	<!-- 검색 -->
 	<select id="searchOrder" resultMap="resultOrder" parameterType="Pagination">
-		SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY ORDER_DETAIL_NUM DESC)AS
+		SELECT DISTINCT ORDER_NUM, ORDER_RECV_NAME, ORDER_RECV_ADDRESS1, ORDER_RECV_ADDRESS2, ORDER_RECV_ADDRESS3, 
+    	ORDER_RECV_PHONE, ORDER_DATE, ORDER_DEL, ORDER_AMOUNT, ORDER_STATUS, USER_NAME
+    	FROM (SELECT ROW_NUMBER() OVER(ORDER BY ORDER_DETAIL_NUM DESC)AS
 		ROW_NUM, ADMIN_ORDER.* FROM ADMIN_ORDER
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
 			<if
@@ -48,7 +52,7 @@
 		WHERE ROW_NUM BETWEEN #{start} AND #{end}
 	</select>
 	<select id="searchOrderCount" resultType="_int" parameterType="Pagination">
-		SELECT COUNT(*) FROM ADMIN_ORDER
+		SELECT COUNT(DISTINCT ORDER_NUM) FROM ADMIN_ORDER
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
 			<if test="selectType=='orderNum' and keyword != null and keyword != ''">
 				AND ORDER_NUM LIKE '%'||#{keyword}||'%'
@@ -66,6 +70,11 @@
 	
 	<!-- 배송상태 수정 -->
 	<update id="updateOrder" parameterType="AdminOrder">
-		UPDATE ADMIN_ORDER SET ORDER_STATUS=#{orderStatus} WHERE ORDER_DETAIL_NUM=#{orderDetailNum}
+		UPDATE ORDER_TABLE SET ORDER_STATUS=#{orderStatus} WHERE ORDER_NUM=#{orderNum}
 	</update>
+	
+	<!-- 총 매출  -->
+	<select id="totalSales" resultType="_int">
+		SELECT SUM(ORDER_AMOUNT) FROM ADMIN_ORDER
+	</select>
 </mapper>

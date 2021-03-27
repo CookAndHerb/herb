@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,26 +82,32 @@
                 <!-- 내용 -->
                 <div class="col-lg-10 order-1 order-lg-2">
 
-               <%-- 	<h3><i class='fas fa-box' style='font-size:32px; color:#e7ab3c'></i> 상품 주문 정보 조회</h3>
+               	<h3><i class='fas fa-box' style='font-size:32px; color:#e7ab3c'></i> 상품 주문 정보 조회</h3>
                 <br><br>
-				<div id="orderNum">&nbsp;&nbsp; 상품주문번호 : <span id="spanNum">${order[0].orderNum} </span></div>
+				<div id="orderNum">&nbsp;&nbsp; 주문번호 : <span id="spanNum">${order[0].orderNum} </span></div>
 					<br>
 					<div class="container">
 					<h5><b>주문 상세 정보</b></h5>
 						<table class="table table-bordered">
+						<c:forEach var="order" items="${order}">
 								<tr>
-									<th width="225px;">상품명</th>
-									<td colspan="3">
-										${order[0].pName}
+									<th width="150px;">상품별 주문 번호</th>
+									<td width="70px;">${order.orderDetailNum}</td>
+									<th width="80px;">상품 명</th>
+									<td>
+										${order.pName}
 									</td>
+									<th width="100px;">주문 수량</th>
+									<td width="70px;">${order.orderDetailStock }</td>					
 								</tr>
+							</c:forEach>
 						</table>
-						<table class="table table-bordered">
+						  <table class="table table-bordered">
 								<tr>
-									<th>상품 주문 상태</th>
-									<td width="225px;">결제 완료</td>
+									<th width="225px;">상품 주문 상태</th>
+									<td>결제 완료</td>
 									<th width="225px;">주문 취소 여부(N/Y)</th>
-									<td>${order.orderDel }</td>
+									<td>${order[0].orderDel }</td>
 								</tr>
 								<tr>
 									<th>구매자 명</th>
@@ -109,43 +116,55 @@
 									<td>${order[0].userId }
 								</tr>
 								<tr>
-									<th>주문 수량</th>
-									<td>${order.orderDetailStock }</td>
 									<th>총 주문 금액</th>
-									<td>${order[0].orderAmount }</td>					
+									<td><fmt:formatNumber pattern="###,###,###" value="${order[0].orderAmount}" /> 원</td>
+									<th>배송비</th>
+									<td>2,500원</td>					
 								</tr>
 						</table>
 						
-						<h5><b>배송 상세 정보</b></h5>
+						 <h5><b>배송 상세 정보</b></h5>
+						 <c:choose>
+							<c:when test="${order[0].orderDel == 'Y'}">
+								<table class="table table-bordered">
+								<tr>
+								<th width="225px;">배송상태</th>
+								<td style="text-align: left;"> 구매 취소 </td>
+								</tr>
+								</table>
+                         	</c:when>
+                         	<c:otherwise>
 						<table class="table table-bordered">
 								<tr>
 									<th width="225px;">수취인명 </th>
-									<td colspan="3">${order.orderRecvName}</td>
+									<td colspan="3">${order[0].orderRecvName}</td>
 									
 								</tr>
 								<tr>
 									<th>연락처</th>
-									<td width="225px;" >${order.orderRecvPhone }</td>
+									<td width="225px;" >${order[0].orderRecvPhone }</td>
 									<th width="225px;">배송상태</th>
-									<td>${order.orderStatus }</td>
+									<td>${order[0].orderStatus}</td>
 	
 								</tr>
 								<tr>
 									<th>배송지</th>
-									<td colspan="3">(${order.orderRecvAddress1 }) ${order.orderRecvAddress2} ${order.orderRecvAddress3}</td>
+									<td colspan="3">(${order[0].orderRecvAddress1 }) ${order[0].orderRecvAddress2} ${order[0].orderRecvAddress3}</td>
 								</tr>
 								<tr>
 									<th>배송 메세지</th>
-									<td colspan="3">${order.orderMessage }</td>
+									<td colspan="3">${order[0].orderMessage }</td>
 								</tr>
-						</table>
+							</table>
+							</c:otherwise>
+						</c:choose>
 					</div>
 					<div style="text-align: right;">
 						<button class="btn btn-sm" id="orderBtn" onclick="location.href = 'adminOrder.do';">주문 목록</button>
 					</div>
 				</div>
             </div>
-        </div> --%>
+        </div>
     </section>
     <!-- content 끝 -->
 
