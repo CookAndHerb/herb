@@ -193,7 +193,7 @@ function execPostCode() {
 				</td>
 			</tr>
 			<tr>
-				<td><span id="idCheckMessage" style="color:red;font-weight:bold"></span></td>
+				<td><span id="idCheckMessage" style="color:red;font-weight:bold;"></span></td>
 			</tr>
 			<tr class="d-flex">
 				<td class="col-4"><label for="userPW">비밀번호</label></td>
@@ -350,20 +350,28 @@ function execPostCode() {
 			$('#idCheckMessage').html('아이디를 입력해 주세요');
 			return false;
 		}
+		
 		$.ajax({
-			type: 'POST',
-			url: 'idCheck.do', 
-			data: {userId: userId},
-			success: function(result){
-				if(result.cnt > 0){ 
-					$('#idCheckMessage').html('사용할 수 없는 아이디입니다.');
-					 $("#join_btn").attr("disabled", "disabled");
-				} else {
-					$('#idCheckMessage').html('사용할 수 있는 아이디입니다.');
-					$("#join_btn").removeAttr("disabled");
-				}
-			}
-		})
+			 type : 'GET',
+			 dataType : 'json',
+			 url : 'idCheck.do?userId='+userId,
+			 success : function(data){
+				 
+			       if(data.result == "ok"){
+				$('#idCheckMessage').html('사용할 수 없는 아이디입니다.');
+				$("#join_btn").attr("disabled", "disabled");
+			       }else{
+				$('#idCheckMessage').html('사용할 수 있는 아이디입니다.');
+				$("#join_btn").removeAttr("disabled");
+			          }
+			                                					
+			 },error : function(data){
+			       
+				 alert('전송오류');
+			     	console.log("서버 호출을 정상적으로 처리하지 못 했습니다.");
+			 } 
+		});// ajax끝
+		
 	});
 
 	// 이메일 인증번호 전송
