@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.herb.cart.model.dao.CartDAO;
 import com.kh.herb.cart.model.vo.Cart;
 import com.kh.herb.cart.model.vo.CartList;
+import com.kh.herb.cart.model.vo.TopList;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -44,6 +45,13 @@ public class CartServiceImpl implements CartService {
 	public boolean searchCart(Cart cart) throws Exception {
 		return cartDAO.searchCart(cart);
 	}
+	
+	// TOP4 조회
+	@Override
+	public List<TopList> topList() throws Exception {
+		return cartDAO.topList();
+	}
 
+	
 	
 }

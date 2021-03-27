@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,39 +66,14 @@
     </section>
     <!-- Hero Section End -->
     
-    <!-- 배너 시작 -->
-    <div class="banner-section spad">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="single-banner">
-                        <img src="${pageContext.request.contextPath}/resources/img/로고로고.jpg" alt="">
-                        <div class="inner-text">
-                            <h4>비타민 </h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="single-banner">
-                        <img src="${pageContext.request.contextPath}/resources/img/로고로고2.jpg" alt="">
-                        <div class="inner-text">
-                            <h4>홍삼</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="single-banner">
-                        <img src="${pageContext.request.contextPath}/resources/img/로고로고3.jpg" alt="">
-                        <div class="inner-text">
-                            <h4>다이어트 식품</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- 배너 끝 -->
 
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	
     <!-- 옆 배너 시작 -->
     <section class="women-banner spad">
         <div class="container-fluid">
@@ -115,91 +92,69 @@
                     <div class="product-slider owl-carousel">
                         <div class="product-item">
                             <div class="pi-pic">
-                                <img src="${pageContext.request.contextPath}/resources/img/products/women-1.jpg" alt="">
-                                <div class="sale">Sale</div>
-                                <div class="icon">
-                                    <i class="icon_heart_alt"></i>
-                                </div>
-                                <ul>
-                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                </ul>
+                           	 	<a href="productInfo.do?num=${topList[0].pNum}" style="color:black; font-weight:bold;">
+                                	<img src="${pageContext.request.contextPath}/resources/img/products/women-1.jpg" alt="">
+                                </a>
+                                <div class="sale">BEST</div>
+                                
                             </div>
                             <div class="pi-text">
-                                <div class="catagory-name">Coat</div>
-                                <a href="#">
-                                    <h5>Pure Pineapple</h5>
+                                <div class="catagory-name">BEST 1</div>
+                                
+                                <a href="productInfo.do?num=${topList[0].pNum}" style="color:black; font-weight:bold;">
+                                    ${topList[0].pName}
                                 </a>
                                 <div class="product-price">
-                                    $14.00
-                                    <span>$35.00</span>
+                                    <fmt:formatNumber pattern="###,###,###" value="${topList[0].pCost}" /> 원
+                                    
                                 </div>
                             </div>
                         </div>
                         <div class="product-item">
                             <div class="pi-pic">
+                           	 <a href="productInfo.do?num=${topList[1].pNum}" style="color:black; font-weight:bold;">
                                 <img src="${pageContext.request.contextPath}/resources/img/products/women-2.jpg" alt="">
-                                <div class="icon">
-                                    <i class="icon_heart_alt"></i>
-                                </div>
-                                <ul>
-                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                </ul>
+                              </a>
                             </div>
                             <div class="pi-text">
-                                <div class="catagory-name">Shoes</div>
-                                <a href="#">
-                                    <h5>Guangzhou sweater</h5>
+                                <div class="catagory-name">BEST 2</div>
+                                <a href="productInfo.do?num=${topList[1].pNum}" style="color:black; font-weight:bold;">
+                                     ${topList[1].pName}
                                 </a>
                                 <div class="product-price">
-                                    $13.00
+                                   <fmt:formatNumber pattern="###,###,###" value="${topList[1].pCost}" /> 원
                                 </div>
                             </div>
                         </div>
                         <div class="product-item">
                             <div class="pi-pic">
+                            	<a href="productInfo.do?num=${topList[2].pNum}" style="color:black; font-weight:bold;">
                                 <img src="${pageContext.request.contextPath}/resources/img/products/women-3.jpg" alt="">
-                                <div class="icon">
-                                    <i class="icon_heart_alt"></i>
-                                </div>
-                                <ul>
-                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                </ul>
+                            	</a>
                             </div>
                             <div class="pi-text">
-                                <div class="catagory-name">Towel</div>
-                                <a href="#">
-                                    <h5>Pure Pineapple</h5>
+                                <div class="catagory-name">BEST 3</div>
+                                <a href="productInfo.do?num=${topList[2].pNum}" style="color:black; font-weight:bold;">
+                                    ${topList[2].pName}
                                 </a>
                                 <div class="product-price">
-                                    $34.00
+                                    <fmt:formatNumber pattern="###,###,###" value="${topList[2].pCost}" /> 원
                                 </div>
                             </div>
                         </div>
                         <div class="product-item">
                             <div class="pi-pic">
+                            <a href="productInfo.do?num=${topList[3].pNum}" style="color:black; font-weight:bold;">
                                 <img src="${pageContext.request.contextPath}/resources/img/products/women-4.jpg" alt="">
-                                <div class="icon">
-                                    <i class="icon_heart_alt"></i>
-                                </div>
-                                <ul>
-                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                </ul>
+                             </a>
                             </div>
                             <div class="pi-text">
-                                <div class="catagory-name">Towel</div>
-                                <a href="#">
-                                    <h5>Converse Shoes</h5>
+                                <div class="catagory-name">BEST 4</div>
+                                <a href="productInfo.do?num=${topList[3].pNum}" style="color:black; font-weight:bold;">
+                                     ${topList[3].pName}
                                 </a>
                                 <div class="product-price">
-                                    $34.00
+                                    <fmt:formatNumber pattern="###,###,###" value="${topList[3].pCost}" /> 원
                                 </div>
                             </div>
                         </div>

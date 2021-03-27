@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.herb.cart.model.vo.Cart;
 import com.kh.herb.cart.model.vo.CartList;
+import com.kh.herb.cart.model.vo.TopList;
 
 @Repository
 public class CartDAO {
@@ -45,5 +46,8 @@ public class CartDAO {
 		return sqlSession.delete("Cart.deleteCart", cart);
 	}
 	
-	
+	// TOP4 조회
+	public List<TopList> topList() throws Exception{
+		return sqlSession.selectList("Cart.topList");
+	}
 }
