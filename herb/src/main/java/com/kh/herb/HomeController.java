@@ -64,9 +64,4 @@ public class HomeController {
 		return "myHerb/memberDeleteForm";
 	}
 	
-	// memberOrder.jsp로 가는 주소
-	@RequestMapping(value="memberOrder.do", method=RequestMethod.GET)
-	public String memberOrder() {
-		return "myHerb/memberOrder";
-	}
 }
