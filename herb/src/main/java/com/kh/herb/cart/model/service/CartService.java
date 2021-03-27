@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.herb.cart.model.vo.Cart;
 import com.kh.herb.cart.model.vo.CartList;
+import com.kh.herb.cart.model.vo.TopList;
 
 public interface CartService {
 	
@@ -21,4 +22,7 @@ public interface CartService {
 	
 	// 카트 삭제
 	public int deleteCart(Cart cart) throws Exception;
+	
+	// top4 조회
+	public List<TopList> topList() throws Exception;
 }
