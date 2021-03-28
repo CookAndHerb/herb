@@ -108,6 +108,7 @@
 							<li><a href="categoryList.do?category=비타민">비타민</a></li>
 							<li><a href="categoryList.do?category=장 건강">장 건강</a></li>
 							<li><a href="categoryList.do?category=눈 건강">눈 건강</a></li>
+							<li><a href="categoryList.do?category=홍삼">홍삼</a></li>
 							<li><a href="categoryList.do?category=기타">기타</a></li>
 						</ul>
 					</div>
@@ -127,9 +128,9 @@
 									</div>
 								</c:if>
 								<div class="select-option">
-									<select class="sorting">
-										<option value="p_num">전체</option>
-										<option value="p_star">리뷰 많은순</option>
+									<select class="sorting" onchange="location.href=this.value">
+										<option value="">전체</option>
+										<option value="">리뷰 많은순</option>
 										<option value="p_cost">낮은가격순</option>
 										<option value="p_cost">높은가격순</option>
 									</select>
@@ -207,7 +208,7 @@
 											</c:when>
 											<c:when test="${keyword ne null}">
 												<li class="page-item"><a class="page-link"
-													href="productSearch.do?pageNum=${startPage-5}&keyword=${keyword}">◀</a>
+													href="productSearch.do?pageNum=${startPage-5}&search=${search}&keyword=${keyword}">◀</a>
 												</li>
 											</c:when>
 											<c:otherwise>
@@ -232,11 +233,11 @@
 											<c:when test="${keyword ne null}">
 												<c:if test="${i==currentPage}">
 													<li class="page-item active"><a class="page-link"
-														href="productSearch.do?pageNum=${i}&keyword=${keyword}">${i}</a></li>
+														href="productSearch.do?pageNum=${i}&search=${search}&keyword=${keyword}">${i}</a></li>
 												</c:if>
 												<c:if test="${i!=currentPage}">
 													<li class="page-item "><a class="page-link"
-														href="productSearch.do?pageNum=${i}&keyword=${keyword}">${i}</a></li>
+														href="productSearch.do?pageNum=${i}&search=${search}&keyword=${keyword}">${i}</a></li>
 												</c:if>
 											</c:when>
 											<c:otherwise>
@@ -261,7 +262,7 @@
 											</c:when>
 											<c:when test="${keyword ne null}">
 												<li class="page-item"><a class="page-link"
-													href="productSearch.do?pageNum=${startPage+5}&keyword=${keyword}">▶</a></li>
+													href="productSearch.do?pageNum=${startPage+5}&search=${search}&keyword=${keyword}">▶</a></li>
 											</c:when>
 											<c:otherwise>
 												<li class="page-item"><a class="page-link"

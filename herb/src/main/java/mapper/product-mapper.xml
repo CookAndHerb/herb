@@ -53,9 +53,18 @@
 	<![CDATA[
 		select * from(select rownum rnum, p_num, p_name, p_cost, 
 		p_image_name, p_image_path, p_star, p_category  from
-		(select * from product where p_del = 'N' and p_name like '%' || #{keyword} || '%'))
-		where rnum >= #{startPage} and rnum <= #{endPage}
-	]]>
+		(select * from product where p_del = 'N' and p_name like '%' || #{keyword} || '%']]>
+	<trim>
+	<choose>
+		<when test='pCategory != "전체"'>
+			and p_category=#{pCategory}))
+		</when>
+		<otherwise>
+			))
+		</otherwise>
+	</choose>
+	</trim>
+		<![CDATA[where rnum >= #{startPage} and rnum <= #{endPage}]]>
 	</select>
 	
 	<!-- 상품 총 개수 -->
@@ -67,8 +76,15 @@
 		select count(*) from product where p_del = 'N' and p_category=#{pCategory}
 	</select>
 	<!-- 상품 검색결과 총 개수 -->
-	<select id="proSearchCount" parameterType="String" resultType="int">
-		<![CDATA[select count(*) from product where p_del = 'N' and p_name like '%' || #{keyword} || '%']]>
+	<select id="proSearchCount" parameterType="ProductPage" resultType="int">
+		<![CDATA[
+		select count(*) from product where p_del = 'N' and p_name like '%' || #{keyword} || '%'
+		]]>
+		<trim>
+			<if test='pCategory != "전체"'>
+			 and p_category=#{pCategory}
+			</if>
+		</trim>
 	</select>
 	<!-- 상품 인포 -->
 	<select id="proInfo" parameterType="int" resultMap="proResult">
@@ -81,5 +97,5 @@
 		p_star = (select count(r_num) from review where p_num = #{p_num})
 		where p_num = #{p_num}
 	</update>
-
+	
 </mapper>

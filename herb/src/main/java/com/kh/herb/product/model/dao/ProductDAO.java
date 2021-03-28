@@ -57,7 +57,7 @@ public class ProductDAO {
 		return sqlSession.selectOne("Product.proCategoryCount",category);
 	}
 	// 검색 총 개수
-	public int proSearchCount(String keyword) {
-		return sqlSession.selectOne("Product.proSearchCount",keyword);
+	public int proSearchCount(ProductPage page) {
+		return sqlSession.selectOne("Product.proSearchCount",page);
 	}
 }

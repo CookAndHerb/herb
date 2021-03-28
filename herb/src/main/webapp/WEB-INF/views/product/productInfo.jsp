@@ -207,6 +207,7 @@
 							<li><a href="categoryList.do?category=비타민">비타민</a></li>
 							<li><a href="categoryList.do?category=장 건강">장 건강</a></li>
 							<li><a href="categoryList.do?category=눈 건강">눈 건강</a></li>
+							<li><a href="categoryList.do?category=홍삼">홍삼</a></li>
 							<li><a href="categoryList.do?category=기타">기타</a></li>
 						</ul>
 					</div>

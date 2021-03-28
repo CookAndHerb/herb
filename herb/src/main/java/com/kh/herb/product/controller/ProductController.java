@@ -57,19 +57,21 @@ public class ProductController {
 	// 검색시 상품 리스트
 	@RequestMapping(value = "productSearch.do", method = RequestMethod.GET)
 	public ModelAndView productSearchList(@RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
-			@RequestParam(name = "keyword") String keyword, ModelAndView modelAndView) throws Exception {
+			@RequestParam(name = "keyword") String keyword, @RequestParam(name = "search") String search, ModelAndView modelAndView) throws Exception {
 		int currentPage = pageNum; // 현재 페이지
 		int startRow = (currentPage - 1) * paseSize + 1; // 페이지별 시작 로우
 		int endRow = currentPage * paseSize; // 페이지별 끝 로우
-		int count = proSe.proSearchCount(keyword);
 		
 		ProductPage page = new ProductPage();
+		page.setKeyword(keyword);
+		page.setpCategory(search);
+		int count = proSe.proSearchCount(page);
+		
 		page.setStartPage(startRow);
 		page.setEndPage(endRow);
-		page.setKeyword(keyword);
 		
-		System.out.println(page.getKeyword());
-		System.out.println(count);
+		System.out.println("키워드: "+page.getKeyword());
+		System.out.println("총 개수: "+count);
 
 		List<Product> list = proSe.productSearchList(page);
 
@@ -78,6 +80,7 @@ public class ProductController {
 		modelAndView.addObject("currentPage", currentPage);
 		modelAndView.addObject("count", count);
 		modelAndView.addObject("keyword", keyword);
+		modelAndView.addObject("search", search);
 		modelAndView.setViewName("product/product");
 
 		return modelAndView;

@@ -24,6 +24,6 @@ public interface ProductService {
 	
 	public int proCategoryCount(String category) throws Exception;
 	
-	public int proSearchCount(String keyword) throws Exception;
+	public int proSearchCount(ProductPage page) throws Exception;
 	
 }

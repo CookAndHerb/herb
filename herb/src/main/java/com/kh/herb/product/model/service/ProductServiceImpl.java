@@ -60,8 +60,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int proSearchCount(String keyword) throws Exception {
-		return dao.proSearchCount(keyword);
+	public int proSearchCount(ProductPage page) throws Exception {
+		return dao.proSearchCount(page);
 	}
 
 }
