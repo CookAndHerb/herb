@@ -141,7 +141,7 @@
 								</c:when>
 	
 								<c:otherwise>
-            						<li class="page-item "><a class="page-link" href="memberOrder.do?page=${page}">${page}</a></li>
+            						<li class="page-item "><a class="page-link" href="memberOrder.do?page=${page}" style="color:black;">${page}</a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>

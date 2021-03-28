@@ -93,7 +93,7 @@
                         <div class="product-item">
                             <div class="pi-pic">
                            	 	<a href="productInfo.do?num=${topList[0].pNum}" style="color:black; font-weight:bold;">
-                                	<img src="${pageContext.request.contextPath}/resources/img/products/women-1.jpg" alt="">
+                                	<img src="${pageContext.request.contextPath}/resources/${topList[0].pImageName}" alt="">
                                 </a>
                                 <div class="sale">BEST</div>
                                 
@@ -113,7 +113,7 @@
                         <div class="product-item">
                             <div class="pi-pic">
                            	 <a href="productInfo.do?num=${topList[1].pNum}" style="color:black; font-weight:bold;">
-                                <img src="${pageContext.request.contextPath}/resources/img/products/women-2.jpg" alt="">
+                                <img src="${pageContext.request.contextPath}/resources/${topList[1].pImageName}" alt="">
                               </a>
                             </div>
                             <div class="pi-text">
@@ -129,7 +129,7 @@
                         <div class="product-item">
                             <div class="pi-pic">
                             	<a href="productInfo.do?num=${topList[2].pNum}" style="color:black; font-weight:bold;">
-                                <img src="${pageContext.request.contextPath}/resources/img/products/women-3.jpg" alt="">
+                                <img src="${pageContext.request.contextPath}/resources/${topList[2].pImageName}" alt="">
                             	</a>
                             </div>
                             <div class="pi-text">
@@ -145,7 +145,7 @@
                         <div class="product-item">
                             <div class="pi-pic">
                             <a href="productInfo.do?num=${topList[3].pNum}" style="color:black; font-weight:bold;">
-                                <img src="${pageContext.request.contextPath}/resources/img/products/women-4.jpg" alt="">
+                                <img src="${pageContext.request.contextPath}/resources/productImg/${topList[3].pImageName}" alt="">
                              </a>
                             </div>
                             <div class="pi-text">
