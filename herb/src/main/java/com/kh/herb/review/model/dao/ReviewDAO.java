@@ -43,8 +43,16 @@ public class ReviewDAO {
 				sqlSession.insert("Review.reviewFileInsert", reFile);
 			}
 		}
+		
 	}
-	
+	// 리뷰 삭제
+	public int reviewDelete(int rNum) {
+		return sqlSession.delete("Review.reviewDelete",rNum);
+	}
+	// 리뷰 파일 삭제
+	public int reviewDeleteFile(int rNum) {
+		return sqlSession.delete("Review.reviewFileDelete",rNum);
+	}
 	// 별점 평균
 	public int reviewAvg(int pNum) {
 		return sqlSession.selectOne("Review.reviewAvg",pNum);

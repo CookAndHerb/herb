@@ -39,9 +39,13 @@
 		<select id="reviewAvg" parameterType="review" resultType="int">
 			select round(avg(r_star)) from review where p_num = #{pNum}
 		</select>
-		<!-- 리뷰 총 개수 -->
-		<select id="reviewCount" parameterType="review" resultType="int">
-			select count(r_num) from review where p_num = #{pNum}
-		</select>
+		<!-- 리뷰 삭제 -->
+		<delete id="reviewDelete" parameterType="int">
+			delete from review where r_num = #{rNum}
+		</delete>
+		<!-- 리뷰 파일 삭제 -->
+		<delete id="reviewFileDelete" parameterType="int">
+			delete from review_file where r_num = #{rNum}
+		</delete>
 		
 </mapper>
