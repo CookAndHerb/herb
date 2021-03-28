@@ -18,21 +18,44 @@
 		<result property="userDate" column="USER_DATE"/>	
 	</resultMap>
 	
+	<!-- 전체회원 조회 -->
 	<select id="memberList" resultMap="resultMember">
-		SELECT * FROM MEMBER ORDER BY USER_NUM DESC
-	</select> 
-	
-	<!-- 검색 쿼리 -->
-	<select id="searchMember" resultMap="resultMember" parameterType="Search">
 		SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY USER_NUM DESC)AS ROW_NUM, MEMBER.* 
-		FROM MEMBER <where>
-		<if test="userId != null">
-			USER_ID = #{userId}
-		</if>
-		<if test="userName != null">
-			OR USER_NAME = #{userName}
-		</if>
-		</where> 
-		LIKE '%'||#{keyword}||'%') WHERE ROW_NUM BETWEEN 1 AND 10
+		FROM MEMBER) WHERE ROW_NUM BETWEEN #{start} AND #{end}
+	</select> 
+	<select id="memberCount" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER
 	</select>
+
+	<!-- 검색 쿼리 -->
+	<select id="searchMember" resultMap="resultMember" parameterType="Pagination">
+		SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY USER_NUM DESC)AS
+		ROW_NUM, MEMBER.* FROM MEMBER
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if
+				test="selectType=='userId' and keyword != null and keyword != ''">
+				AND USER_ID LIKE '%'||#{keyword}||'%'
+			</if>
+			<if
+				test="selectType=='userName' and keyword != null and keyword != ''">
+				AND USER_NAME LIKE '%'||#{keyword}||'%'
+			</if>
+		</trim>
+		)
+		WHERE ROW_NUM BETWEEN #{start} AND #{end}
+	</select>
+	<select id="searchMemberCount" resultType="_int" parameterType="Pagination">
+		SELECT COUNT(*) FROM MEMBER
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if
+				test="selectType=='userId' and keyword != null and keyword != ''">
+				AND USER_ID LIKE '%'||#{keyword}||'%'
+			</if>
+			<if
+				test="selectType=='userName' and keyword != null and keyword != ''">
+				AND USER_NAME LIKE '%'||#{keyword}||'%'
+			</if>
+		</trim>
+	</select>
+	
 </mapper>

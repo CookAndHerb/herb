@@ -12,6 +12,8 @@ public interface ProductService {
 	
 	public List<Product> productCateList(ProductPage page) throws Exception;
 	
+	public List<Product> productSearchList(ProductPage page) throws Exception;
+	
 	public Product productInfo(int num) throws Exception;
 	
 	public List<ProductFile> productInfoFile(int num) throws Exception;
@@ -21,5 +23,7 @@ public interface ProductService {
 	public int proCount() throws Exception;
 	
 	public int proCategoryCount(String category) throws Exception;
+	
+	public int proSearchCount(String keyword) throws Exception;
 	
 }

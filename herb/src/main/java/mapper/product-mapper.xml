@@ -37,13 +37,38 @@
 		where rnum >= #{startPage} and rnum <= #{endPage}
 	]]>
 	</select>
+	<!-- 상품 정렬해서 리스트 가져오기 -->
+	<select id="proSelctList" parameterType="ProductPage" resultType="Product" resultMap="proResult">
+	<![CDATA[
+		select * from(select rownum rnum, p_num, p_name, p_cost, 
+		p_image_name, p_image_path, p_star, p_category  from
+		(select * from product where p_del = 'N' order by
+		 ${pSelect}
+		 desc nulls last)a)
+		where rnum >= #{startPage} and rnum <= #{endPage}
+	]]>
+	</select>
+	<!-- 상품 검색 리스트 -->
+	<select id="ProductSearchList" parameterType="ProductPage" resultType="Product" resultMap="proResult">
+	<![CDATA[
+		select * from(select rownum rnum, p_num, p_name, p_cost, 
+		p_image_name, p_image_path, p_star, p_category  from
+		(select * from product where p_del = 'N' and p_name like '%' || #{keyword} || '%'))
+		where rnum >= #{startPage} and rnum <= #{endPage}
+	]]>
+	</select>
+	
 	<!-- 상품 총 개수 -->
 	<select id="proCount" resultType="int">
-		select count(*) from product where p_del = 'N'
+		select count(*) from product where p_del = 'N'	
 	</select>
 	<!-- 상품 카테고리별 총 개수 -->
 	<select id="proCategoryCount" parameterType="String" resultType="int">
 		select count(*) from product where p_del = 'N' and p_category=#{pCategory}
+	</select>
+	<!-- 상품 검색결과 총 개수 -->
+	<select id="proSearchCount" parameterType="String" resultType="int">
+		<![CDATA[select count(*) from product where p_del = 'N' and p_name like '%' || #{keyword} || '%']]>
 	</select>
 	<!-- 상품 인포 -->
 	<select id="proInfo" parameterType="int" resultMap="proResult">

@@ -5,7 +5,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+<script>
+// 검색
+window.onload = function(){
+	document.getElementById("SearchBtn").onclick=function(){
+		if(frm.keyword.value==""){
+			frm.keyword.focus();
+			alert("키워드를 입력해주세요");
+			return;
+		}
+		frm.submit();
+	}
+}
+</script>
 
 </head>
 <body>
@@ -68,8 +80,10 @@
                         <div class="advanced-search">
                             <button type="button" class="category-btn">All Categories</button>
                             <div class="input-group">
-                                <input type="text" placeholder="키워드를 입력해주세요">
-                                <button type="button"><i class="ti-search"></i></button>
+                            <form name="frm" action="productSearch.do" method="get">
+                                <input type="text" name="keyword" placeholder="키워드를 입력해주세요">
+                                <button type="button" id="SearchBtn"><i class="ti-search"></i></button>
+                            </form>
                             </div>
                         </div>
                     </div>

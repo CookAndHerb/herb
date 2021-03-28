@@ -54,6 +54,35 @@ public class ProductController {
 		return modelAndView;
 	}
 	
+	// 검색시 상품 리스트
+	@RequestMapping(value = "productSearch.do", method = RequestMethod.GET)
+	public ModelAndView productSearchList(@RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
+			@RequestParam(name = "keyword") String keyword, ModelAndView modelAndView) throws Exception {
+		int currentPage = pageNum; // 현재 페이지
+		int startRow = (currentPage - 1) * paseSize + 1; // 페이지별 시작 로우
+		int endRow = currentPage * paseSize; // 페이지별 끝 로우
+		int count = proSe.proSearchCount(keyword);
+		
+		ProductPage page = new ProductPage();
+		page.setStartPage(startRow);
+		page.setEndPage(endRow);
+		page.setKeyword(keyword);
+		
+		System.out.println(page.getKeyword());
+		System.out.println(count);
+
+		List<Product> list = proSe.productSearchList(page);
+
+		modelAndView.addObject("list", list);
+		modelAndView.addObject("pageSize", paseSize);
+		modelAndView.addObject("currentPage", currentPage);
+		modelAndView.addObject("count", count);
+		modelAndView.addObject("keyword", keyword);
+		modelAndView.setViewName("product/product");
+
+		return modelAndView;
+	}
+	
 	//카테고리별 상품 리스트
 	@RequestMapping(value="categoryList.do", method=RequestMethod.GET)
 	public ModelAndView productCateList(@RequestParam(name="category") String category,
@@ -62,12 +91,13 @@ public class ProductController {
 		int currentPage = pageNum; // 현재 페이지
 		int startRow = (currentPage - 1) * paseSize + 1; // 페이지별 시작 로우
 		int endRow = currentPage * paseSize; // 페이지별 끝 로우
-		int count = proSe.proCategoryCount(category);
-
+		
 		ProductPage page = new ProductPage();
 		page.setStartPage(startRow);
 		page.setEndPage(endRow);
 		page.setpCategory(category);
+		
+		int count = proSe.proCategoryCount(category);
 		
 		List<Product> list = proSe.productCateList(page);
 

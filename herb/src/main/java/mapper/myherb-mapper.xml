@@ -19,6 +19,40 @@
 		<result property="userDate" column="USER_DATE"/>
 	</resultMap>
 	
+	
+		<resultMap id="resultOrderList" type="com.kh.herb.myherb.model.vo.OrderList">
+		<id property="rNum" column="RNUM"/>
+		<result property="orderNum" column="ORDER_NUM"/>
+		<result property="orderDate" column="ORDER_DATE"/>
+		<result property="orderStatus" column="ORDER_STATUS"/>
+		<result property="orderAmount" column="ORDER_AMOUNT"/>
+		<result property="orderRecvName" column="ORDER_RECV_NAME"/>
+		<result property="orderRecvAddress1" column="ORDER_RECV_ADDRESS1"/>
+		<result property="orderRecvAddress2" column="ORDER_RECV_ADDRESS2"/>
+		<result property="orderRecvAddress3" column="ORDER_RECV_ADDRESS3"/>
+	</resultMap>
+	
+	<resultMap id="resultOrderDetailList" type="com.kh.herb.myherb.model.vo.OrderDetailList">
+		<result property="orderNum" column="ORDER_NUM"/>
+		<result property="orderRecvName" column="ORDER_RECV_NAME"/>
+		<result property="orderRecvAddress1" column="ORDER_RECV_ADDRESS1"/>
+		<result property="orderRecvAddress2" column="ORDER_RECV_ADDRESS2"/>
+		<result property="orderRecvAddress3" column="ORDER_RECV_ADDRESS3"/>
+		<result property="orderRecvPhone" column="ORDER_RECV_PHONE"/>
+		<result property="orderDate" column="ORDER_DATE"/>
+		<result property="orderDel" column="ORDER_DEL"/>
+		<result property="orderAmount" column="ORDER_AMOUNT"/>
+		<result property="orderMessage" column="ORDER_MESSAGE"/>
+		<result property="orderStatus" column="ORDER_STATUS"/>
+		<result property="orderUserId" column="ORDER_USER_ID"/>
+		<result property="orderDetailNumber" column="ORDER_DETAIL_NUM"/>
+		<result property="orderDetailStock" column="ORDER_DETAIL_STOCK"/>
+		<result property="orderDetailPnum" column="ORDER_DETAIL_P_NUM"/>
+		<result property="pName" column="P_NAME"/>
+		<result property="pImageName" column="P_IMAGE_NAME"/>
+		<result property="pCost" column="P_COST"/>
+	</resultMap>
+	
 	<!-- 회원 정보 가져오기 -->
 	<select id="selectMember" parameterType="Member" resultMap="resultMember">
 		SELECT * FROM MEMBER WHERE USER_ID = #{userId} AND USER_PW = #{userPw}
@@ -41,5 +75,44 @@
 	<delete id="deleteMember" parameterType="Member" >
 		DELETE FROM MEMBER WHERE USER_ID = #{userId} <!-- 이때는 field값 정확히 적어줘야 한다. -->
 	</delete>
-		
+	
+	<!-- 주문 목록 불러오기 -->
+	<select id="orderList" parameterType="com.kh.herb.myherb.model.vo.OrderListPage" resultMap="resultOrderList">
+	  <![CDATA[
+	SELECT * FROM(
+		 SELECT
+    		ROW_NUMBER() OVER(ORDER BY ORDER_NUM DESC)AS RNUM, ORDER_NUM , ORDER_DATE, ORDER_STATUS, ORDER_AMOUNT, ORDER_RECV_NAME, 
+    		ORDER_RECV_ADDRESS1, ORDER_RECV_ADDRESS2, ORDER_RECV_ADDRESS3
+ 			FROM ORDER_TABLE 
+     		WHERE ORDER_USER_ID = #{orderUserId}) 
+      WHERE RNUM >= #{start} AND RNUM <= #{end}
+       ]]>
+	</select>
+	
+	<!-- 주문 개수 세기 -->
+	 <select id="listCount" parameterType="string" resultType="int">
+ 		SELECT COUNT(*) cnt FROM ORDER_TABLE WHERE ORDER_USER_ID = #{orderUserId}
+ 	</select>
+	
+	<!-- 주문 상세 목록 불러오기 -->
+	<select id="orderDetailList" parameterType="com.kh.herb.myherb.model.vo.OrderDetailList" resultMap="resultOrderDetailList">
+	 SELECT
+		o.ORDER_NUM , o.ORDER_RECV_NAME , o.ORDER_RECV_ADDRESS1,  o.ORDER_RECV_ADDRESS2, o.ORDER_RECV_ADDRESS3,
+		o.ORDER_RECV_PHONE, o.ORDER_DATE, o.ORDER_DEL, o.ORDER_AMOUNT, o.ORDER_MESSAGE, o.ORDER_STATUS, o.ORDER_USER_ID,
+     	d.ORDER_DETAIL_NUM, d.ORDER_DETAIL_STOCK, d.ORDER_DETAIL_P_NUM,
+     	g.P_NAME, g.P_IMAGE_NAME, P_COST
+ 		FROM ORDER_TABLE o
+        	 INNER JOIN ORDER_DETAIL d
+            	 on o.ORDER_NUM = d.ORDER_NUM
+         	INNER JOIN PRODUCT g
+            	 on d.ORDER_DETAIL_P_NUM = g.P_NUM
+     	WHERE o.ORDER_USER_ID = #{orderUserId} and o.ORDER_NUM = #{orderNum}
+	</select>
+	
+	<!-- 주문 취소 하기 -->
+	<update id="orderDel" parameterType="int">
+	UPDATE ORDER_TABLE
+		SET ORDER_DEL = 'Y'
+		WHERE ORDER_NUM = #{orderNum}
+	</update>
 </mapper>

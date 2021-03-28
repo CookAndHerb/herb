@@ -82,16 +82,16 @@
                 <br><br>
                 &nbsp;&nbsp;&nbsp;
                 <button class="btn btn-sm" id="productIns" onclick="location.href = 'productIns.do';">상품등록</button>
-				
+				<!-- 검색기능 -->
 				<div id="searchDiv">
 				<form action="searchProduct.do">
                         <div class="form-inline serch">
                             <select name="selectType" class="custom-select-sm">
-                            <option value="pNum">상품번호</option>
-                            <option value="pName">상품명</option>
+                            <option ${(param.selectType)=="pNum" ? "selected" : "" } value="pNum">상품번호</option>
+                            <option ${(param.selectType)=="pName" ? "selected" : "" } value="pName">상품명</option>
                             </select>
                             <div class="input-group">
-                                <input type="text" class="control-sm" name="keyword">
+                                <input type="text" class="control-sm" name="keyword" value="${keyword }">
                                 <button type="submit" id="searchButton" class="btn-warning" >
                                 	<i class="ti-search"></i></button>
                             &nbsp;&nbsp;
@@ -141,9 +141,11 @@
  						</c:if> 
  						<c:if test="${startPage > 1}">
 						<!-- 페이지 많아지면 5로 처리하는게 맞음 ( ex)6페이지에서 [이전] 버튼 클릭 ) -->
-							<c:url var="proST" value="adminProduct.do">
+							<c:url var="proST" value="searchPrdouct.do">
 								<!-- blist.do?page=?  파라미터 자동으로 전달 -->
 								<c:param name="page" value="${startPage-5}" />
+								<c:param name="selectType" value="${selectType }" />
+								<c:param name="keyword" value="${keyword }" />
 							</c:url>
 							<a class="paging" href="${proST}">[이전]</a>
 						</c:if> 
@@ -153,8 +155,10 @@
 								<font color="#e7ab3c" size="4"><b>[${p}]</b></font>
 							</c:if>
 							<c:if test="${p ne currentPage}">
-								<c:url var="prostchk" value="adminProduct.do">
+								<c:url var="prostchk" value="searchPrdouct.do">
 									<c:param name="page" value="${p}" />
+									<c:param name="selectType" value="${selectType }" />
+									<c:param name="keyword" value="${keyword }" />	
 								</c:url>
 								<a class="paging" href="${prostchk}">${p}</a>
 							</c:if>
@@ -163,12 +167,15 @@
  							<span id=notEnd>[다음]</span>
  						</c:if> 
  						<c:if test="${endPage < maxPage}">
-							<c:url var="proEND" value="adminProduct.do">
+							<c:url var="proEND" value="searchPrdouct.do">
 								<c:param name="page" value="${endPage+1}" />
+								<c:param name="selectType" value="${selectType }" />
+								<c:param name="keyword" value="${keyword }" />
 							</c:url>
 							<a class="paging" href="${proEND}">[다음]</a>
 						</c:if>
 					</div>
+					
 					
 				</div>
             </div>

@@ -102,4 +102,25 @@ public class ReviewController {
 		return jsonObject.toJSONString();
 	}
 	
+	//리뷰 삭제
+	@RequestMapping(value="reviewDelete.do", method=RequestMethod.GET)
+	@ResponseBody
+	public String reviewDelete(@RequestParam("rNum") int rNum, @RequestParam("num") int num) throws Exception{
+		System.out.println("controller reviewDelete 메서드 실행");
+		System.out.println("rNum: "+rNum);
+		
+		int rf = reSe.reviewFileDelete(rNum);
+		int re = reSe.reviewDelete(rNum);
+		String result = rf+re+"";
+		proSe.proStarCount(num);
+		
+		System.out.println("결과: "+result);
+		JSONObject jo = new JSONObject();
+		jo.put("result", result);
+		jo.put("num", num);
+		jo.put("moveUrl","productInfo.do");
+		
+		return jo.toJSONString();
+	}
+	
 }

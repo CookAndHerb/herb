@@ -26,7 +26,12 @@ public class ProductDAO {
 	}
 	// 상품 카테고리별 리스트
 	public List<Product> productCateList(ProductPage page){
-		List<Product> list = sqlSession.selectList("proCategoryList", page);
+		List<Product> list = sqlSession.selectList("Product.proCategoryList", page);
+		return list;
+	}
+	// 상풍 검색 리스트
+	public List<Product> productSearchList(ProductPage page){
+		List<Product> list = sqlSession.selectList("Product.ProductSearchList", page);
 		return list;
 	}
 	// 상품 상세페이지
@@ -47,8 +52,12 @@ public class ProductDAO {
 	public int proCount() {
 		return sqlSession.selectOne("Product.proCount"); 
 	}
-	// 카테고리별 총 개수
+	// 카테고리 총 개수
 	public int proCategoryCount(String category) {
-		return sqlSession.selectOne("proCategoryCount",category);
+		return sqlSession.selectOne("Product.proCategoryCount",category);
+	}
+	// 검색 총 개수
+	public int proSearchCount(String keyword) {
+		return sqlSession.selectOne("Product.proSearchCount",keyword);
 	}
 }

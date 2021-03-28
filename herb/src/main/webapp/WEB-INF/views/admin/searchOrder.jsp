@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
     <!-- Icon -->
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    
     <!-- Css Styles -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" type="text/css">
@@ -28,12 +28,60 @@
     <!-- sujung css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sujung.css" type="text/css">
 
-	<script>
-		//삭제 확인 버튼
-		function delchk(){
-			return confirm("삭제하시겠습니까?");
-		}
-	</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+	//테이블 스크롤 설정
+	$(document).ready(function() {
+		$('#dtHorizontalExample').DataTable({
+			"scrollX" : true
+		});
+		$('.dataTables_length').addClass('bs-select');
+	});
+	
+	$(function(){
+		$('#orderUpt').on('click',function(){
+			var orderStr = $('#orderStatus').val();
+			var orderDetailNum = $('#orderDetailNum').text();
+			$.ajax({
+				url: 'orderUpt.do',
+				data: {'orderStatus' : orderStr, 'orderDetailNum' : orderDetailNum},
+				type: 'POST', 
+				dataType: 'json',
+				success: function(data){
+					if(data.ok=='dup'){
+						alert('배송상태 업데이트 실패');
+					}else{
+						alert('배송상태 업데이트 성공');
+					}
+				},
+				error: function(request, status, errorData){ 
+					alert("error code: "+request.status+"\n"	// 오류 번호 나옴 ex)500 404
+							+"message: "+request.responseText+"\n"	//오류 원인(기술 용어로 나옴)
+							+"error: "+errorData);
+				}
+			});
+		})
+	});
+</script>
+<style>
+.dtHorizontalExampleWrapper {
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+#dtHorizontalExample th, td {
+	white-space: nowrap;
+}
+
+table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
+	table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_asc:before,
+	table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_asc_disabled:before,
+	table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_desc:before,
+	table.dataTable thead .sorting_desc_disabled:after, table.dataTable thead .sorting_desc_disabled:before
+	{
+	bottom: .5em;
+}
+</style>
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -49,7 +97,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="adminMain.do"><i class="fa fa-home"></i> Admin</a>
-                        <span>상품관리</span>
+                        <span>주문관리</span>
                     </div>
                 </div>
             </div>
@@ -68,8 +116,8 @@
                     <div class="filter-widget">
                         <h4 class="fw-title">Admin</h4>
                         <ul class="filter-catagories" style="font-weight: bold;">
-                            <li><a href="adminProduct.do" style="color: #e7ab3c">상품관리</a></li>
-                            <li><a href="adminOrder.do" >주문관리</a></li>
+                            <li><a href="adminProduct.do" >상품관리</a></li>
+                            <li><a href="adminOrder.do" style="color: #e7ab3c">주문관리</a></li>
                             <li><a href="adminMember.do" >회원관리</a></li>
                         </ul>
                     </div>              
@@ -78,17 +126,15 @@
                 <!-- 내용 -->
                 <div class="col-lg-10 order-1 order-lg-2">
 
-               	<h3><i class='fas fa-capsules' style='font-size:32px; color:#e7ab3c'></i> 상품관리</h3>
-                <br><br>
-                &nbsp;&nbsp;&nbsp;
-                <button class="btn btn-sm" id="productIns" onclick="location.href = 'productIns.do';">상품등록</button>
-				
+               	<h3><i class='fas fa-box-open' style='font-size:32px; color:#e7ab3c'></i> 주문관리</h3>
+                <br>
+                <!-- 검색 -->
 				<div id="searchDiv">
-				<form action="searchProduct.do">
+                 <form action="searchOrder.do">
                         <div class="form-inline serch">
                             <select name="selectType" class="custom-select-sm">
-                            <option value="pNum">상품번호</option>
-                            <option value="pName">상품명</option>
+                            <option ${(param.selectType)=="orderNum" ? "selected" : "" } value="orderNum">주문번호</option>
+                            <option ${(param.selectType)=="userName" ? "selected" : "" } value="userName">주문자</option>
                             </select>
                             <div class="input-group">
                                 <input type="text" class="control-sm" name="keyword">
@@ -99,41 +145,55 @@
                        	 </div>
                        </form>
                     </div>
-                  
 				
 				<br><br>
-					<div class="container ">
-						<table id="productTable" class="table table-bordered col-sm-12">
+					<div class="table-responsive" id="orderDiv" style="overflow-x:scroll;">
+						<table id="dtHorizontalExample" class="table table-bordered orderTable" 
+							cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<th>상품번호</th>
-									<th>상품명</th>
-									<th>카테고리</th>
-									<th>식품의 유형</th>
-									<th>판매가</th>
-									<th>제조일</th>
-									<th>유통기한</th>
+									<th style="width:50px;">상품주문번호</th>
+									<th>주문번호</th>
+									<th>주문일자</th>
+									<th style="width:70px;">주문자</th>
+									<th style="width:70px;">수령인</th>
+									<th>수령주소</th>
+									<th>연락처</th>
+									<th>주문상품</th>
+									<th>주문수량</th>
+									<th>총 주문금액</th>
+									<th style="width:100px;">배송상태</th>
+									<th>취소여부(N/Y)</th>
 									<th>수정</th>
-									<th>삭제</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="product" items="${productList }">
-									<tr>
-										<td>${product.pNum}</td>
-										<td style="width: 180px;">${product.pName}</td>
-										<td>${product.pCategory}</td>
-										<td>${product.pType}</td>
-										<td>${product.pCost}</td>
-										<td>${product.pMaDate}</td>
-										<td>${product.pExDate}</td>
-										<td><a class="aTag" href="productUpt.do?pNum=${product.pNum }&page=${currentPage}">수정</a></td>
-										<td><a class="aDel" href="productDel.do?pNum=${product.pNum }&page=${currentPage}" onclick="return delchk();">삭제</a></td>
-									</tr>
-								</c:forEach>
+							<c:forEach var="order" items="${orderList}">
+								<tr>
+									<td><a href="adminOrderDetail.do?orderDetailNum=${order.orderDetailNum }">${order.orderDetailNum }</a></td>
+									<td>${order.orderNum }</td>
+									<td>${order.orderDate }</td>
+									<td>${order.userName }</td>
+									<td>${order.orderRecvName }</td>
+									<td>(${order.orderRecvAddress1}) ${order.orderRecvAddress2} ${order.orderRecvAddress3}</td>
+									<td>${order.orderRecvPhone }</td>
+									<td>${order.pName }</td>
+									<td>${order.orderDetailStock }</td>
+									<td>${order.orderAmount }</td>
+									<td>
+										<select name="orderStatus" id="orderStatus" class="custom-select-sm">
+										<option ${(param.orderStatus)=="배송 준비중" ? "selected" : "" } value="배송 준비중">배송 준비중</option>
+                            			<option ${(param.orderStatus)=="배송중" ? "selected" : "" } value="배송중">배송중</option>
+                            			<option ${(param.orderStatus)=="배송완료" ? "selected" : "" } value="배송완료">배송완료</option>
+                            			</select>
+                           			</td>
+									<td>${order.orderDel }</td>
+									<td><button id="orderUpt">수정</button></td>
+								</tr>
+							</c:forEach>
 						</table>
 					</div>
-					
+
 					<!-- 앞 페이지 번호 처리 -->
 					<div class="pageDiv">
 						<c:if test="${startPage == 1}"> 
@@ -141,9 +201,11 @@
  						</c:if> 
  						<c:if test="${startPage > 1}">
 						<!-- 페이지 많아지면 5로 처리하는게 맞음 ( ex)6페이지에서 [이전] 버튼 클릭 ) -->
-							<c:url var="proST" value="adminProduct.do">
+							<c:url var="proST" value="searchOrder.do">
 								<!-- blist.do?page=?  파라미터 자동으로 전달 -->
 								<c:param name="page" value="${startPage-5}" />
+								<c:param name="selectType" value="${selectType }" />
+								<c:param name="keyword" value="${keyword }" />
 							</c:url>
 							<a class="paging" href="${proST}">[이전]</a>
 						</c:if> 
@@ -153,8 +215,10 @@
 								<font color="#e7ab3c" size="4"><b>[${p}]</b></font>
 							</c:if>
 							<c:if test="${p ne currentPage}">
-								<c:url var="prostchk" value="adminProduct.do">
+								<c:url var="prostchk" value="searchOrder.do">
 									<c:param name="page" value="${p}" />
+									<c:param name="selectType" value="${selectType }" />
+									<c:param name="keyword" value="${keyword }" />	
 								</c:url>
 								<a class="paging" href="${prostchk}">${p}</a>
 							</c:if>
@@ -163,13 +227,15 @@
  							<span id=notEnd>[다음]</span>
  						</c:if> 
  						<c:if test="${endPage < maxPage}">
-							<c:url var="proEND" value="adminProduct.do">
+							<c:url var="proEND" value="searchOrder.do">
 								<c:param name="page" value="${endPage+1}" />
+								<c:param name="selectType" value="${selectType }" />
+								<c:param name="keyword" value="${keyword }" />
 							</c:url>
 							<a class="paging" href="${proEND}">[다음]</a>
 						</c:if>
 					</div>
-					
+
 				</div>
             </div>
         </div>

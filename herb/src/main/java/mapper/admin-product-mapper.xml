@@ -31,9 +31,9 @@
 
 	
 	<!-- 상품 조회 -->
-	<select id="productList" resultMap="proResult">
+<!-- 	<select id="productList" resultMap="proResult">
 		SELECT * FROM PRODUCT WHERE P_DEL='N' ORDER BY P_NUM DESC
-	</select>
+	</select> -->
 	
 	<!-- 상품 하나만 조회 -->
 	<select id="selectProduct" parameterType="int" resultMap="proResult">
@@ -52,4 +52,46 @@
 	<delete id="deleteProduct" parameterType="int">
 		UPDATE PRODUCT SET P_DEL='Y' WHERE P_NUM=#{pNum}
 	</delete>
+	
+	<!-- 상품 조회 페이징 -->
+	<select id="productList" parameterType="Pagination" resultMap="proResult">
+	SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY P_NUM DESC)AS ROW_NUM, PRODUCT.* 
+		FROM PRODUCT WHERE P_DEL='N') WHERE ROW_NUM BETWEEN #{start} AND #{end}
+	</select>
+	<select id="productCount" resultType="_int">
+		SELECT COUNT(*) FROM PRODUCT WHERE P_DEL='N'
+	</select>
+	
+	<!-- 검색기능 -->
+	<select id="searchProduct" resultMap="proResult" parameterType="Pagination">
+		SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY P_NUM DESC)AS
+		ROW_NUM, PRODUCT.* FROM PRODUCT
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if
+				test="selectType=='pNum' and keyword != null and keyword != ''">
+				AND P_NUM LIKE '%'||#{keyword}||'%'
+			</if>
+			<if
+				test="selectType=='pName' and keyword != null and keyword != ''">
+				AND P_NAME LIKE '%'||#{keyword}||'%'
+			</if>
+			AND P_DEL='N'
+		</trim>
+		)
+		WHERE ROW_NUM BETWEEN #{start} AND #{end}
+	</select>
+	<select id="searchProductCount" resultType="_int" parameterType="Pagination">
+		SELECT COUNT(*) FROM PRODUCT
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if
+				test="selectType=='pNum' and keyword != null and keyword != ''">
+				AND P_NUM LIKE '%'||#{keyword}||'%'
+			</if>
+			<if
+				test="selectType=='pName' and keyword != null and keyword != ''">
+				AND P_NAME LIKE '%'||#{keyword}||'%'
+			</if>
+			AND P_DEL='N'
+		</trim>
+	</select>
 </mapper>

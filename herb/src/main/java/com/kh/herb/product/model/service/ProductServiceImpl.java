@@ -54,4 +54,14 @@ public class ProductServiceImpl implements ProductService {
 		return dao.proCategoryCount(category);
 	}
 
+	@Override
+	public List<Product> productSearchList(ProductPage page) throws Exception {
+		return dao.productSearchList(page);
+	}
+
+	@Override
+	public int proSearchCount(String keyword) throws Exception {
+		return dao.proSearchCount(keyword);
+	}
+
 }

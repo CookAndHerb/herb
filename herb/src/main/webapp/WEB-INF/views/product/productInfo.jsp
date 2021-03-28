@@ -111,6 +111,14 @@
 .addCart_btn:active {
 	background-color: #252525;
 }
+.reUpDel{
+
+	display: inline-block;
+	float: right;
+	cursor: pointer;
+	margin-left: 5px;
+}
+.
 </style>
 
 <!-- 주연 장바구니 ajax 부분 -->
@@ -196,10 +204,10 @@
 						<h4 class="fw-title">상품 목록</h4>
 						<ul class="filter-catagories" style="font-weight: bold;">
 							<li><a href="product.do">상품 전체</a></li>
-							<li><a href="#">비타민</a></li>
-							<li><a href="#">장 건강</a></li>
-							<li><a href="#">눈 건강</a></li>
-							<li><a href="#">기타</a></li>
+							<li><a href="categoryList.do?category=비타민">비타민</a></li>
+							<li><a href="categoryList.do?category=장 건강">장 건강</a></li>
+							<li><a href="categoryList.do?category=눈 건강">눈 건강</a></li>
+							<li><a href="categoryList.do?category=기타">기타</a></li>
 						</ul>
 					</div>
 
@@ -382,9 +390,8 @@
 												<div class="col-lg-12">
 													<c:set var="pNum" value="${num }"></c:set>
 													<input type="hidden" name="pNum" id="pNum" value="${pNum }">
-													<input type="hidden" id="rWriter" name="rWriter"
-														value="${sessionScope.member.getUserId()}"> <select
-														id="rStar" name="rStar">
+													<input type="hidden" id="rWriter" name="rWriter" value="${sessionScope.member.getUserId()}"> 	
+														<select id="rStar" name="rStar">
 														<option value="1">1</option>
 														<option value="2">2</option>
 														<option value="3">3</option>
@@ -403,13 +410,17 @@
 											</div>
 										</div>
 										<!-- 리뷰 쓰기 끝 -->
-
 										<!-- 리뷰 리스트 출력 -->
 										<div class="comment-option">
 											<!-- 사진 리뷰 리스트 -->
 											<c:if test="${!empty review}">
 												<c:forEach var="review" items="${review }">
+												<c:set var="rNum" value="${review.rNum}"/>
 													<div class="co-item">
+													<c:if test="${review.rWriter == sessionScope.member.getUserId()}">
+															<button id="reUdateBtn" class="reUpDel btn btn-warning">수정</button>
+															<button id="reDeleteBtn" class="reUpDel btn btn-secondary">삭제</button>
+														</c:if>
 														<div class="avatar-text">
 															<div class="at-rating">
 																<c:forEach var="rStar" begin="0"
@@ -428,6 +439,7 @@
 																<span><fmt:formatDate value="${review.rDate}"
 																		pattern="yyyy/MM/dd" /></span>
 															</h5>
+															
 															<div class="at-reply">${review.rContent }</div>
 															<!-- 리뷰 파일 출력-->
 															<div class="img-reply">
@@ -436,6 +448,7 @@
 																		src="${pageContext.request.contextPath}/resources/reviewImg/${fileName.rFile}" />
 																</c:forEach>
 															</div>
+															
 														</div>
 													</div>
 												</c:forEach>
@@ -474,21 +487,23 @@
 		var fileList = []; // 리뷰 사진객체  list
 		var userfile = '';
 		var id = $('input[name=rWriter]').val();
+		var num = ${pNum};
+		var rNum = ${rNum}+1;
 
-		// 리뷰 추가
-		$('#reSumitBtn').on('click', reviewList);
-
+		
+		// 리뷰쓰기 버튼 클릭 시 배송상태 체크 예정
 		$(function() {
-			if (id != "") {
+			if (id != null) {
 				$('#reWriteBtn').show();
 			}
 
 		});
-
-		// 리뷰쓰기 버튼 클릭 시 배송상태 체크 예정
 		function reWriteBtn() {
 			$('#reWrite').show();
 		}
+		// 리뷰 추가
+		$('#reSumitBtn').on('click', reviewList);
+
 
 		$('#rStar').barrating({
 			theme : 'fontawesome-stars',
@@ -502,6 +517,30 @@
 			userfile = $('#userFile');
 			console.log($(userfile[0]).val());
 			fileList.push(userfile[0].files[0]);
+		});
+		
+		// 리뷰 수정 버튼
+		
+		// 리뷰 삭제 버튼	
+		$('#reDeleteBtn').on('click', function(){
+			$.ajax({
+		         type : 'GET',
+		         dataType : 'json',
+		         url : 'reviewDelete.do',
+		         data: {rNum:rNum-1,
+		        	 	num:num},
+		         success : function(data){
+		        	 if(data.result > 1){
+		        		 alert("리뷰 삭제를 완료했습니다.");
+		        		 location.href = data.moveUrl + "?num=" + data.num;
+		        	 }else{
+		        		 alert("리뷰 삭제를 실패하였습니다.");
+		        	 }
+		         },
+		         error : function() {
+					alert("리뷰 삭제를 실패하였습니다.")
+				}
+		      });
 		});
 		// 리뷰 제출 전 예외처리
 		function reviewList() {

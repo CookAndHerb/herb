@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.herb.admin.model.dao.AdminDAO;
-import com.kh.herb.admin.model.vo.Search;
+import com.kh.herb.admin.model.vo.AdminOrder;
 import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.product.model.vo.Product;
 import com.kh.herb.product.model.vo.ProductFile;
@@ -20,15 +20,24 @@ public class AdminServiceImpl implements AdminService {
 	public int insertProduct(Product product) throws Exception {
 		return ad.insertProduct(product);
 	}
-
+	
 	@Override
-	public List<Member> memberList() throws Exception {
-		return ad.memberList();
+	public int memberCount() throws Exception {
+		return ad.memberCount();
+	}
+	
+	@Override
+	public List<Member> memberList(int startPage, int limit) throws Exception {
+		return ad.memberList(startPage, limit);
 	}
 
 	@Override
-	public List<Member> searchMember(Search search) throws Exception {
-		return ad.searchMember(search);
+	public List<Member> searchMember(int startPage, int limit, String selectType, String keyword) throws Exception {
+		return ad.searchMember(startPage, limit, selectType, keyword);
+	}
+	
+	public int searchMemberCount (String selectType, String keyword) throws Exception{
+		return ad.searchMemberCount(selectType, keyword);
 	}
 
 	@Override
@@ -37,8 +46,8 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<Product> productList() throws Exception {
-		return ad.productList();
+	public List<Product> productList(int startPage, int limit) throws Exception {
+		return ad.productList(startPage, limit);
 	}
 
 	@Override
@@ -71,5 +80,55 @@ public class AdminServiceImpl implements AdminService {
 		return ad.deleteFile(pNum);
 	}
 
+	@Override
+	public int productCount() throws Exception {
+		return ad.productCount();
+	}
+
+	@Override
+	public int searchProductCount(String selectType, String keyword) throws Exception {
+		return ad.searchProductCount(selectType, keyword);
+	}
+
+	@Override
+	public List<Product> searchProduct(int startPage, int limit, String selectType, String keyword) throws Exception {
+		return ad.searchProduct(startPage, limit, selectType, keyword);
+	}
+
+	@Override
+	public int orderCount() throws Exception {
+		return ad.orderCount();
+	}
+
+	@Override
+	public List<AdminOrder> orderList(int startPage, int limit) throws Exception {
+		return ad.orderList(startPage, limit);
+	}
+
+	@Override
+	public int searchOrderCount(String selectType, String keyword) throws Exception {
+		return ad.searchOrderCount(selectType, keyword);
+	}
+
+	@Override
+	public List<AdminOrder> searchOrder(int startPage, int limit, String selectType, String keyword) throws Exception {
+		return ad.searchOrder(startPage, limit, selectType, keyword);
+	}
+
+	@Override
+	public List<AdminOrder> selectOrder(int orderNum) throws Exception {
+		return ad.selectOrder(orderNum);
+	}
+
+	@Override
+	public int updateOrder(String orderStatus, int orderNum) throws Exception {
+		return ad.updateOrder(orderStatus, orderNum);
+	}
+
+	@Override
+	public int totalSales() throws Exception {
+		return ad.totalSales();
+	}
+	
 }
 
