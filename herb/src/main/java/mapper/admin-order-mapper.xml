@@ -73,9 +73,8 @@
 		UPDATE ORDER_TABLE SET ORDER_STATUS=#{orderStatus} WHERE ORDER_NUM=#{orderNum}
 	</update>
 	
-	<!-- 3월 매출  -->
+	<!-- 총 매출  -->
 	<select id="totalSales" resultType="_int">
-		SELECT DECODE(TO_CHAR(ORDER_DATE, 'YYYY-MM'), '2021-03', SUM(ORDER_AMOUNT), 0)
-		FROM ADMIN_ORDER GROUP BY TO_CHAR(ORDER_DATE, 'YYYY-MM')
+		SELECT SUM(ORDER_AMOUNT) FROM ADMIN_ORDER
 	</select>
 </mapper>

@@ -81,9 +81,6 @@ table tr td{
 	display: inline-block;
 	float: right;
 }
-#proDetail{
-	color: #e7ab3c;
-}
 
 /* 주문관리페이지 */
 #orderDel{

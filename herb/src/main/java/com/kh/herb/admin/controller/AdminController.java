@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -140,16 +139,12 @@ public class AdminController {
 		String savePath = root+"\\productImg";
 		String filePath = null;
 		MultipartFile image = product.getImage();
-		
-		//원본이름 저장
-		String savedName = image.getOriginalFilename();
-		//랜덤생성+파일이름 저장
-		String fileName = (int)(Math.random()*100)+"_"+savedName;
-		
 		File folder = new File(savePath);
 		if(!folder.exists())
 			folder.mkdir();
-		filePath = savePath+"\\"+fileName;
+		filePath = savePath+"\\"+image.getOriginalFilename();
+		//product.setImagePath(filePath);
+		//product.setInfoImagePath(filePath);
 		try {
 			image.transferTo(new File(filePath));
 		} catch (IllegalStateException | IOException e) {
@@ -158,7 +153,7 @@ public class AdminController {
 		}
 		
 		product = new Product();
-		product.setImageName(fileName);
+		product.setImageName(image.getOriginalFilename());
 		product.setImagePath(savePath);
 		return product;
 	}
@@ -169,20 +164,15 @@ public class AdminController {
 		//String root = "C:\\finalproject\\herb\\herb\\herb\\src\\main\\webapp\\resources";
 		String savePath = root+"\\productImg";
 		String filePath = null;
-		
 		MultipartFile image = infoImage;
-		
-		//원본이름 저장
-		String savedName = image.getOriginalFilename();
-		//랜덤생성+파일이름 저장
-		String fileName = (int)(Math.random()*100)+"_"+savedName;
-						
 		File folder = new File(savePath);
 		if(!folder.exists())
 			folder.mkdir();
 		
+		//product.setImagePath(filePath);
+		//product.setInfoImagePath(filePath);
 		try {
-			filePath = savePath+"\\"+fileName;
+			filePath = savePath+"\\"+image.getOriginalFilename();
 			image.transferTo(new File(filePath));
 		} catch (IllegalStateException | IOException e) {
 			// TODO Auto-generated catch block
@@ -190,7 +180,7 @@ public class AdminController {
 		}
 		
 		ProductFile pf = new ProductFile();
-		pf.setpInfoFile(fileName);
+		pf.setpInfoFile(image.getOriginalFilename());
 		pf.setpInfoPath(savePath);
 		return pf;
 	}

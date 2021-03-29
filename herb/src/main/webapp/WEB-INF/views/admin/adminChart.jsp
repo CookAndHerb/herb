@@ -13,9 +13,9 @@
         var data = google.visualization.arrayToDataTable([
             ['month', '월별 매출액'],
             ['2021.3', ${totalSales}],
-            ['2021.2', 0],
-            ['2021.1', 0],
-            ['2020.12', 0]
+            ['2021.2', 500000],
+            ['2021.1', 700000],
+            ['2020.12', 670000]
         ]);
 
         var options = {
