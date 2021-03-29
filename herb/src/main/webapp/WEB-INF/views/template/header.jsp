@@ -5,6 +5,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+<script type="text/javascript"
+	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js"
+	charset="utf-8"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- 네이버로그아웃 -->
+<script type="text/javascript"
+	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js"
+	charset="utf-8"></script>
+	
 <script>
 // 검색
 window.onload = function(){
