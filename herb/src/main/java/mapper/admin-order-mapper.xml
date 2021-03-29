@@ -3,4 +3,78 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="adminOrder">
+	<resultMap id="resultOrder" type="AdminOrder">
+		<result property="orderDetailNum" column="ORDER_DETAIL_NUM" />
+		<result property="orderNum" column="ORDER_NUM" />
+		<result property="orderDate" column="ORDER_DATE"/>
+		<result property="orderRecvName" column="ORDER_RECV_NAME" />
+		<result property="userName" column="USER_NAME"/>
+		<result property="userId" column="USER_ID" />
+		<result property="orderRecvAddress1" column="ORDER_RECV_ADDRESS1"/>
+		<result property="orderRecvAddress2" column="ORDER_RECV_ADDRESS2"/>
+		<result property="orderRecvAddress3" column="ORDER_RECV_ADDRESS3"/>
+		<result property="orderRecvPhone" column="ORDER_RECV_PHONE"/>
+		<result property="pName" column="P_NAME"/>
+		<result property="orderDetailStock" column="ORDER_DETAIL_STOCK"/>
+		<result property="orderAmount" column="ORDER_AMOUNT"/>
+		<result property="orderStatus" column="ORDER_STATUS"/>
+		<result property="orderMessage" column="ORDER_MESSAGE" />
+		<result property="orderDel" column="ORDER_DEL"/>
+	</resultMap>
+	
+	<select id="orderList" resultMap="resultOrder">
+	SELECT DISTINCT ORDER_NUM, ORDER_RECV_NAME, ORDER_RECV_ADDRESS1, ORDER_RECV_ADDRESS2, ORDER_RECV_ADDRESS3, 
+    ORDER_RECV_PHONE, ORDER_DATE, ORDER_DEL, ORDER_AMOUNT, ORDER_STATUS, USER_NAME
+    FROM (SELECT ROW_NUMBER() OVER(ORDER BY ORDER_DETAIL_NUM DESC)AS ROW_NUM, ADMIN_ORDER.* 
+		FROM ADMIN_ORDER) WHERE ROW_NUM BETWEEN #{start} AND #{end}
+	</select>
+	<select id="orderCount" resultType="_int">
+	SELECT COUNT(DISTINCT ORDER_NUM) FROM ADMIN_ORDER
+	</select>
+	
+	<!-- 검색 -->
+	<select id="searchOrder" resultMap="resultOrder" parameterType="Pagination">
+		SELECT DISTINCT ORDER_NUM, ORDER_RECV_NAME, ORDER_RECV_ADDRESS1, ORDER_RECV_ADDRESS2, ORDER_RECV_ADDRESS3, 
+    	ORDER_RECV_PHONE, ORDER_DATE, ORDER_DEL, ORDER_AMOUNT, ORDER_STATUS, USER_NAME
+    	FROM (SELECT ROW_NUMBER() OVER(ORDER BY ORDER_DETAIL_NUM DESC)AS
+		ROW_NUM, ADMIN_ORDER.* FROM ADMIN_ORDER
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if
+				test="selectType=='orderNum' and keyword != null and keyword != ''">
+				AND ORDER_NUM LIKE '%'||#{keyword}||'%'
+			</if>
+			<if
+				test="selectType=='userName' and keyword != null and keyword != ''">
+				AND USER_NAME LIKE '%'||#{keyword}||'%'
+			</if>
+		</trim>
+		)
+		WHERE ROW_NUM BETWEEN #{start} AND #{end}
+	</select>
+	<select id="searchOrderCount" resultType="_int" parameterType="Pagination">
+		SELECT COUNT(DISTINCT ORDER_NUM) FROM ADMIN_ORDER
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="selectType=='orderNum' and keyword != null and keyword != ''">
+				AND ORDER_NUM LIKE '%'||#{keyword}||'%'
+			</if>
+			<if test="selectType=='userName' and keyword != null and keyword != ''">
+				AND USER_NAME LIKE '%'||#{keyword}||'%'
+			</if>
+		</trim>
+	</select>
+	
+	<!-- 주문 상세 -->
+	<select id="selectOrder" parameterType="_int" resultMap="resultOrder">
+		SELECT * FROM ADMIN_ORDER WHERE ORDER_NUM=#{orderNum}
+	</select>
+	
+	<!-- 배송상태 수정 -->
+	<update id="updateOrder" parameterType="AdminOrder">
+		UPDATE ORDER_TABLE SET ORDER_STATUS=#{orderStatus} WHERE ORDER_NUM=#{orderNum}
+	</update>
+	
+	<!-- 총 매출  -->
+	<select id="totalSales" resultType="_int">
+		SELECT SUM(ORDER_AMOUNT) FROM ADMIN_ORDER
+	</select>
 </mapper>

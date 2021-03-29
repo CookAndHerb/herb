@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,8 +60,8 @@
                         <h4 class="fw-title">Admin</h4>
                         <ul class="filter-catagories" style="font-weight: bold;">
                             <li><a href="adminProduct.do" >상품관리</a></li>
-                            <li><a href="#" >주문관리</a></li>
-                            <li><a href="#" >회원관리</a></li>
+                            <li><a href="adminOrder.do" >주문관리</a></li>
+                            <li><a href="adminMember.do" >회원관리</a></li>
                         </ul>
                     </div>
 
@@ -69,24 +70,30 @@
                 
                 <!-- 내용 -->
                 <div class="col-lg-9 order-1 order-lg-2">
+                
                 <div id="eventing">매출 정보</div>
+                <%@ include file="adminChart.jsp" %>
+                
+           <%--      <div id="eventing">매출 정보</div>
                  <div class="totalSales">
                  <p class="font">총 매출 금액</p>
-                 <p id="mainPrice"> 000000000원</p>
+                 <p id="mainPrice"><fmt:formatNumber pattern="###,###,###" value="${totalSales}" /> 원</p>
                  </div>
                  <div class="monthSales">
                  <p class="font">월별 매출 금액</p>
                  <p id="mainPrice"> 000000000원</p>
-                 </div>
+                 </div> --%>
                  <br><br><br>
                  <div id="eventing">진행 중 이벤트</div>
                   <img class="banner" src="${pageContext.request.contextPath}/resources/img/sujung/banner1.JPG">
                   <img class="banner" src="${pageContext.request.contextPath}/resources/img/sujung/banner2.JPG">
                 </div>
-                
-                
-            </div>
+            </div>       
+            
+            
         </div>
+        
+        
     </section>
     <!-- content 끝 -->
 

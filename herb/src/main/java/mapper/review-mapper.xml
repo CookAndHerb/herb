@@ -10,20 +10,42 @@
 			<result property="rContent" column="R_CONTENT"></result>
 			<result property="rDate" column="R_DATE"></result>
 			<result property="rStar" column="R_STAR"></result>
+			<!-- 리뷰 파일 -->
+			<collection property="mFileList" javaType="java.util.List"
+			ofType="ReviewFile" autoMapping="true">
+			<result column="R_FILE_PATH" property="rFile" />
+			</collection>
 		</resultMap>
-		
-		<resultMap id="reFileResult" type="reviewFile">
-			<result property="rNum" column="R_NUM"></result>
-			<result property="rFile" column="R_FILE"></result>
-			<result property="pNum" column="P_NUM"></result>
-		</resultMap>
+
 	
 		<!-- 리뷰 리스트 -->
 		<select id="reviewAllList" parameterType="int" resultMap="reResult">
-			select * from review where p_num = #{pNum}
+			select r.*, f.r_file_path from review r, review_file f
+			where r.r_num = f.r_num and r.p_num = #{pNum} order by r.r_num desc
 		</select>
 		<!-- 리뷰 쓰기 -->
 		<insert id="reviewInsert" parameterType="review">
-			INSERT INTO REVIEW(P_NUM, R_NUM, R_WRITER, R_CONTENT, R_DATE, R_STAR) VALUES (#{pNum}, r_num_seq.nextval, #{rWriter}, #{rContent}, sysdate, #{rStar})
+			INSERT INTO REVIEW(P_NUM, R_NUM, R_WRITER, R_CONTENT, R_DATE, R_STAR) VALUES (#{pNum}, review_seq.nextval, #{rWriter}, #{rContent}, sysdate, #{rStar})
 		</insert>
+		<!-- 리뷰 사진 추가 -->
+		<insert id="reviewFileInsert" parameterType="ReviewFile">
+			INSERT INTO REVIEW_FILE VALUES (#{rFile},#{rNum},#{pNum})
+		</insert>
+		<!-- 리뷰파일에 댓글번호 넣기 위한 쿼리 -->
+		<select id="reviewNum" resultType="int">
+			SELECT MAX(R_NUM) FROM REVIEW
+		</select>
+		<!-- 리뷰 평균-->
+		<select id="reviewAvg" parameterType="review" resultType="int">
+			select round(avg(r_star)) from review where p_num = #{pNum}
+		</select>
+		<!-- 리뷰 삭제 -->
+		<delete id="reviewDelete" parameterType="int">
+			delete from review where r_num = #{rNum}
+		</delete>
+		<!-- 리뷰 파일 삭제 -->
+		<delete id="reviewFileDelete" parameterType="int">
+			delete from review_file where r_num = #{rNum}
+		</delete>
+		
 </mapper>

@@ -15,16 +15,35 @@ public class ReviewServiceImpl implements ReviewService {
 	ReviewDAO dao;
 	
 	@Override
-	public int reviewInsert(Review review) throws Exception {
-		
-		int result = dao.reviewInsert(review);
-		return result;
+	public void reviewInsert(Review review) throws Exception {
+		System.out.println("reviewService insert 메서드 실행");
+		dao.reviewInsert(review); 
 	}
 
 	@Override
 	public List<Review> reviewAllList(int pNum) throws Exception {
 		List<Review> list = dao.reviewAllList(pNum);
 		return list;
+	}
+
+	@Override
+	public int reviewAvg(int pNum) throws Exception {
+		return dao.reviewAvg(pNum);
+	}
+
+	@Override
+	public int reviewCount(int pNum) throws Exception {
+		return dao.reviewCount(pNum);
+	}
+
+	@Override
+	public int reviewDelete(int rNum) throws Exception {
+		return dao.reviewDelete(rNum);
+	}
+
+	@Override
+	public int reviewFileDelete(int rNum) throws Exception {
+		return dao.reviewDeleteFile(rNum);
 	}
 
 }

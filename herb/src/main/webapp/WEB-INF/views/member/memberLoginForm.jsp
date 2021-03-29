@@ -21,6 +21,16 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
+    
+    <script type="text/javascript"
+   src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+   
+   
+    <script type="text/javascript"
+   src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js"
+   charset="utf-8"></script>   
+   
+   
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -62,15 +72,23 @@
                             </div>
                             <div class="group-input gi-check">
                                 <div class="gi-more">
-                                   <a href="#" class="forget-pass">비밀번호 찾기</a>
+                                   <a href="memberPwSearch.do" class="forget-pass">비밀번호 찾기</a>
                                    <span class="forget-pass">&nbsp;&nbsp;/&nbsp;&nbsp;</span>
-                                   <a href="#" class="forget-pass">아이디 찾기  </a>
+                                   <a href="memberIdSearch.do" class="forget-pass">아이디 찾기  </a>
                                 </div>
                             </div>
                             <button type="submit" class="site-btn login-btn">로그인</button>
+                        
+                        	<!-- 소셜로그인칸 
+                           	<div id="naver_id_login" style="text-align: center">
+                    			 <a href="${naver_url}"><img width="223" 
+                     				src="${pageContext.request.contextPath}/resources/img/네이버.png" /></a>
+                  			</div>
+                        	소셜로그인 끝 -->
+                        
                         </form>
                         <div class="switch-login">
-                            <a href="./register.html" class="or-login">회원가입</a>
+                            <a href="memberJoin.do" class="or-login">회원가입</a>
                         </div>
                     </div>
                 </div>

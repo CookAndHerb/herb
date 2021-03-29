@@ -22,5 +22,26 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.insertMember(member);
 	}
 
+	@Override
+	public int idCheckProcess(String userId) throws Exception{
+		return memberDAO.idCheckMethod(userId);
 
+	}
+
+	@Override
+	public String idSearch(Member member) throws Exception {
+		return memberDAO.idSearch(member);
+	}
+
+	@Override
+	public Member idEmail(Member member) throws Exception {
+		return memberDAO.idEmail(member);
+	}
+
+	@Override
+	public int updatePw(Member member) throws Exception {
+		return memberDAO.updatePw(member);
+	}
+
+	
 }

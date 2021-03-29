@@ -3,6 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="adminProduct">
+
 	<resultMap id="proResult" type="Product">
 		<id property="pNum" column="P_NUM"></id>
 		<result property="pName" column="P_NAME"></result>
@@ -16,17 +17,81 @@
 		<result property="pExDate" column="P_EX_DATE"></result>
 		<result property="pCapacity" column="P_CAPACITY"></result>
 		<result property="pType" column="P_TYPE"></result>
-		<result property="infoImageName" column="P_INFO_IMAGE_NAME"></result>
-		<result property="infoImagePath" column="P_INFO_IMAGE_PATH"></result>
 		<result property="pCategory" column="P_CATEGORY"></result>
 	</resultMap>
 	
 	<!-- 상품등록 -->
 	<insert id="insertProduct" parameterType="Product">
 		INSERT INTO PRODUCT 
-		(P_NUM, P_NAME, P_COST, P_IMAGE_NAME, P_IMAGE_PATH, P_CONTEXT, P_MA_DATE, P_EX_DATE, 
-		P_CAPACITY, P_TYPE, P_INFO_IMAGE_NAME, P_INFO_IMAGE_PATH, P_CATEGORY) 
-		VALUES (PRODUCT_SEQ.NEXTVAL, #{pName}, #{pCost}, #{imageName}, #{imagePath}, #{pContent}, #{pMaDate}, #{pExDate}, 
-		#{pCapacity}, #{pType}, #{infoImageName}, #{infoImagePath}, #{pCategory})
+		(P_NUM, P_NAME, P_COST, P_IMAGE_NAME, P_IMAGE_PATH, P_CONTENT, P_MA_DATE, P_EX_DATE, 
+		P_CAPACITY, P_TYPE, P_CATEGORY) 
+		VALUES (PRODUCT_SEQ.NEXTVAL, #{pName}, #{pCost}, #{imageName}, #{imagePath}, #{pContent}, 
+		TO_DATE(#{pMaDate},'YYYY-MM-DD'), TO_DATE(#{pExDate},'YYYY-MM-DD'), #{pCapacity}, #{pType}, #{pCategory})
 	</insert>
+
+	
+	<!-- 상품 조회 -->
+<!-- 	<select id="productList" resultMap="proResult">
+		SELECT * FROM PRODUCT WHERE P_DEL='N' ORDER BY P_NUM DESC
+	</select> -->
+	
+	<!-- 상품 하나만 조회 -->
+	<select id="selectProduct" parameterType="int" resultMap="proResult">
+		SELECT * FROM PRODUCT WHERE P_NUM=#{pNum}
+	</select>
+	
+	<!-- 상품 수정 -->
+	<update id="updateProduct" parameterType="Product">
+		UPDATE PRODUCT SET P_NAME=#{pName}, P_COST=#{pCost}, P_IMAGE_NAME=#{imageName}, 
+		P_IMAGE_PATH=#{imagePath}, P_CONTENT=#{pContent}, P_MA_DATE=#{pMaDate}, 
+		P_EX_DATE=#{pExDate}, P_CAPACITY=#{pCapacity}, P_TYPE=#{pType}, P_CATEGORY=#{pCategory}
+		WHERE P_NUM=#{pNum}
+	</update>
+	
+	<!-- 상품 삭제 -->
+	<delete id="deleteProduct" parameterType="int">
+		UPDATE PRODUCT SET P_DEL='Y' WHERE P_NUM=#{pNum}
+	</delete>
+	
+	<!-- 상품 조회 페이징 -->
+	<select id="productList" parameterType="Pagination" resultMap="proResult">
+	SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY P_NUM DESC)AS ROW_NUM, PRODUCT.* 
+		FROM PRODUCT WHERE P_DEL='N') WHERE ROW_NUM BETWEEN #{start} AND #{end}
+	</select>
+	<select id="productCount" resultType="_int">
+		SELECT COUNT(*) FROM PRODUCT WHERE P_DEL='N'
+	</select>
+	
+	<!-- 검색기능 -->
+	<select id="searchProduct" resultMap="proResult" parameterType="Pagination">
+		SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY P_NUM DESC)AS
+		ROW_NUM, PRODUCT.* FROM PRODUCT
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if
+				test="selectType=='pNum' and keyword != null and keyword != ''">
+				AND P_NUM LIKE '%'||#{keyword}||'%'
+			</if>
+			<if
+				test="selectType=='pName' and keyword != null and keyword != ''">
+				AND P_NAME LIKE '%'||#{keyword}||'%'
+			</if>
+			AND P_DEL='N'
+		</trim>
+		)
+		WHERE ROW_NUM BETWEEN #{start} AND #{end}
+	</select>
+	<select id="searchProductCount" resultType="_int" parameterType="Pagination">
+		SELECT COUNT(*) FROM PRODUCT
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if
+				test="selectType=='pNum' and keyword != null and keyword != ''">
+				AND P_NUM LIKE '%'||#{keyword}||'%'
+			</if>
+			<if
+				test="selectType=='pName' and keyword != null and keyword != ''">
+				AND P_NAME LIKE '%'||#{keyword}||'%'
+			</if>
+			AND P_DEL='N'
+		</trim>
+	</select>
 </mapper>

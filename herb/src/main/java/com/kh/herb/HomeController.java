@@ -2,14 +2,20 @@ package com.kh.herb;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.kh.herb.cart.model.service.CartService;
+import com.kh.herb.cart.model.vo.TopList;
 
 /**
  * Handles requests for the application home page.
@@ -19,8 +25,11 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
+	@Autowired
+	CartService cartService;
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Locale locale, Model model) throws Exception {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		Date date = new Date();
@@ -28,6 +37,9 @@ public class HomeController {
 		
 		String formattedDate = dateFormat.format(date);
 		
+		List<TopList> topList = cartService.topList();
+		
+		model.addAttribute("topList", topList);
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "index";
@@ -36,8 +48,13 @@ public class HomeController {
 	
 	// index.jsp로 가는 주소
 	@RequestMapping(value = "index.do", method = RequestMethod.GET)
-	public String index() {
-		return "index";
+	public ModelAndView index(ModelAndView mv) throws Exception {
+			
+		List<TopList> topList = cartService.topList();
+		mv.addObject("topList",topList);
+		mv.setViewName("index");
+		
+		return mv;
 	}
 
 	// template.jsp로 가는 주소
@@ -64,9 +81,4 @@ public class HomeController {
 		return "myHerb/memberDeleteForm";
 	}
 	
-	// memberOrder.jsp로 가는 주소
-	@RequestMapping(value="memberOrder.do", method=RequestMethod.GET)
-	public String memberOrder() {
-		return "myHerb/memberOrder";
-	}
 }

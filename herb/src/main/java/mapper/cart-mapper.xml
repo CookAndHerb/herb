@@ -3,4 +3,80 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Cart">
+	<resultMap id="resultCart" type="Cart">
+		<id property="cartNum" column="CART_NUM"/>
+		<result property="cartStock" column="CART_STOCK"/>
+		<result property="cartUserId" column="CART_USER_ID"/>
+		<result property="cartPnum" column="CART_P_NUM"/>
+	</resultMap>
+	
+	<resultMap id="resultCartList" type="com.kh.herb.cart.model.vo.CartList">
+		<id property="num" column="NUM"/>
+		<result property="cartNum" column="CART_NUM"/>
+		<result property="cartPnum" column="CART_P_NUM"/>
+		<result property="cartUserId" column="CART_USER_ID"/>
+		<result property="cartPnum" column="CART_P_NUM"/>
+		<result property="cartStock" column="CART_STOCK"/>
+		<result property="pName" column="P_NAME"/>
+		<result property="pCost" column="P_COST"/>
+		<result property="pImageName" column="P_IMAGE_NAME"/>
+		<result property="pImagePath" column="P_IMAGE_PATH"/>
+	</resultMap>
+	
+		<resultMap id="resultTopList" type="com.kh.herb.cart.model.vo.TopList">
+		<id property="rNum" column="RNUM"/>
+		<result property="pNum" column="P_NUM"/>
+		<result property="pName" column="P_NAME"/>
+		<result property="pCost" column="P_COST"/>
+		<result property="pImageName" column="P_IMAGE_NAME"/>
+		<result property="pSell" column="P_SELL"/>
+	</resultMap>
+	
+	<!-- 카트에 이미 있는 상품인지 확인 -->
+	<select id="searchCart" parameterType="Cart" resultType="int">
+		 SELECT COUNT(*) FROM CART WHERE CART_USER_ID = #{cartUserId} AND  CART_P_NUM = #{cartPnum}
+	</select>
+	
+	
+	<!-- 카트 담기 -->
+	<insert id="addCart" parameterType="Cart">
+		INSERT INTO CART (CART_NUM, CART_STOCK, CART_USER_ID, CART_P_NUM)
+			VALUES (CART_SEQ.NEXTVAL, #{cartStock}, #{cartUserId}, #{cartPnum})
+	</insert>
+	
+	
+	<!-- 카트 리스트 -->
+	<select id="cartList" parameterType="String" resultMap="resultCartList">
+	SELECT
+  		ROW_NUMBER() OVER(ORDER BY C.CART_NUM DESC) AS NUM,
+   		C.CART_NUM, C.CART_USER_ID, C.CART_P_NUM, C.CART_STOCK,
+    	P.P_NAME, P.P_COST, P.P_IMAGE_NAME, P.P_IMAGE_PATH
+	FROM CART C
+    	INNER JOIN PRODUCT P
+        	ON C.CART_P_NUM = P.P_NUM
+    	WHERE C.CART_USER_ID = #{userId}
+	</select>
+	
+	<!-- 카트 수량 변경 -->
+	<update id="updateCart" parameterType="Cart">
+		UPDATE CART
+		SET CART_STOCK = #{cartStock}
+		WHERE CART_USER_ID = #{cartUserId} AND CART_NUM = #{cartNum}
+	</update>
+	
+	
+	<!-- 카트 삭제 -->
+	<delete id="deleteCart" parameterType="Cart" >
+		DELETE FROM CART WHERE CART_NUM = #{cartNum} 
+	</delete>
+	
+	<!-- Top4 조회 -->
+	<select id="topList" resultMap="resultTopList">
+	 <![CDATA[
+	SELECT * FROM(
+	SELECT ROW_NUMBER() OVER(ORDER BY P_SELL DESC)AS RNUM,
+    P_NUM , P_NAME, P_COST, P_IMAGE_NAME, P_SELL
+    FROM PRODUCT) WHERE RNUM >= 1 AND RNUM <= 4
+       ]]>
+	</select>
 </mapper>

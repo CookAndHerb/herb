@@ -11,7 +11,8 @@
 <title>어른허브</title>
 <!-- Google Font -->
 <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-
+    <!-- Icon -->
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 <!-- Css Styles -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" type="text/css">
@@ -62,9 +63,9 @@
 					<div class="filter-widget">
 						<h4 class="fw-title">Admin</h4>
 						<ul class="filter-catagories" style="font-weight: bold;">
-							<li><a class="sidebar" href="adminProduct.do">상품관리</a></li>
-							<li><a href="#">주문관리</a></li>
-							<li><a href="#">회원관리</a></li>
+							<li><a class="sidebar" href="adminProduct.do" style="color: #e7ab3c">상품관리</a></li>
+							<li><a href="adminOrder.do">주문관리</a></li>
+							<li><a href="adminMember.do">회원관리</a></li>
 						</ul>
 					</div>
 				</div>
@@ -72,20 +73,20 @@
 				<!-- 내용 -->
 				<div class="col-lg-9 order-1 order-lg-2">
 
-					<h3>상품 등록</h3>
+					<h3><i class='fas fa-copy' style='font-size:32px; color:#e7ab3c'></i> 상품 등록</h3>
 					<br>
 					<br>
 					<form action="productIns.do" method="post" enctype="multipart/form-data">
 						  <div class="custom-file col-sm-12">
-    						<input type="file" class="custom-file-input" name="infoImageName" id="customFile">
-    						<label class="custom-file-label" for="customFile">상품 대표 이미지</label>
+    						<input type="file" class="custom-file-input" name="image" id="image">
+    						<label class="custom-file-label" for="image">상품 대표 이미지</label>
   						</div>
   						<br><br>
   						<div class="form-inline">
 						<label for="pName">상품 명</label> &nbsp;&nbsp;&nbsp; 
 						<input type="text" class="col-sm-8 form-control" name="pName" id="pName">&nbsp; 
-						<label for="sel1"></label> 
-						<select class="form-control col-sm-3" id="sel1" name="pCategory">
+						<label for="pCategory"></label> 
+						<select class="form-control col-sm-3" id="pCategory" name="pCategory">
 							<option value="">카테고리 선택</option>
 							<option value="비타민">비타민</option>
 							<option value="홍삼">홍삼</option>
@@ -98,7 +99,7 @@
 							<label for="pMaDate">제조일자</label>&nbsp;
 							<input type="date" class="col-sm-5 form-control" name="pMaDate" id="pMaDate">
 							&nbsp;
-							<label for="pMaDate">유통기한</label> &nbsp;
+							<label for="pExDate">유통기한</label> &nbsp;
 							<input type="date" class="col-sm-5 form-control" name="pExDate" id="pExDate">
 						</div><br>
 						<div class="form-inline">
@@ -117,7 +118,7 @@
 						</div><br>
 						<div class="form-inline">
 							<label for="ImageName">상품 정보 이미지 </label>&nbsp;&nbsp;&nbsp; 
-    						<input type="file" class="col-sm-10" name="imageName" id="imageName" multiple="multiple">
+    						<input type="file" class="col-sm-10" name="pInfoFiles" id="pInfoFiles" multiple="multiple">
   						</div><br>
   						<textarea id="pContent" name="pContent"></textarea><br>
   						<div class="insButton">
@@ -125,7 +126,7 @@
 						<input type="reset" class="btn btn-secondary" value="취소">
 						</div>
 					</form>
-				
+				</div>
 				</div>
 			</div>
 

@@ -3,4 +3,59 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="adminMember">
+	<resultMap id="resultMember" type="Member">
+		<id property="userNum" column="USER_NUM"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="userPw" column="USER_PW"/>
+		<result property="userName" column="USER_NAME"/>
+		<result property="userPhone" column="USER_PHONE"/>
+		<result property="userEmail" column="USER_EMAIL"/>
+		<result property="userAddress1" column="USER_ADDRESS1"/>
+		<result property="userAddress2" column="USER_ADDRESS2"/>
+		<result property="userAddress3" column="USER_ADDRESS3"/>
+		<result property="userBirth" column="USER_BIRTH"/>
+		<result property="userDel" column="USER_DEL"/>
+		<result property="userDate" column="USER_DATE"/>	
+	</resultMap>
+	
+	<!-- 전체회원 조회 -->
+	<select id="memberList" resultMap="resultMember">
+		SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY USER_NUM DESC)AS ROW_NUM, MEMBER.* 
+		FROM MEMBER) WHERE ROW_NUM BETWEEN #{start} AND #{end}
+	</select> 
+	<select id="memberCount" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER
+	</select>
+
+	<!-- 검색 쿼리 -->
+	<select id="searchMember" resultMap="resultMember" parameterType="Pagination">
+		SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY USER_NUM DESC)AS
+		ROW_NUM, MEMBER.* FROM MEMBER
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if
+				test="selectType=='userId' and keyword != null and keyword != ''">
+				AND USER_ID LIKE '%'||#{keyword}||'%'
+			</if>
+			<if
+				test="selectType=='userName' and keyword != null and keyword != ''">
+				AND USER_NAME LIKE '%'||#{keyword}||'%'
+			</if>
+		</trim>
+		)
+		WHERE ROW_NUM BETWEEN #{start} AND #{end}
+	</select>
+	<select id="searchMemberCount" resultType="_int" parameterType="Pagination">
+		SELECT COUNT(*) FROM MEMBER
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if
+				test="selectType=='userId' and keyword != null and keyword != ''">
+				AND USER_ID LIKE '%'||#{keyword}||'%'
+			</if>
+			<if
+				test="selectType=='userName' and keyword != null and keyword != ''">
+				AND USER_NAME LIKE '%'||#{keyword}||'%'
+			</if>
+		</trim>
+	</select>
+	
 </mapper>
