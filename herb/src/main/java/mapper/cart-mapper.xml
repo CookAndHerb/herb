@@ -23,6 +23,14 @@
 		<result property="pImagePath" column="P_IMAGE_PATH"/>
 	</resultMap>
 	
+		<resultMap id="resultTopList" type="com.kh.herb.cart.model.vo.TopList">
+		<id property="rNum" column="RNUM"/>
+		<result property="pNum" column="P_NUM"/>
+		<result property="pName" column="P_NAME"/>
+		<result property="pCost" column="P_COST"/>
+		<result property="pImageName" column="P_IMAGE_NAME"/>
+		<result property="pSell" column="P_SELL"/>
+	</resultMap>
 	
 	<!-- 카트에 이미 있는 상품인지 확인 -->
 	<select id="searchCart" parameterType="Cart" resultType="int">
@@ -61,4 +69,14 @@
 	<delete id="deleteCart" parameterType="Cart" >
 		DELETE FROM CART WHERE CART_NUM = #{cartNum} 
 	</delete>
+	
+	<!-- Top4 조회 -->
+	<select id="topList" resultMap="resultTopList">
+	 <![CDATA[
+	SELECT * FROM(
+	SELECT ROW_NUMBER() OVER(ORDER BY P_SELL DESC)AS RNUM,
+    P_NUM , P_NAME, P_COST, P_IMAGE_NAME, P_SELL
+    FROM PRODUCT) WHERE RNUM >= 1 AND RNUM <= 4
+       ]]>
+	</select>
 </mapper>
