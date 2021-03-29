@@ -34,6 +34,12 @@
 			return confirm("삭제하시겠습니까?");
 		}
 	</script>
+	<style>
+		#proDetail:hover{
+			color: #e7ab3c;
+			font-weight: bold;
+		}
+	</style>
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -121,7 +127,7 @@
 								<c:forEach var="product" items="${productList }">
 									<tr>
 										<td>${product.pNum}</td>
-										<td style="width: 180px;">${product.pName}</td>
+										<td style="width: 180px;"><a id="proDetail" href="productInfo.do?num=${product.pNum}">${product.pName}</a></td>
 										<td>${product.pCategory}</td>
 										<td>${product.pType}</td>
 										<td>${product.pCost}</td>
