@@ -23,7 +23,7 @@
    </typeAliases>
    
 
-   <mappers>  
+   <mappers>   
       <mapper resource="mapper/member-mapper.xml" />
       <mapper resource="mapper/admin-member-mapper.xml" />
       <mapper resource="mapper/admin-order-mapper.xml" />
