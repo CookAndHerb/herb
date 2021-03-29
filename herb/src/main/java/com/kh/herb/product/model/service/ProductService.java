@@ -8,7 +8,7 @@ import com.kh.herb.product.model.vo.ProductPage;
 
 public interface ProductService {
 	
-	public List<Product> productAllList(int startRow, int endRow) throws Exception;
+	public List<Product> productAllList(ProductPage page) throws Exception;
 	
 	public List<Product> productCateList(ProductPage page) throws Exception;
 	
@@ -18,7 +18,9 @@ public interface ProductService {
 	
 	public List<ProductFile> productInfoFile(int num) throws Exception;
 	
-	public void proStarCount(int num) throws Exception;
+	public int starCount(int num) throws Exception;
+	
+	public int starAvg(int num) throws Exception;
 	
 	public int proCount() throws Exception;
 	

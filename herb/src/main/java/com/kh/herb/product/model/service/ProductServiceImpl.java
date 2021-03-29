@@ -17,8 +17,8 @@ public class ProductServiceImpl implements ProductService {
 	ProductDAO dao;
 	
 	@Override
-	public List<Product> productAllList(int startRow, int endRow) throws Exception {
-		List<Product> list = dao.productAllList(startRow, endRow);
+	public List<Product> productAllList(ProductPage page) throws Exception {
+		List<Product> list = dao.productAllList(page);
 		return list;
 	}
 
@@ -35,8 +35,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void proStarCount(int num) throws Exception {
-		dao.proStarCount(num);
+	public int starCount(int num) throws Exception {
+		return dao.starCount(num);
+	}
+	
+	@Override
+	public int starAvg(int num) throws Exception {
+		return dao.starAvg(num);
 	}
 
 	@Override

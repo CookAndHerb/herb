@@ -21,11 +21,11 @@ public class ReviewDAO {
 	}
 	
 	// 리뷰 추가
-	public void reviewInsert(Review review) {
+	public int reviewInsert(Review review) {
 		System.out.println("ReviewDao insert 메서드 실행");
 		System.out.println("===reNum 넣기 전===");
 		// 리뷰 추가
-		sqlSession.insert("Review.reviewInsert", review);
+		int result = sqlSession.insert("Review.reviewInsert", review);
 		
 		if(review.getmFileList() != null) {
 			// 방금 추가한 리뷰 번호
@@ -43,6 +43,7 @@ public class ReviewDAO {
 				sqlSession.insert("Review.reviewFileInsert", reFile);
 			}
 		}
+		return result;
 		
 	}
 	// 리뷰 삭제

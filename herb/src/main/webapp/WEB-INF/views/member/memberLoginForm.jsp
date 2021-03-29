@@ -21,15 +21,15 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
-    
+
     <script type="text/javascript"
    src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-   
-   
-    <script type="text/javascript"
+
+	<script type="text/javascript"
    src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js"
    charset="utf-8"></script>   
    
+	<link href="css/bootstrap.min.css" rel="stylesheet">
    
 </head>
 <body>
@@ -77,15 +77,16 @@
                                    <a href="memberIdSearch.do" class="forget-pass">아이디 찾기  </a>
                                 </div>
                             </div>
-                            <button type="submit" class="site-btn login-btn">로그인</button>
+                            <button type="submit"  class="site-btn login-btn">로그인</button>
                         
-                        	<!-- 소셜로그인칸 
-                           	<div id="naver_id_login" style="text-align: center">
-                    			 <a href="${naver_url}"><img width="223" 
-                     				src="${pageContext.request.contextPath}/resources/img/네이버.png" /></a>
+                        	<!-- <div id="naver_id_login" style="text-align: center">
+                     		<a href="${naver_url}"><img style="width:250px; height:50px;" 
+                        	src="${pageContext.request.contextPath}/resources/img/네이버.png" /></a>
                   			</div>
-                        	소셜로그인 끝 -->
-                        
+                         -->
+                         <div id="naver_id_login" class="site-btn login-btn" style="background-color:green; border:green;">
+                     		<a href="${naver_url}" style="color:white; text-align:center; margin-left:150px;">네이버 아이디로 로그인</a>
+                  			</div>
                         </form>
                         <div class="switch-login">
                             <a href="memberJoin.do" class="or-login">회원가입</a>

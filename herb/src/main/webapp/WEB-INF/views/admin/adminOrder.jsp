@@ -37,8 +37,36 @@ $(document).ready(function() {
 	$('.dataTables_length').addClass('bs-select');
 });
 
-
-	$(function() {
+	$(document).on('click', '.orderUpt', updatefunction);
+	   function updatefunction(){ 
+		   var orderStr = $('#orderStatus').val();
+		   var orderNum = $('.orderUpt').val();
+		      $.ajax({
+		         type : 'post',
+		         dataType : 'json',
+		         url : 'orderUpt.do',
+		         data : {
+						'orderStatus' : orderStr,
+						'orderNum' : orderNum
+					},
+		         success : function(data){
+		              if(data.ok == "dup"){
+		            	alert('배송상태 업데이트 성공');
+		               	location.href="adminOrder.do"
+		               }else{
+		            	  alert('배송상태 업데이트 실패');
+		               }
+		                                                     
+		            },
+					error : function(request, status, errorData) {
+						alert("error code: " + request.status + "\n" // 오류 번호 나옴 ex)500 404
+								+ "message: " + request.responseText + "\n" //오류 원인(기술 용어로 나옴)
+								+ "error: " + errorData);
+					}
+		        }); // ajax끝
+	   };
+	
+/* 	$(function() {
 		$('#orderUpt').on('click', function() {
 			var orderStr = $('#orderStatus').val();
 			var orderNum = $('#orderNum').val();
@@ -63,8 +91,8 @@ $(document).ready(function() {
 							+ "error: " + errorData);
 				}
 			});
-		})
-	});
+		}) 
+	}); */
 </script>
 <style>
 .dtHorizontalExampleWrapper {
@@ -142,7 +170,7 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
                         <div class="form-inline serch">
                             <select name="selectType" class="custom-select-sm">
                             <option value="orderNum">주문번호</option>
-                            <option value="userName">주문자</option>
+                            <option value="userName">구매자</option>
                             </select>
                             <div class="input-group">
                                 <input type="text" class="control-sm" name="keyword">
@@ -162,7 +190,7 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
 								<tr>
 									<th>주문 번호</th>
 									<th>주문 일자</th>
-									<th>주문자</th>
+									<th>구매자</th>
 									<th>수령인</th>
 									<th>수령 주소</th>
 									<th>연락처</th>
@@ -176,7 +204,7 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
 							<c:forEach var="order" items="${orderList}">
 								<tr>
 									<td>
-										<a href="adminOrderDetail.do?orderNum=${order.orderNum }">
+										<a href="adminOrderDetail.do?orderNum=${order.orderNum }" class="aTag" >
 										${order.orderNum }</a>
 									</td>
 									<td>${order.orderDate }</td>
@@ -201,8 +229,9 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
                            			</td>
 									<td>${order.orderDel }</td>
 									<td>
-										<input type="hidden" name="orderNum" id="orderNum" value="${order.orderNum }"> 
-										<button id="orderUpt" style="border: white; background: #e7ab3c; color: white;">수정</button>
+										<%-- <input type="hidden" name="orderNum" id="orderNum" value="${order.orderNum }"> 
+										<button id="orderUpt" style="border: white; background: #e7ab3c; color: white;">수정</button> --%>
+										<button type="button" style="border: white; background: #e7ab3c; color: white;" class="orderUpt" value="${order.orderNum }">수정</button>
 									</td>
 								</tr>
 							</c:forEach>

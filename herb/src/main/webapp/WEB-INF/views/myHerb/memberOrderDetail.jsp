@@ -184,7 +184,7 @@
                 			
                 			<td> <!-- 오른쪽-->
                 				
-                				<div style="text-align:center; margin-top: 50%;">
+                				<div style="text-align:center; margin-top: 30%;">
                 				<c:choose>
                 					<c:when test="${orderDetailList[0].orderDel == 'N'}">
                 							<button class="orderDel addCart_btn primary-btn pd-cart" style="border-style:none;" type="button" value="${orderDetailList[0].orderNum}">주문 취소</button>

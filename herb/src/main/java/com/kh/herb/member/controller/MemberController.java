@@ -1,8 +1,10 @@
 package com.kh.herb.member.controller;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -12,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -23,6 +27,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.kh.herb.cart.model.service.CartService;
+import com.kh.herb.cart.model.vo.TopList;
 import com.kh.herb.member.model.service.MemberService;
 import com.kh.herb.member.model.vo.Member;
 
@@ -31,17 +38,78 @@ import com.kh.herb.member.model.vo.Member;
 @Controller
 public class MemberController {
 	
+	/* NaverLoginDTO */
+	private String apiResult = null;
+	
+	@Autowired
+	NaverController naverLoginDTO;
+	
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	CartService cartService;
 	
 	@Autowired
 	private JavaMailSender mailSender;
 	
 	// 로그인 폼으로 가는 주소
 	@RequestMapping(value="memberLogin.do", method=RequestMethod.GET)
-	public String memberLogin() {
-		return "member/memberLoginForm";
+	public ModelAndView memberLogin(HttpSession session, ModelAndView mv)  {
+		
+		/* 네아로 인증 URL을 생성하기 위하여 getAuthorizationUrl을 호출 */
+		String naverAuthUrl = naverLoginDTO.getAuthorizationUrl(session);
+		// 네이버 로그인
+		mv.addObject("naver_url", naverAuthUrl);
+		mv.setViewName("member/memberLoginForm");
+		return mv;
 	}
+	
+	// 네이버 로그인 & 회원정보(이름) 가져오기
+	@RequestMapping(value = "naverLogin.do", produces = "application/json;charset=utf-8", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	public ModelAndView naverLogin(@RequestParam String code, @RequestParam String state, HttpSession session)
+			throws Exception {
+		ModelAndView mav = new ModelAndView();
+		OAuth2AccessToken oauthToken;
+		oauthToken = naverLoginDTO.getAccessToken(session, code, state);
+
+		// 로그인한 사용자의 모든 정보가 JSON타입으로 저장되어 있음
+		apiResult = naverLoginDTO.getUserProfile(oauthToken);
+
+		// 내가 원하는 정보 (이름)만 JSON타입에서 String타입으로 바꿔 가져오기 위한 작업
+		JSONParser parser = new JSONParser();
+		Object obj = null;
+		try {
+			obj = parser.parse(apiResult);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		JSONObject jsonobj = (JSONObject) obj;
+		JSONObject response = (JSONObject) jsonobj.get("response");
+		String userId = (String) response.get("id");
+		String userName = (String) response.get("name");
+		String userEmail = (String) response.get("email");
+		String userBirth = (String) response.get("birthday");
+		
+		Member member = new Member();
+		member.setUserId(userId);
+		member.setUserName(userName);
+		member.setUserEmail(userEmail);
+		member.setUserBirth(userBirth);
+		
+		// 로그인&아웃 하기위한 세션값 주기
+		session.setAttribute("member", member);
+		mav.addObject("member", member);
+		
+		List<TopList> topList = cartService.topList();
+		mav.addObject("topList",topList);
+		
+		// 네이버 로그인 성공 페이지 View 호출
+		mav.setViewName("index");
+		// 네이버 로그인 성공 페이지 View 호출
+		return mav;
+	}// end naverLogin()
 	
 	// 회원가입 폼으로 가는 주소
 	@RequestMapping(value="memberJoin.do", method=RequestMethod.GET)
@@ -93,6 +161,9 @@ public class MemberController {
 		//로그아웃하려면 세션을 가져오는게 우선
 		HttpSession session = request.getSession();
 		session.invalidate();
+		
+		List<TopList> topList = cartService.topList();
+		mv.addObject("topList",topList);
 		mv.setViewName("index");
 		return mv;
 	}

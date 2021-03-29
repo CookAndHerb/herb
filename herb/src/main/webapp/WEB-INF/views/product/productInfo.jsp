@@ -269,8 +269,8 @@
 											<c:forEach var="rSta" begin="0" end="${5-(reAvg+1)}">
 												<i class="fa fa-star-o"></i>
 											</c:forEach>
-											<span>(${vo.pStar})</span>
 										</c:if>
+										<span>(${vo.pStar})</span>
 									</c:if>
 									<!-- 리뷰가 없을 경우 -->
 									<c:if test="${empty review}">
