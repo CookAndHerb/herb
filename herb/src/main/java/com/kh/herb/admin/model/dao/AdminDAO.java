@@ -178,9 +178,5 @@ public class AdminDAO {
 	public int totalSales() throws Exception{
 		return sqlSession.selectOne("adminOrder.totalSales");
 	}
-	
-	//파일 수정시 해당 파일 삭제
-	public int deleteOne(int pInfoNum) throws Exception{
-		return sqlSession.delete("adminFile.deleteOne", pInfoNum);
-	}
+
 }
