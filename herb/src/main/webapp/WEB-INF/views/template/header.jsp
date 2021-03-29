@@ -221,7 +221,7 @@ window.onload = function(){
                                 <li><a href="#">질문 게시판</a></li>
                             </ul>
                         </li>
-                        <li><a href="./contact.html">Contact</a></li>
+                        <li><a href="contact.do">Contact</a></li>
                         
                      
                     	<c:choose>
