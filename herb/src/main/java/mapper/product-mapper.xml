@@ -23,45 +23,84 @@
 	<select id="proAllList" parameterType="ProductPage" resultType="Product" resultMap="proResult">
 	<![CDATA[
 		select * from(select rownum rnum, p_num, p_name, p_cost, 
-		p_image_name, p_image_path, p_star, p_category 
-		from product where p_del = 'N')
-		where rnum >= #{startPage} and rnum <= #{endPage}
-	]]>
+		p_image_name, p_image_path, p_star, p_category, p_star_avg
+		from (select * from product where p_del = 'N']]>
+	<trim>
+		<choose>
+			<when test="pSelect == 2">
+				order by p_star desc nulls last))
+			</when>
+			<when test="pSelect == 3">
+				order by p_cost asc))
+			</when>
+			<when test="pSelect == 4">
+				order by p_cost desc))
+			</when>
+			<otherwise>))</otherwise>
+		</choose>
+	</trim>
+	<![CDATA[where rnum >= #{startPage} and rnum <= #{endPage}]]>
 	</select>
 	<!-- 상품 카테고리별 리스트 가져오기 -->
 	<select id="proCategoryList" parameterType="ProductPage" resultType="Product" resultMap="proResult">
 	<![CDATA[
 		select * from(select rownum rnum, p_num, p_name, p_cost, 
-		p_image_name, p_image_path, p_star, p_category 
-		from product where p_del = 'N' and p_category=#{pCategory})
-		where rnum >= #{startPage} and rnum <= #{endPage}
+		p_image_name, p_image_path, p_star, p_category, p_star_avg
+		from 
+		(select * from product where p_del = 'N' and p_category=#{pCategory}
 	]]>
-	</select>
-	<!-- 상품 정렬해서 리스트 가져오기 -->
-	<select id="proSelctList" parameterType="ProductPage" resultType="Product" resultMap="proResult">
-	<![CDATA[
-		select * from(select rownum rnum, p_num, p_name, p_cost, 
-		p_image_name, p_image_path, p_star, p_category  from
-		(select * from product where p_del = 'N' order by
-		 ${pSelect}
-		 desc nulls last)a)
-		where rnum >= #{startPage} and rnum <= #{endPage}
-	]]>
+		<trim>
+			<choose>
+				<when test="pSelect == 2">
+					order by p_star desc nulls last))
+				</when>
+				<when test="pSelect == 3">
+					order by p_cost asc))
+				</when>
+				<when test="pSelect == 4">
+					order by p_cost desc))
+				</when>
+				<otherwise>))</otherwise>
+			</choose>
+		</trim>
 	</select>
 	<!-- 상품 검색 리스트 -->
 	<select id="ProductSearchList" parameterType="ProductPage" resultType="Product" resultMap="proResult">
 	<![CDATA[
 		select * from(select rownum rnum, p_num, p_name, p_cost, 
-		p_image_name, p_image_path, p_star, p_category  from
-		(select * from product where p_del = 'N' and p_name like '%' || #{keyword} || '%']]>
+		p_image_name, p_image_path, p_star, p_category,p_star_avg 
+		from (select * from product where p_del = 'N' and p_name like '%' || #{keyword} || '%']]>
 	<trim>
 	<choose>
 		<when test='pCategory != "전체"'>
-			and p_category=#{pCategory}))
+			and p_category=#{pCategory}
+			<choose>
+				<when test="pSelect == 2">
+					order by p_star desc nulls last))
+				</when>
+				<when test="pSelect == 3">
+					order by p_cost asc))
+				</when>
+				<when test="pSelect == 4">
+					order by p_cost desc))
+				</when>
+				<otherwise>))</otherwise>
+			</choose>
 		</when>
-		<otherwise>
-			))
-		</otherwise>
+		<when test='pCategory == "전체"'>
+			<choose>
+				<when test="pSelect == 2">
+					order by p_star desc nulls last))
+				</when>
+				<when test="pSelect == 3">
+					order by p_cost asc))
+				</when>
+				<when test="pSelect == 4">
+					order by p_cost desc))
+				</when>
+				<otherwise>))</otherwise>
+			</choose>
+		</when>
 	</choose>
 	</trim>
 		<![CDATA[where rnum >= #{startPage} and rnum <= #{endPage}]]>
@@ -91,11 +130,17 @@
 		select * from
 		product where p_del = 'N' and p_num = #{pNum}
 	</select>
-	<!-- 리뷰 개수 업데이트 -->
-	<update id="proStarCount" parameterType="int">
+	<!-- 별점 개수 업데이트 -->
+	<update id="starCount" parameterType="int">
 		update product set
-		p_star = (select count(r_num) from review where p_num = #{p_num})
-		where p_num = #{p_num}
+		p_star = (select count(r_star) from review where p_num = #{pNum})
+		where p_num = #{pNum}
+	</update>
+	<!-- 별점 평균 업데이트 -->
+	<update id="starAvg" parameterType="int">
+		update product set
+        p_star_avg = (select round(avg(r_star),1) from review where p_num = #{pNum})
+		where p_num = #{pNum}
 	</update>
 	
 </mapper>

@@ -32,13 +32,18 @@ public class ProductController {
 	// 상품 리스트
 	@RequestMapping(value = "product.do", method = RequestMethod.GET)
 	public ModelAndView productAllList(@RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
-			ModelAndView modelAndView) throws Exception {
+			@RequestParam(name="pSelect", defaultValue = "1") int pSelect, ModelAndView modelAndView) throws Exception {
 		int currentPage = pageNum; // 현재 페이지
 		int startRow = (currentPage - 1) * paseSize + 1; // 페이지별 시작 로우
 		int endRow = currentPage * paseSize; // 페이지별 끝 로우
+		ProductPage page = new ProductPage();
+		page.setStartPage(startRow);
+		page.setEndPage(endRow);
+		page.setpSelect(pSelect);
+		
 		int count = proSe.proCount();
 
-		List<Product> list = proSe.productAllList(startRow, endRow);
+		List<Product> list = proSe.productAllList(page);
 		/*
 		 * System.out.println("count: "+count);
 		 * System.out.println("currentPage: "+currentPage);
@@ -49,6 +54,7 @@ public class ProductController {
 		modelAndView.addObject("pageSize", paseSize);
 		modelAndView.addObject("currentPage", currentPage);
 		modelAndView.addObject("count", count);
+		modelAndView.addObject("pSelect", pSelect);
 		modelAndView.setViewName("product/product");
 
 		return modelAndView;
@@ -57,7 +63,8 @@ public class ProductController {
 	// 검색시 상품 리스트
 	@RequestMapping(value = "productSearch.do", method = RequestMethod.GET)
 	public ModelAndView productSearchList(@RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
-			@RequestParam(name = "keyword") String keyword, @RequestParam(name = "search") String search, ModelAndView modelAndView) throws Exception {
+			@RequestParam(name = "keyword") String keyword, @RequestParam(name = "search") String search, 
+			@RequestParam(name="pSelect") int pSelect, ModelAndView modelAndView) throws Exception {
 		int currentPage = pageNum; // 현재 페이지
 		int startRow = (currentPage - 1) * paseSize + 1; // 페이지별 시작 로우
 		int endRow = currentPage * paseSize; // 페이지별 끝 로우
@@ -69,6 +76,7 @@ public class ProductController {
 		
 		page.setStartPage(startRow);
 		page.setEndPage(endRow);
+		page.setpSelect(pSelect);
 		
 		System.out.println("키워드: "+page.getKeyword());
 		System.out.println("총 개수: "+count);
@@ -81,6 +89,7 @@ public class ProductController {
 		modelAndView.addObject("count", count);
 		modelAndView.addObject("keyword", keyword);
 		modelAndView.addObject("search", search);
+		modelAndView.addObject("pSelect", pSelect);
 		modelAndView.setViewName("product/product");
 
 		return modelAndView;
@@ -89,7 +98,8 @@ public class ProductController {
 	//카테고리별 상품 리스트
 	@RequestMapping(value="categoryList.do", method=RequestMethod.GET)
 	public ModelAndView productCateList(@RequestParam(name="category") String category,
-			@RequestParam(name = "pageNum", defaultValue = "1") int pageNum,  ModelAndView modelAndView) throws Exception {
+			@RequestParam(name = "pageNum", defaultValue = "1") int pageNum,  
+			@RequestParam(name="pSelect") int pSelect, ModelAndView modelAndView) throws Exception {
 		
 		int currentPage = pageNum; // 현재 페이지
 		int startRow = (currentPage - 1) * paseSize + 1; // 페이지별 시작 로우
@@ -99,6 +109,7 @@ public class ProductController {
 		page.setStartPage(startRow);
 		page.setEndPage(endRow);
 		page.setpCategory(category);
+		page.setpSelect(pSelect);
 		
 		int count = proSe.proCategoryCount(category);
 		
@@ -109,10 +120,12 @@ public class ProductController {
 		modelAndView.addObject("currentPage", currentPage);
 		modelAndView.addObject("count", count);
 		modelAndView.addObject("category",category);
+		modelAndView.addObject("pSelect", pSelect);
 		modelAndView.setViewName("product/product");
 		
 		return modelAndView;
-	}
+	}	
+	
 	
 
 	// 상품 상세페이지

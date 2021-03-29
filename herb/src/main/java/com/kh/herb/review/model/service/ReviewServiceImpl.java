@@ -15,9 +15,9 @@ public class ReviewServiceImpl implements ReviewService {
 	ReviewDAO dao;
 	
 	@Override
-	public void reviewInsert(Review review) throws Exception {
+	public int reviewInsert(Review review) throws Exception {
 		System.out.println("reviewService insert 메서드 실행");
-		dao.reviewInsert(review); 
+		return dao.reviewInsert(review); 
 	}
 
 	@Override
