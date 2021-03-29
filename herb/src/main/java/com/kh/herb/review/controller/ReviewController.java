@@ -92,8 +92,13 @@ public class ReviewController {
 				review.setmFileList(fList); 
 			}
 		}
-		reSe.reviewInsert(review);
-		proSe.proStarCount(review.getpNum()); // 리뷰 총 개수 업데이트
+		int result = reSe.reviewInsert(review);
+		System.out.println("추가된 리뷰 수:"+result);
+		
+		int count = proSe.starCount(review.getpNum()); // 리뷰 총 개수 업데이트
+		int avg = proSe.starAvg(review.getpNum()); // 리뷰 평균 업데이트
+		System.out.println("리뷰 개수 업데이트: "+count);
+		System.out.println("리뷰 평균 업데이트: "+avg);
 		
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("num", review.getpNum());
@@ -112,8 +117,11 @@ public class ReviewController {
 		int rf = reSe.reviewFileDelete(rNum);
 		int re = reSe.reviewDelete(rNum);
 		String result = rf+re+"";
-		proSe.proStarCount(num);
 		
+		int count = proSe.starCount(num); // 리뷰 총 개수 업데이트
+		int avg = proSe.starAvg(num); // 리뷰 평균 업데이트
+		System.out.println("리뷰 개수 업데이트: "+count);
+		System.out.println("리뷰 평균 업데이트: "+avg);
 		System.out.println("결과: "+result);
 		JSONObject jo = new JSONObject();
 		jo.put("result", result);

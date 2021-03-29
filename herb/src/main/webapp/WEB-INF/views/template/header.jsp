@@ -29,7 +29,14 @@ window.onload = function(){
 	}
 }
 </script>
-
+<style>
+	#SearchBtn{
+		right: -38px;	
+	}
+	#logo{
+		padding: 0px;
+	}	
+</style>
 </head>
 <body>
     <!-- Page Preloder -->
@@ -80,7 +87,7 @@ window.onload = function(){
                 <div class="row">
                 
                     <div class="col-lg-2 col-md-2">
-                        <div class="logo">
+                        <div class="logo" id="logo">
                             <a href="index.do" >
                                 <img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="">
                             </a>
@@ -101,6 +108,7 @@ window.onload = function(){
                             <div class="input-group">
                                 <input type="text" name="keyword" placeholder="키워드를 입력해주세요"
                                 <c:if test="${keyword ne null}">value="${keyword}"</c:if>>
+                                <input type="hidden" name="pSelect" value="1">
                                 <button type="button" id="SearchBtn"><i class="ti-search"></i></button>
                             </div>
                         </div>
@@ -193,11 +201,11 @@ window.onload = function(){
                         <i class="ti-menu"></i>
                         <span>전체 카테고리</span>
                         <ul class="depart-hover">
-                            <li class="active"><a href="categoryList.do?category=비타민">비타민</a></li>
-                            <li><a href="categoryList.do?category=홍삼">홍삼</a></li>
-                            <li><a href="categoryList.do?category=눈 건강">눈 건강</a></li>
-                            <li><a href="categoryList.do?category=장 건강">장 건강</a></li>
-                            <li><a href="categoryList.do?category=기타">기타</a></li>
+                            <li class="active"><a href="categoryList.do?category=비타민&pSelect=1">비타민</a></li>
+                            <li><a href="categoryList.do?category=홍삼&pSelect=1">홍삼</a></li>
+                            <li><a href="categoryList.do?category=눈 건강&pSelect=1">눈 건강</a></li>
+                            <li><a href="categoryList.do?category=장 건강&pSelect=1">장 건강</a></li>
+                            <li><a href="categoryList.do?category=기타&pSelect=1">기타</a></li>
                         </ul>
                     </div>
                 </div>

@@ -4,16 +4,15 @@ public class ProductPage {
 	private int startPage;
 	private int endPage;
 	private String pCategory;
-	private String pSelect;
+	private int pSelect;
 	private String keyword;
 	
 	public ProductPage() {}
 	
-	public ProductPage(int startPage, int endPage, String pCategory, String pSelect, String keyword) {
+	public ProductPage(int startPage, int endPage, String pCategory, int pSelect, String keyword) {
 		this.startPage = startPage;
 		this.endPage = endPage;
 		this.pCategory = pCategory;
-		this.pSelect = pSelect;
 		this.keyword = keyword;
 	}
 	
@@ -35,17 +34,20 @@ public class ProductPage {
 	public void setpCategory(String pCategory) {
 		this.pCategory = pCategory;
 	}
-	public String getpSelect() {
-		return pSelect;
-	}
-	public void setpSelect(String pSelect) {
-		this.pSelect = pSelect;
-	}
+
 	public String getKeyword() {
 		return keyword;
 	}
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
+	}
+
+	public int getpSelect() {
+		return pSelect;
+	}
+
+	public void setpSelect(int pSelect) {
+		this.pSelect = pSelect;
 	}
 
 }

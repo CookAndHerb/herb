@@ -16,11 +16,7 @@ public class ProductDAO {
 	private SqlSessionTemplate sqlSession;
 	
 	// 상품 리스트
-	public List<Product> productAllList(int startRow, int endRow){
-		ProductPage page = new ProductPage();
-		page.setStartPage(startRow);
-		page.setEndPage(endRow);
-		
+	public List<Product> productAllList(ProductPage page){
 		List<Product> list = sqlSession.selectList("Product.proAllList", page);
 		return list;
 	}
@@ -44,9 +40,13 @@ public class ProductDAO {
 		List<ProductFile> file = sqlSession.selectList("ProductFile.selectFile", pNum);
 		return file;
 	}
+	// 리뷰 총 개수 업데이트
+	public int starCount(int pNum) {
+		return sqlSession.update("Product.starCount",pNum);
+	}
 	// 리뷰 총 개수
-	public void proStarCount(int num) {
-		sqlSession.update("Product.proStarCount",num);
+	public int starAvg(int pNum) {
+		return sqlSession.update("Product.starAvg",pNum);
 	}
 	// 상품 총 개수
 	public int proCount() {
