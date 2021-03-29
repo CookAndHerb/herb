@@ -25,11 +25,16 @@
 	
 	<!-- 선택 상품 이미지 수정 -->
 	<update id="updateFile" parameterType="ProductFile">
-		UPDATE PRODUCT_FILE SET P_INFO_FILE=#{pInfoFile}, P_INFO_PATH=#{pInfoPath} WHERE P_NUM=#{pNum}
+		UPDATE PRODUCT_FILE SET P_INFO_FILE=#{pInfoFile}, P_INFO_PATH=#{pInfoPath} WHERE P_NUM=#{pNum} AND P_INFO_NUM=#{pInfoNum}
 	</update>
 	
 	<!-- 선택 상품 파일 삭제 -->
 	<delete id="deleteFile" parameterType="int">
 		DELETE FROM PRODUCT_FILE WHERE P_NUM=#{pNum}
+	</delete>
+	
+	<!-- 글 수정시 해당 파일 삭제 -->
+	<delete id="deleteOne" parameterType="int">
+		DELETE FROM PRODUCT_FILE WHERE P_INFO_NUM=#{pInfoNum}
 	</delete>
 </mapper>
