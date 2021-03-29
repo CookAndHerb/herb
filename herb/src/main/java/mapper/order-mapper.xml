@@ -17,7 +17,28 @@
 		<result property="pImagePath" column="P_IMAGE_PATH"/>
 	</resultMap>
 	
+
+	<resultMap id="resultOrder" type="Order">
+	<id property="orderNum" column="ORDER_NUM"/>
+	<result property="orderRecvName" column="ORDER_RECV_NAME" />
+	<result property="orderRecvAddr1" column="ORDER_RECV_ADDRESS1" />
+	<result property="orderRecvAddr2" column="ORDER_RECV_ADDRESS2" />
+	<result property="orderRecvAddr3" column="ORDER_RECV_ADDRESS3" />
+	<result property="orderRecvPhone" column="ORDER_RECV_PHONE" />
+	<result property="orderDate" column="ORDER_DATE" />
+	<result property="orderDel" column="ORDER_DEL" />
+	<result property="orderAmount" column="ORDER_AMOUNT" />
+	<result property="orderMessage" column="ORDER_MESSAGE" />
+	<result property="orderStatus" column="ORDER_STATUS" />
+	<result property="orderUserId" column="ORDER_USER_ID" />
+	</resultMap>
 	
+	<resultMap id="resultOrderDetail" type="OrderDetail">
+	<id property="orderDetailNum" column="ORDER_DETAIL_NUM"/>
+	<result property="orderDetailStock" column="ORDER_DETAIL_STOCK" />
+	<result property="orderNum" column="ORDER_NUM" />
+	<result property="orderDetailPNum" column="ORDER_DETAIL_P_NUM" />
+	</resultMap>
 		<!-- 카트 리스트 -->
 	<select id="cartList" parameterType="String" resultMap="resultCartList">
 	SELECT

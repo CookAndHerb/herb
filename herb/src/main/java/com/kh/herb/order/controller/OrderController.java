@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.herb.cart.model.vo.CartList;
 import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.order.model.service.OrderService;
+import com.kh.herb.order.model.vo.Order;
 
 @Controller
 public class OrderController {
@@ -40,11 +41,17 @@ public class OrderController {
 			if(cartList.size() == 0) { // 카트가 비어있음
 				mv.setViewName("cart/noCart");
 			}else { // 결제하기 버튼 누르면 결제 폼으로 
+				mv.addObject("member");
 				mv.addObject("cartList", cartList);
 				mv.setViewName("order/orderForm");
 			}
 		}
 		
 		return mv;
+	}
+	
+	@RequestMapping(value="orderInsert.do")
+	public String orderInsert(ModelAndView modelAndView, Order order) {
+		return "member/memberLoginForm";
 	}
 }

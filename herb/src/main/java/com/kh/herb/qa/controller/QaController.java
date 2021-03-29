@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.qa.model.service.QaService;
 import com.kh.herb.qa.model.vo.Pager;
 import com.kh.herb.qa.model.vo.Qa;
@@ -104,14 +105,14 @@ public class QaController {
 	@RequestMapping(value="qaPwForm.do")
 	public ModelAndView qaPwForm(ModelAndView modelAndView,
 			HttpSession session, @RequestParam int qaNum) throws Exception {
+		Member member = (Member)session.getAttribute("member");
 		
-		// TODO : 관리자일 경우 잘 안됨
-		if(session.getAttribute("userNum")!=null && (int) (session.getAttribute("userNum")) < 1000) { 
+		if(member!=null && member.getUserNum() < 1000) { 
 			//관리자일 경우 비밀번호 입력 창 없이 바로 게시글 상세페이지로 이동
-			modelAndView.addObject("qaNum",qaNum);
+			//modelAndView.addObject("qaNum",qaNum);
 			modelAndView.addObject("qa", qaService.read(qaNum)); 
+			qaService.increaseViewcnt(qaNum, session);
 			modelAndView.setViewName("qa/qaView");
-        	qaService.increaseViewcnt(qaNum, session);
 		} else {
 			// 비밀번호 입력 폼 페이지로 이동(관리자 아닐 경우)
 			modelAndView.addObject("qaNum",qaNum);
