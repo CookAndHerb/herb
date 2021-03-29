@@ -20,12 +20,11 @@
      <typeAlias type="com.kh.herb.admin.model.vo.Pagination" alias="Pagination"/>
      <typeAlias type="com.kh.herb.product.model.vo.ProductFile" alias="ProductFile" />
      <typeAlias type="com.kh.herb.admin.model.vo.AdminOrder" alias="AdminOrder"/>
-     <typeAlias type="com.kh.herb.product.model.vo.ProductPage" alias="ProductPage"/>
-     
+     <typeAlias type="com.kh.herb.product.model.vo.ProductPage" alias="ProductPage"/>    
    </typeAliases>
-   
+      
 
-   <mappers> 
+   <mappers>   
       <mapper resource="mapper/member-mapper.xml" />
       <mapper resource="mapper/admin-member-mapper.xml" />
       <mapper resource="mapper/admin-order-mapper.xml" />
