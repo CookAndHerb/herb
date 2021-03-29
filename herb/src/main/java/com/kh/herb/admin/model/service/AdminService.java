@@ -32,4 +32,5 @@ public interface AdminService {
 	public List<AdminOrder> selectOrder(int orderNum) throws Exception;
 	public int updateOrder(String orderStatus, int orderNum) throws Exception;
 	public int totalSales() throws Exception;
+	public int deleteOne(int pInfoNum) throws Exception;
 }

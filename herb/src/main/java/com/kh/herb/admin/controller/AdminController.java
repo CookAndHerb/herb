@@ -86,47 +86,60 @@ public class AdminController {
 	@RequestMapping(value="productUpt.do", method=RequestMethod.POST)
 	public ModelAndView updateProduct(ModelAndView mav, Product product, ProductFile pf,
 			@RequestParam("pInfoFiles") MultipartFile pInfoFiles[], MultipartHttpServletRequest request) throws Exception {
-		String image = request.getParameter("image");
+		MultipartFile image = request.getFile("image");
 		int pNum = Integer.parseInt(request.getParameter("pNum"));
 
+		System.out.println("대표 이미지 : "+image.getSize());
+
 		product.setpNum(pNum);
-		
-		if(image != null) {
+
+		if(image.getSize() != 0) {
 			Product fileProduct = imageUplode(product, request);
 			product.setImageName(fileProduct.getImageName());
 			product.setImagePath(fileProduct.getImagePath());
-		}else {
+		}else { //product 테이블의 image는 not null 속성을 가지기 때문에 해줘야함
 			String existImage = request.getParameter("existImage");
 			String existImagePath = request.getParameter("existImagePath");
 			product.setImageName(existImage);
 			product.setImagePath(existImagePath);
 		}
-		
+
 		int result = as.updateProduct(product);
 
 		ProductFile infoFile = new ProductFile();
 		pf.setpNum(pNum);
-		
-		if(pInfoFiles.length > 1) {
+
+		String[] pInfoNum = request.getParameterValues("pInfoNum");
+		//int[] pInfoNumArr = null;
+		if(pInfoNum != null) { 
+			//pInfoNumArr = new int[pInfoNum.length];
+			if(pInfoFiles.length > 1) {;
+			int cnt = as.deleteFile(pNum);
+			System.out.println("delete 결과 : "+cnt);
 			for(MultipartFile productInfo : pInfoFiles) {
 				infoFile = infoImage(productInfo, request);
-				pf.setpInfoFile(infoFile.getpInfoFile());				
-				System.out.println("파일업데이트 : "+infoFile.getpInfoFile());				
-				pf.setpInfoPath(infoFile.getpInfoPath());				
-				System.out.println("경로업데이트 : "+infoFile.getpInfoPath());				
-				int cnt = as.updateFile(pf);
+				pf.setpInfoFile(infoFile.getpInfoFile());
+				pf.setpInfoPath(infoFile.getpInfoPath());
+				int insert = as.insertFile(pf);
+				System.out.println("insert 결과 : "+insert);
 			}
-		}else {
-			String[] existInfoFile = request.getParameterValues("existInfoFile");
-			String[] existInfoPath = request.getParameterValues("existInfoPath");
-			for(int i = 0; i<existInfoFile.length; i++) {
-				System.out.println(i+"번 기존 파일 이름 : "+existInfoFile[i]);		
-				pf.setpInfoFile(existInfoFile[i]);
-				System.out.println(i+"번 기존 파일 경로 : "+existInfoPath[i]);
-				pf.setpInfoPath(existInfoPath[i]);
-				int cnt = as.updateFile(pf);
+
 			}
-		}
+		}//else { 테이블이 다르기 때문에 굳이 업데이트 안 해줘도 돼서 이건 필요없음 그래서 위에 선언한 int 배열도 안 쓰기 때문에 일단 주석처리
+//			String[] existInfoFile = request.getParameterValues("existInfoFile");
+//			String[] existInfoPath = request.getParameterValues("existInfoPath");
+//			for(int j = 0; j<pInfoNumArr.length; j++){
+//				pInfoNumArr[j]=Integer.parseInt(pInfoNum[j]);
+//				System.out.println("파일번호 : "+pInfoNum[j]);
+//				System.out.println(j+"번 기존 파일 이름 : "+existInfoFile[j]);		
+//				pf.setpInfoFile(existInfoFile[j]);
+//				System.out.println(j+"번 기존 파일 경로 : "+existInfoPath[j]);
+//				pf.setpInfoPath(existInfoPath[j]);
+//				pf.setpInfoNum(pInfoNumArr[j]);
+//				int cnt = as.updateFile(pf);		
+//			}
+//
+//		}
 			
 		mav.addObject("result", result);
 		mav.setViewName("product/productUptComplete");
@@ -144,7 +157,7 @@ public class AdminController {
 		//원본이름 저장
 		String savedName = image.getOriginalFilename();
 		//랜덤생성+파일이름 저장
-		String fileName = (int)(Math.random()*100)+"_"+savedName;
+		String fileName = (int)(Math.random()*1000)+"_"+savedName;
 		
 		File folder = new File(savePath);
 		if(!folder.exists())
@@ -175,7 +188,7 @@ public class AdminController {
 		//원본이름 저장
 		String savedName = image.getOriginalFilename();
 		//랜덤생성+파일이름 저장
-		String fileName = (int)(Math.random()*100)+"_"+savedName;
+		String fileName = (int)(Math.random()*1000)+"_"+savedName;
 						
 		File folder = new File(savePath);
 		if(!folder.exists())

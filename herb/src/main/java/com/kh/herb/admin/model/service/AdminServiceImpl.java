@@ -129,6 +129,11 @@ public class AdminServiceImpl implements AdminService {
 	public int totalSales() throws Exception {
 		return ad.totalSales();
 	}
+
+	@Override
+	public int deleteOne(int pInfoNum) throws Exception {
+		return ad.deleteOne(pInfoNum);
+	}
 	
 }
 
