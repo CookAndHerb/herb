@@ -298,11 +298,11 @@ a {
 											<c:when test="${category ne null}">
 												<c:if test="${i==currentPage}">
 													<li class="page-item active"><a class="page-link"
-														href="categoryList.do?category=${category}&pageNum=${i}&pSelect=${pSelect}">${i}</a></li>
+														href="categoryList.do?pageNum=${i}&category=${category}&pSelect=${pSelect}">${i}</a></li>
 												</c:if>
 												<c:if test="${i!=currentPage}">
 													<li class="page-item "><a class="page-link"
-														href="categoryList.do?category=${category}&pageNum=${i}&pSelect=${pSelect}">${i}</a></li>
+														href="categoryList.do?pageNum=${i}&category=${category}&pSelect=${pSelect}">${i}</a></li>
 												</c:if>
 											</c:when>
 											<c:when test="${keyword ne null}">
@@ -318,7 +318,7 @@ a {
 											<c:otherwise>
 												<c:if test="${i==currentPage}">
 													<li class="page-item active"><a class="page-link"
-														href="product.do?page=${i}&pSelect=${pSelect}">${i}</a></li>
+														href="product.do?pageNum=${i}&pSelect=${pSelect}">${i}</a></li>
 												</c:if>
 												<c:if test="${i!=currentPage}">
 													<li class="page-item "><a class="page-link"
@@ -333,7 +333,7 @@ a {
 										<c:choose>
 											<c:when test="${category ne null}">
 												<li class="page-item"><a class="page-link"
-													href="categoryList.do?category=${category}&pageNum=${startPage+5}&pSelect=${pSelect}">▶</a></li>
+													href="categoryList.do?pageNum=${startPage+5}&category=${category}&pSelect=${pSelect}">▶</a></li>
 											</c:when>
 											<c:when test="${keyword ne null}">
 												<li class="page-item"><a class="page-link"

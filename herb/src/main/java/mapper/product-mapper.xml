@@ -63,6 +63,7 @@
 				<otherwise>))</otherwise>
 			</choose>
 		</trim>
+		<![CDATA[where rnum >= #{startPage} and rnum <= #{endPage}]]>
 	</select>
 	<!-- 상품 검색 리스트 -->
 	<select id="ProductSearchList" parameterType="ProductPage" resultType="Product" resultMap="proResult">
