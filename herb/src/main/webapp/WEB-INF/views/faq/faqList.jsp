@@ -39,12 +39,12 @@
 		//아래쪽에서 이 함수를 호출해 페이지값을 컨트롤러에 매핑
 		function list(page) {
 			console.log("페이지를 이동합니다");
-			location.href="qaList.do?curPage="+page;
+			location.href="faqList.do?curPage="+page;
 		}
 		// 글쓰기 폼으로 이동하게 하는 함수
 		$(function() {
 			$("#btn_write").click(function() {
-				location.href="qaWrite.do";
+				location.href="faqWrite.do";
 			});
 		});
 	</script>
@@ -83,7 +83,7 @@ a {
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="#"><i class="fa fa-home"></i>고객 센터</a>
-                        <span>질문 게시판</span>
+                        <span>자주 묻는 질문</span>
                     </div>
                 </div>
             </div>
@@ -113,15 +113,10 @@ a {
                 
                 <!-- 내용 -->
                 <div class="col-lg-9 order-1 order-lg-2">
-                	<h2 align="center" style="margin: 20px 0 0 0; padding-bottom: 0px;">질문 게시판</h2><br><br>
-                   <form name="formSearch" method="post" action="qaList.do">
+                	<h2 align="center" style="margin: 20px 0 0 0; padding-bottom: 0px;">자주 묻는 질문</h2><br><br>
+                   <form name="formSearch" method="post" action="faqList.do">
                    <div class="input-group mb-3">
-                   		<select name="selectMenu">
-                   			 <option value="전체" <c:if test="${map.selectMenu == '전체'}">selected</c:if>>전체</option>
-                   			 <option value="QA_WRITER" <c:if test="${map.selectMenu == 'QA_WRITER'}">selected</c:if>>작성자</option>
-                   			 <option value="QA_TITLE" <c:if test="${map.selectMenu == 'QA_TITLE'}">selected</c:if>>제목</option>
-                   			 <option value="QA_CONTENT" <c:if test="${map.selectMenu == 'QA_CONTENT'}">selected</c:if>>내용</option>
-                   		</select>
+                   		
                    		<input name="keyword" class="form-control" placeholder="검색어를 입력해주세요" value="${map.keyword }">
                    		<div class="input-group-append">
                    			<input type="submit" id="btn_search" class="btn btn-warning" value="검색">
@@ -129,10 +124,15 @@ a {
                    </div>
 					</form>
 					
+					<% Member mvo = (Member)session.getAttribute("member"); // 로그인 돼있는 경우만 글쓰기 버튼 보이도록
+	
+						if(mvo != null && mvo.getUserNum() < 1000){
+						%>
 					<!-- 글 작성 버튼 -->
 					<div style ="margin: 15px 25px 15px 0px;" align="right" >
 						<button type="button" id="btn_write" class="btn btn-dark">글쓰기</button>
 					</div>
+					 <%} %>
 					
 					<c:if test="${ count == 0 }">
 						<table class="table text-center table_text">
@@ -149,20 +149,19 @@ a {
 					<table class="table table-hover" id='board_list'>
 					<tr>
 						<td class="text-center d-none d-md-table-cell">번호</td>
+						<td class="text-center d-none d-md-table-cell">카테고리</td>
 						<td class="w-50">제목</td>
-						<td class="text-center d-none d-md-table-cell">작성자</td>
-						<td class="text-center d-none d-md-table-cell">작성일</td>
 						<td class="text-center d-none d-md-table-cell">조회수</td>
 					</tr>
 					<!-- forEach var = "개별데이터" items = "집합데이터" -->
 					<c:forEach var="row" items = "${map.list }">
 					<tr>
 						<td class="text-center d-none d-md-table-cell">${number }</td> 
+						<td class="text-center d-none d-md-table-cell">${row.faqCategory }</
 						<td class="w-50">
-						<a href="qaPwForm.do?qaNum=${row.qaNum}&curPage=${map.curPage}&keyword=${map.keyword}&selectMenu=${selectMenu}">
-						${row.qaTitle}</a></td>
-						<td class="text-center d-none d-md-table-cell">${row.qaWriter }</td>
-						<td class="text-center d-none d-md-table-cell">${row.qaDate }</td>
+						<a href="faqView.do?qaNum=${row.faqNum}&curPage=${map.curPage}&keyword=${map.keyword}">
+						${row.faqTitle}</a></td>
+						<td class="text-center d-none d-md-table-cell">${row.faqDate }</td>
 						<td class="text-center d-none d-md-table-cell">${row.readcount }</td>
 						<c:set var="number" value="${number-1 }" />
 					</tr>
