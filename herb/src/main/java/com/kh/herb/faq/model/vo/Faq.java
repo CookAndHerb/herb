@@ -6,7 +6,7 @@ public class Faq {
 
 	private int faqNum;
 	private String faqTitle;
-	private int faqCategory;
+	private String faqCategory;
 	private String faqContent;
 	private String faqWriter;
 	private Date faqDate;
@@ -24,10 +24,10 @@ public class Faq {
 	public void setFaqTitle(String faqTitle) {
 		this.faqTitle = faqTitle;
 	}
-	public int getFaqCategory() {
+	public String getFaqCategory() {
 		return faqCategory;
 	}
-	public void setFaqCategory(int faqCategory) {
+	public void setFaqCategory(String faqCategory) {
 		this.faqCategory = faqCategory;
 	}
 	public String getFaqContent() {

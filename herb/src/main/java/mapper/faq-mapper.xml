@@ -8,7 +8,6 @@
 	<result property="faqTitle" column="FAQ_TITLE" />
 	<result property="faqCategory" column="FAQ_CATEGORY" />
 	<result property="faqContent" column="FAQ_CONTENT" />
-	<result property="faqWriter" column="FAQ_WRITER" />
 	<result property="faqDate" column="FAQ_DATE" />
 	<result property="readcount" column="READCOUNT" />
 	</resultMap>
@@ -18,7 +17,7 @@
 	<select id="listAll" parameterType="java.util.Map" resultType="Faq" resultMap="resultFaq">
 		<include refid="paging_header" /> <!-- 아래의 sql문을 include -->
 		<!-- ref는 다른 테이블을 의미 -->
-		SELECT FAQ_NUM, FAQ_CATEGORY, FAQ_TITLE, READCOUNT FROM FAQ_BOARD
+		SELECT FAQ_NUM, FAQ_TITLE, FAQ_CATEGORY, READCOUNT FROM FAQ
 		<!-- FAQ_NUM의 내림차순으로 검색 -->
 		<!-- where절은 include태그 이용 -->
 		<include refid="search" />
@@ -42,13 +41,14 @@
 	<!-- 검색 -->
 	WHERE FAQ_CONTENT LIKE '%'||#{keyword}||'%'
 		OR FAQ_TITLE LIKE '%'||#{keyword}||'%'
+		OR FAQ_CATEGORY LIKE '%'||#{keyword}||'%'
 	</sql>
 	
 	<!-- 글 작성해서 insert -->
-	<insert id="insertFaq" parameterType="Faq">
+	<insert id="insertFaq">
 	<!-- 게시글 번호는 시퀀스로 하고 생성할 때마다 숫자가 1씩 증가하도록 설정 -->
-		INSERT INTO FAQ (FAQ_NUM,FAQ_TITLE,FAQ_CONTENT) VALUES
-				(FAQ_SEQ.NEXTVAL,#{faqTitle},#{faqContent})
+		INSERT INTO FAQ (FAQ_NUM,FAQ_TITLE,FAQ_CATEGORY,FAQ_CONTENT) VALUES
+				(FAQ_SEQ.NEXTVAL,#{faqTitle},#{faqCategory},#{faqContent})
 	</insert>
 	
 	<!-- 조회수 증가처리 -->
@@ -57,4 +57,31 @@
 	UPDATE FAQ SET READCOUNT = READCOUNT + 1
 		WHERE FAQ_NUM = #{faqNum}
 	</update>
+	
+	<!-- 게시글 하나 선택해서 보여주기 -->
+	<select id="read" resultType="Faq" resultMap="resultFaq">
+		SELECT * FROM FAQ
+			WHERE FAQ_NUM = #{faqNum}
+	</select>
+	
+	<!-- 게시글 수정 -->
+	<update id="updateFaq" parameterType="Faq">
+		UPDATE FAQ SET
+			FAQ_TITLE = #{faqTitle},
+			FAQ_CATEGORY = #{faqCategory},
+			FAQ_CONTENT = #{faqContent}
+			WHERE FAQ_NUM = #{faqNum}
+	</update>
+	
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteFaq" parameterType="int">
+		DELETE FROM FAQ 
+			WHERE FAQ_NUM = #{faqNum}
+	</delete>
+	
+	<!-- 전체 게시글 조회 -->
+	<select id="getTotalNum" resultType="int">
+		SELECT COUNT(*) FROM FAQ
+	</select>
 </mapper>

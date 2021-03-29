@@ -1,7 +1,10 @@
 package com.kh.herb.faq.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 
 import com.kh.herb.faq.model.vo.Faq;
 
@@ -13,6 +16,16 @@ public interface FaqService {
 
 	public int insertFaq(Faq faq) throws Exception;
 
-	public void increaseViewcnt(int faqNum) throws Exception;
+	public void increaseViewcnt(int faqNum, HttpSession session) throws Exception;
+
+	public Faq read(int faqNum) throws Exception;
+	
+	
+	public int deleteFaq(int faqNum) throws Exception;
+
+	public int getTotalNum() throws Exception;
+
+	public int updateFaq(Faq faq) throws Exception;
+
 
 }

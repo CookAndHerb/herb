@@ -3,4 +3,129 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Qa">
+
+	<resultMap id="resultQa" type="Qa">
+	<id property="qaNum" column="QA_NUM"/>
+	<result property="qaTitle" column="QA_TITLE" />
+	<result property="qaWriter" column="QA_WRITER" />
+	<result property="qaPw" column="QA_PW" />
+	<result property="qaContent" column="QA_CONTENT" />
+	<result property="qaDate" column="QA_DATE" />
+	<result property="ref" column="REF" />
+	<result property="reStep" column="RE_STEP" />
+	<result property="reLevel" column="RE_LEVEL" />
+	<result property="readcount" column="READCOUNT" />
+	</resultMap>
+
+	
+	<!-- 리스트 반환 -->
+	<select id="listAll" parameterType="java.util.Map" resultType="Qa" resultMap="resultQa">
+		<include refid="paging_header" /> <!-- 아래의 sql문을 include -->
+		<!-- ref는 다른 테이블을 의미 -->
+		SELECT * FROM QA
+		<!-- QA_NUM의 내림차순으로 검색 -->
+		<!-- where절은 include태그 이용 -->
+		<include refid="search" />
+		<!-- ORDER BY QA_NUM DESC -->
+		ORDER BY REF DESC, RE_STEP ASC
+		<include refid="paging_footer" />
+	</select>
+	
+	<sql id="paging_header">
+	<!-- 게시물을 한 페이지에 10개씩  볼 수 있게 처리하는 쿼리 윗부분 -->
+	SELECT * FROM (SELECT ROWNUM AS RN, A.* FROM (
+	</sql>
+	
+	<sql id="paging_footer">
+	<!-- 게시물을 한 페이지에 10개씩 볼 수 있도록 처리하는 쿼리 아랫부분 -->
+	<!-- 새로 매겨진 일련번호 1~10번 글까지 1페이지 -->
+	<!-- 11~20번 글까지 2페이지 -->
+	)A )WHERE RN BETWEEN #{start} AND #{end}
+	</sql>
+	
+	<sql id="search">
+	<!-- 검색 -->
+	<choose>
+		<when test="selectMenu == '전체'">
+		<!-- '전체'일 때는 이름, 내용, 제목으로 검색 -->
+		WHERE QA_WRITER LIKE '%'||#{keyword}||'%'
+			OR QA_TITLE LIKE '%'||#{keyword}||'%'
+			OR QA_CONTENT LIKE '%'||#{keyword}||'%'
+		</when>
+	<otherwise>
+	<!-- 그렇지 않으면 옵션과 키워드를 이용해 검색 -->
+	<!-- $을 붙이면 따옴표가 빠지게 되고, #을 붙이면 따옴표가 붙게된다 -->
+		WHERE ${selectMenu} LIKE '%'||#{keyword}||'%'
+	</otherwise>
+	</choose>
+	</sql>
+	
+	
+	<!-- 전체 게시글 갯수 조회 -->
+	<select id="getTotalNum" resultType="int">
+		SELECT COUNT(*) FROM QA
+	</select>
+	
+	<!-- 글 작성하기 -->
+	<insert id="insertQa">
+		INSERT INTO QA VALUES
+			(QA_SEQ.NEXTVAL,#{qaTitle},#{qaWriter},#{qaPw},#{qaContent},
+			SYSDATE,#{ref},#{reStep},#{reLevel},0)
+	</insert>
+	
+	<!-- ref 값 조회 -->
+	<select id="getRef" resultType="int">
+		SELECT MAX(REF) FROM QA
+	</select>
+	
+	<!-- 조회수 증가처리 -->
+	<update id = "increaseViewcnt">
+	<!-- 글 번호에 해당하는 조회수를 +1하는 쿼리문 -->
+	UPDATE QA SET READCOUNT = READCOUNT + 1
+		WHERE QA_NUM = #{qaNum}
+	</update>
+	
+	
+	<!-- 게시글 하나 선택해서 보여주기 -->
+	<select id="read" resultType="Qa" resultMap="resultQa">
+		SELECT * FROM QA
+			WHERE QA_NUM = #{qaNum}
+	</select>
+	
+	<!-- 게시글 비밀번호 찾기 -->
+	<select id="getQaPassword" resultType="String">
+		SELECT QA_PW FROM QA
+			WHERE QA_NUM = #{qaNum}
+	</select>
+	
+	<!-- 게시글 수정 -->
+	<update id="updateQa" parameterType="Qa">
+		UPDATE QA SET
+			QA_TITLE = #{qaTitle},
+			QA_CONTENT= #{qaContent}
+			WHERE QA_NUM = #{qaNum}
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteQa" parameterType="int">
+		DELETE FROM QA 
+			WHERE QA_NUM = #{qaNum}
+	</delete>
+	
+	<!-- 답변글 쓰기전 reStep 해줘야한다.=>> 출력순서 정하기 -->
+	<!-- 답변글일 경우에 가장 최근글이 먼저 출력되어야 하기 때문에 -->
+	<update id="reStepCount" parameterType="Qa">
+      <![CDATA[
+      UPDATE QA SET RE_LEVEL = RE_LEVEL + 1
+      WHERE REF = #{ref} AND RE_LEVEL > #{reLevel}
+      ]]>
+	</update>
+	
+	<!-- 답변글 작성하기 -->
+	<!-- <insert id="reInsert">
+		INSERT INTO QA VALUES
+			(QA_SEQ.NEXTVAL,#{qaTitle},#{qaWriter},#{qaPw},#{qaContent},
+			SYSDATE,#{ref},#{reStep+1},#{reLevel+1},0)
+	</insert> -->
+	
 </mapper>

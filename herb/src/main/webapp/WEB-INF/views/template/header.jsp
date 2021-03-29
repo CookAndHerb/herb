@@ -175,9 +175,9 @@
                         <li><a href="./blog.html">Cart</a></li>
                         <li><a href="#">Service Center</a>
                             <ul class="dropdown">
-                                <li><a href="#">공지사항</a></li>
-                                <li><a href="#">자주 묻는 질문</a></li>
-                                <li><a href="#">질문 게시판</a></li>
+                                <li><a href="list.do">공지사항</a></li>
+                                <li><a href="faqList.do">자주 묻는 질문</a></li>
+                                <li><a href="qaList.do">질문 게시판</a></li>
                             </ul>
                         </li>
                         <li><a href="./contact.html">Contact</a></li>
