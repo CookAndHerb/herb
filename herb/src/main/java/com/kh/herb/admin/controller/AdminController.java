@@ -108,21 +108,25 @@ public class AdminController {
 
 		ProductFile infoFile = new ProductFile();
 		pf.setpNum(pNum);
-
-		String[] pInfoNum = request.getParameterValues("pInfoNum");
+		
+		//파일 번호 가져오기
+		String[] pInfoNum = request.getParameterValues("pInfoNum"); 
+		//파일 번호 변환을 위한 int형 배열 선언
 		int[] pInfoNumArr = null;
+		//업로드한 파일이 있을때
 		if(pInfoNum != null) { 
-			pInfoNumArr = new int[pInfoNum.length];
+			pInfoNumArr = new int[pInfoNum.length]; //String으로 가져온 배열의 크기만큼 파일 번호 변환 배열에 크기 지정
 			if(pInfoFiles.length > 1) { //다중파일 업로드시
 				int cnt = as.deleteFile(pNum); //DB에서 기존 파일 삭제
-				String[] existInfoFile = request.getParameterValues("existInfoFile");
+				String[] existInfoFile = request.getParameterValues("existInfoFile"); //기존파일 삭제를 위해 이룸 가져옴
 				for(int j = 0; j<pInfoNumArr.length; j++){
+					//반복문을 이용해 기존 파일 서버에서 하나씩 삭제
 					String root = request.getSession().getServletContext().getRealPath("resources");
 					String savePath = root+"\\productImg";
-					//기존 파일 이름 가져와서 서버에서 삭제
+					//기존 파일 삭제
 					File file = new File(savePath+"\\"+existInfoFile[j]);
-					if( file.exists() ){ 
-						if(file.delete()){ 
+					if( file.exists() ){ //파일이 존재하면
+						if(file.delete()){ //삭제하기!
 							System.out.println("파일삭제 성공"); 
 						}else{ 
 							System.out.println("파일삭제 실패"); 
@@ -133,7 +137,7 @@ public class AdminController {
 				}
 				System.out.println("delete 결과 : "+cnt);
 				
-				//새로 등록
+				//파일 새로 등록
 				for(MultipartFile productInfo : pInfoFiles) {
 					infoFile = infoImage(productInfo, request);
 					pf.setpInfoFile(infoFile.getpInfoFile());
