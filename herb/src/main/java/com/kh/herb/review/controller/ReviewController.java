@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.kh.herb.product.model.service.ProductService;
 import com.kh.herb.review.model.service.ReviewService;
 import com.kh.herb.review.model.vo.Review;
 import com.kh.herb.review.model.vo.ReviewFile;
@@ -32,6 +33,9 @@ public class ReviewController {
 
 	@Autowired
 	ReviewService reSe;
+	
+	@Autowired
+	ProductService proSe;
 	
 	// 리뷰 등록
 	@ResponseBody
@@ -89,12 +93,34 @@ public class ReviewController {
 			}
 		}
 		reSe.reviewInsert(review);
+		proSe.proStarCount(review.getpNum()); // 리뷰 총 개수 업데이트
 		
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("num", review.getpNum());
 		jsonObject.put("moveUrl", "productInfo.do");
 		
 		return jsonObject.toJSONString();
+	}
+	
+	//리뷰 삭제
+	@RequestMapping(value="reviewDelete.do", method=RequestMethod.GET)
+	@ResponseBody
+	public String reviewDelete(@RequestParam("rNum") int rNum, @RequestParam("num") int num) throws Exception{
+		System.out.println("controller reviewDelete 메서드 실행");
+		System.out.println("rNum: "+rNum);
+		
+		int rf = reSe.reviewFileDelete(rNum);
+		int re = reSe.reviewDelete(rNum);
+		String result = rf+re+"";
+		proSe.proStarCount(num);
+		
+		System.out.println("결과: "+result);
+		JSONObject jo = new JSONObject();
+		jo.put("result", result);
+		jo.put("num", num);
+		jo.put("moveUrl","productInfo.do");
+		
+		return jo.toJSONString();
 	}
 	
 }

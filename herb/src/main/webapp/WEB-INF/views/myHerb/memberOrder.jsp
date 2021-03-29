@@ -31,7 +31,7 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	
     <style>
- 		#content ul li { border:5px solid #eee; padding:10px 20px; margin-bottom:20px; }
+ 		#content ul li { border:5px solid #eee; padding:10px 20px; margin-bottom:30px; box-shadow:2px 2px 3px 1px gray; }
  		#content .orderList span { font-size:20px; font-weight:bold; display:inline-block; width:90px; margin-right:10px; }
  		
  		.my.pagination > .active > a, 
@@ -141,7 +141,7 @@
 								</c:when>
 	
 								<c:otherwise>
-            						<li class="page-item "><a class="page-link" href="memberOrder.do?page=${page}">${page}</a></li>
+            						<li class="page-item "><a class="page-link" href="memberOrder.do?page=${page}" style="color:black;">${page}</a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>

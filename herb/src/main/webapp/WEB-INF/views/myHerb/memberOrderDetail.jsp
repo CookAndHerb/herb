@@ -136,7 +136,8 @@
    				
                 <div id="content">
                 	
-                	<table class="table table-bordered">
+                	<table class="table table-bordered" style="
+    					box-shadow:2px 2px 3px 1px gray;">
                 		
                 		<tr>
                 			

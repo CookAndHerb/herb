@@ -5,7 +5,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+<script>
+// 검색
+window.onload = function(){
+	document.getElementById("SearchBtn").onclick=function(){
+		if(frm.keyword.value==""){
+			frm.keyword.focus();
+			alert("키워드를 입력해주세요");
+			return;
+		}
+		frm.submit();
+	}
+}
+</script>
 
 </head>
 <body>
@@ -65,13 +77,23 @@
                     </div>
                     
                      <div class="col-lg-7 col-md-7">
+                     <form name="frm" action="productSearch.do" method="get">
                         <div class="advanced-search">
-                            <button type="button" class="category-btn">All Categories</button>
+                            <select class="category-btn" name="search">
+                            	<option value="전체" <c:if test="${search eq '전체' }">selected</c:if>>전체</option>
+                            	<option value="비타민" <c:if test="${search eq '비타민' }">selected</c:if>>비타민</option>
+                            	<option value="장 건강" <c:if test="${search eq '장 건강' }">selected</c:if>>장 건강</option>
+                            	<option value="눈 건강" <c:if test="${search eq '눈 건강' }">selected</c:if>>눈 건강</option>
+                            	<option value="홍삼" <c:if test="${search eq '홍삼' }">selected</c:if>>홍삼</option>
+                            	<option value="기타" <c:if test="${search eq '기타' }">selected</c:if>>기타</option>
+                            </select>
                             <div class="input-group">
-                                <input type="text" placeholder="키워드를 입력해주세요">
-                                <button type="button"><i class="ti-search"></i></button>
+                                <input type="text" name="keyword" placeholder="키워드를 입력해주세요"
+                                <c:if test="${keyword ne null}">value="${keyword}"</c:if>>
+                                <button type="button" id="SearchBtn"><i class="ti-search"></i></button>
                             </div>
                         </div>
+                      </form>
                     </div>
                     
                     
@@ -160,11 +182,11 @@
                         <i class="ti-menu"></i>
                         <span>전체 카테고리</span>
                         <ul class="depart-hover">
-                            <li class="active"><a href="#">비타민</a></li>
-                            <li><a href="#">홍삼</a></li>
-                            <li><a href="#">눈 건강</a></li>
-                            <li><a href="#">장 건강</a></li>
-                            <li><a href="#">기타</a></li>
+                            <li class="active"><a href="categoryList.do?category=비타민">비타민</a></li>
+                            <li><a href="categoryList.do?category=홍삼">홍삼</a></li>
+                            <li><a href="categoryList.do?category=눈 건강">눈 건강</a></li>
+                            <li><a href="categoryList.do?category=장 건강">장 건강</a></li>
+                            <li><a href="categoryList.do?category=기타">기타</a></li>
                         </ul>
                     </div>
                 </div>

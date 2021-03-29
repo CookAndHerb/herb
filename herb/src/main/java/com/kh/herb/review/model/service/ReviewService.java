@@ -13,4 +13,9 @@ public interface ReviewService {
 	public int reviewAvg(int pNum) throws Exception;
 	
 	public int reviewCount(int pNum) throws Exception;
+	
+	public int reviewDelete(int rNum) throws Exception;
+	
+	public int reviewFileDelete(int rNum) throws Exception;
+	
 }
