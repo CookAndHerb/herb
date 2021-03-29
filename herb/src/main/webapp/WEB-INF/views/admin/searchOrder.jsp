@@ -38,30 +38,34 @@
 		$('.dataTables_length').addClass('bs-select');
 	});
 	
-	$(function(){
-		$('#orderUpt').on('click',function(){
-			var orderStr = $('#orderStatus').val();
-			var orderDetailNum = $('#orderDetailNum').text();
-			$.ajax({
-				url: 'orderUpt.do',
-				data: {'orderStatus' : orderStr, 'orderDetailNum' : orderDetailNum},
-				type: 'POST', 
-				dataType: 'json',
-				success: function(data){
-					if(data.ok=='dup'){
-						alert('배송상태 업데이트 실패');
-					}else{
-						alert('배송상태 업데이트 성공');
+	$(document).on('click', '.orderUpt', updatefunction);
+	   function updatefunction(){ 
+		   var orderStr = $('#orderStatus').val();
+		   var orderNum = $('.orderUpt').val();
+		      $.ajax({
+		         type : 'post',
+		         dataType : 'json',
+		         url : 'orderUpt.do',
+		         data : {
+						'orderStatus' : orderStr,
+						'orderNum' : orderNum
+					},
+		         success : function(data){
+		              if(data.ok == "dup"){
+		            	alert('배송상태 업데이트 성공');
+		               	location.href="searchOrder.do?selectType=${selectType}&keyword=${keyword}"
+		               }else{
+		            	  alert('배송상태 업데이트 실패');
+		               }
+		                                                     
+		            },
+					error : function(request, status, errorData) {
+						alert("error code: " + request.status + "\n" // 오류 번호 나옴 ex)500 404
+								+ "message: " + request.responseText + "\n" //오류 원인(기술 용어로 나옴)
+								+ "error: " + errorData);
 					}
-				},
-				error: function(request, status, errorData){ 
-					alert("error code: "+request.status+"\n"	// 오류 번호 나옴 ex)500 404
-							+"message: "+request.responseText+"\n"	//오류 원인(기술 용어로 나옴)
-							+"error: "+errorData);
-				}
-			});
-		})
-	});
+		        }); // ajax끝
+	   };
 </script>
 <style>
 .dtHorizontalExampleWrapper {
@@ -152,17 +156,14 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
 							cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<th style="width:50px;">상품주문번호</th>
-									<th>주문번호</th>
-									<th>주문일자</th>
-									<th style="width:70px;">주문자</th>
-									<th style="width:70px;">수령인</th>
-									<th>수령주소</th>
+									<th>주문 번호</th>
+									<th>주문 일자</th>
+									<th>구매자</th>
+									<th>수령인</th>
+									<th>수령 주소</th>
 									<th>연락처</th>
-									<th>주문상품</th>
-									<th>주문수량</th>
 									<th>총 주문금액</th>
-									<th style="width:100px;">배송상태</th>
+									<th>배송 상태</th>
 									<th>취소여부(N/Y)</th>
 									<th>수정</th>
 								</tr>
@@ -170,25 +171,34 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
 							<tbody>
 							<c:forEach var="order" items="${orderList}">
 								<tr>
-									<td><a href="adminOrderDetail.do?orderDetailNum=${order.orderDetailNum }">${order.orderDetailNum }</a></td>
-									<td>${order.orderNum }</td>
+									<td>
+										<a href="adminOrderDetail.do?orderNum=${order.orderNum }" class="aTag">
+										${order.orderNum }</a>
+									</td>
 									<td>${order.orderDate }</td>
 									<td>${order.userName }</td>
 									<td>${order.orderRecvName }</td>
 									<td>(${order.orderRecvAddress1}) ${order.orderRecvAddress2} ${order.orderRecvAddress3}</td>
 									<td>${order.orderRecvPhone }</td>
-									<td>${order.pName }</td>
-									<td>${order.orderDetailStock }</td>
 									<td>${order.orderAmount }</td>
 									<td>
-										<select name="orderStatus" id="orderStatus" class="custom-select-sm">
-										<option ${(param.orderStatus)=="배송 준비중" ? "selected" : "" } value="배송 준비중">배송 준비중</option>
-                            			<option ${(param.orderStatus)=="배송중" ? "selected" : "" } value="배송중">배송중</option>
-                            			<option ${(param.orderStatus)=="배송완료" ? "selected" : "" } value="배송완료">배송완료</option>
-                            			</select>
+										<c:choose>
+											<c:when test="${order.orderDel == 'Y'}">
+											구매 취소
+                            				</c:when>
+                            				<c:otherwise>
+                            					<select name="orderStatus" id="orderStatus" class="custom-select-sm">
+													<option ${(order.orderStatus)=="배송 준비중" ? "selected" : "" } value="배송 준비중">배송 준비중</option>
+                            						<option ${(order.orderStatus)=="배송중" ? "selected" : "" } value="배송중">배송중</option>
+                            						<option ${(order.orderStatus)=="배송완료" ? "selected" : "" } value="배송완료">배송완료</option>
+                            					</select>
+                            				</c:otherwise>
+                            			</c:choose>
                            			</td>
 									<td>${order.orderDel }</td>
-									<td><button id="orderUpt">수정</button></td>
+									<td>
+										<button type="button" style="border: white; background: #e7ab3c; color: white;" class="orderUpt" value="${order.orderNum }">수정</button>
+									</td>
 								</tr>
 							</c:forEach>
 						</table>
