@@ -79,7 +79,7 @@
 					<br>
 					<form action="productUpt.do" method="post" enctype="multipart/form-data">
 						<input type="hidden" name="pNum" value=${product.pNum }>
-						  <div class="custom-file col-sm-12">
+						<div class="custom-file col-sm-12">
     						<input type="file" class="custom-file-input" name="image" id="image">
     						<label class="custom-file-label" for="image">상품 대표 이미지</label>
     						<p>기존 파일 : ${product.imageName }</p>
@@ -123,14 +123,18 @@
 						</div><br>
 						<div class="form-inline">
 							<label for="ImageName">상품 정보 이미지 </label>&nbsp;&nbsp;&nbsp; 
-    						<input type="file" class="col-sm-10" name="pInfoFiles" id="pInfoFiles" multiple="multiple" value="gg">
+    						<input type="file" class="col-sm-10" name="pInfoFiles" id="pInfoFiles" multiple="multiple">
     						<p>기존 파일 : <c:forEach var="info" items="${productFile }">
     							${info.pInfoFile }
+    							<input type="hidden" name="existInfoFile" value="${info.pInfoFile }">
+    							<input type="hidden" name="existInfoPath" value="${info.pInfoPath }">
+    							<input type="hidden" name="pInfoNum" value="${info.pInfoNum }">
     						</c:forEach></p>
-    						<c:forEach var="info" items="${productFile }">
+    					<%-- 	<c:forEach var="info" items="${productFile }">
     						<input type="hidden" name="existInfoFile" value="${info.pInfoFile }">
     						<input type="hidden" name="existInfoPath" value="${info.pInfoPath }">
-    						</c:forEach>
+    						<input type="hidden" name="pInfoNum" value="${info.pInfoNum }">
+    						</c:forEach> --%>
   						</div>
   						<textarea id="pContent" name="pContent">${product.pContent} </textarea><br>
   						<div class="insButton">

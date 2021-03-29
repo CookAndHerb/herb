@@ -86,12 +86,14 @@ public class AdminController {
 	@RequestMapping(value="productUpt.do", method=RequestMethod.POST)
 	public ModelAndView updateProduct(ModelAndView mav, Product product, ProductFile pf,
 			@RequestParam("pInfoFiles") MultipartFile pInfoFiles[], MultipartHttpServletRequest request) throws Exception {
-		String image = request.getParameter("image");
+		MultipartFile image = request.getFile("image");
 		int pNum = Integer.parseInt(request.getParameter("pNum"));
+		
+		System.out.println("대표 이미지 : "+image.getSize());
 
 		product.setpNum(pNum);
 		
-		if(image != null) {
+		if(image.getSize() != 0) {
 			Product fileProduct = imageUplode(product, request);
 			product.setImageName(fileProduct.getImageName());
 			product.setImagePath(fileProduct.getImagePath());
@@ -101,33 +103,45 @@ public class AdminController {
 			product.setImageName(existImage);
 			product.setImagePath(existImagePath);
 		}
-		
-		int result = as.updateProduct(product);
-
+		//int result = as.updateProduct(product);
+		int result = 0;
 		ProductFile infoFile = new ProductFile();
 		pf.setpNum(pNum);
 		
-		if(pInfoFiles.length > 1) {
-			for(MultipartFile productInfo : pInfoFiles) {
-				infoFile = infoImage(productInfo, request);
-				pf.setpInfoFile(infoFile.getpInfoFile());				
-				System.out.println("파일업데이트 : "+infoFile.getpInfoFile());				
-				pf.setpInfoPath(infoFile.getpInfoPath());				
-				System.out.println("경로업데이트 : "+infoFile.getpInfoPath());				
-				int cnt = as.updateFile(pf);
-			}
-		}else {
-			String[] existInfoFile = request.getParameterValues("existInfoFile");
-			String[] existInfoPath = request.getParameterValues("existInfoPath");
-			for(int i = 0; i<existInfoFile.length; i++) {
-				System.out.println(i+"번 기존 파일 이름 : "+existInfoFile[i]);		
-				pf.setpInfoFile(existInfoFile[i]);
-				System.out.println(i+"번 기존 파일 경로 : "+existInfoPath[i]);
-				pf.setpInfoPath(existInfoPath[i]);
-				int cnt = as.updateFile(pf);
+		String[] pInfoNum = request.getParameterValues("pInfoNum");
+		int[] pInfoNumArr = null;
+		if(pInfoNum != null) {
+			pInfoNumArr = new int[pInfoNum.length];
+			for(int j = 0; j<=pInfoNumArr.length; j++){
+				pInfoNumArr[j]=Integer.parseInt(pInfoNum[j]);
+				if(pInfoFiles.length > 1) {
+					for(MultipartFile productInfo : pInfoFiles) {
+						System.out.println("파일번호 : "+pInfoNum[j]);
+						
+						infoFile = infoImage(productInfo, request);
+						pf.setpInfoFile(infoFile.getpInfoFile());				
+						System.out.println("파일업데이트 : "+pf.getpInfoFile());				
+						pf.setpInfoPath(infoFile.getpInfoPath());				
+						System.out.println("경로업데이트 : "+pf.getpInfoPath());
+						pf.setpInfoNum(pInfoNumArr[j]);
+						int cnt = as.updateFile(pf);
+					}
+				}else {
+					String[] existInfoFile = request.getParameterValues("existInfoFile");
+					String[] existInfoPath = request.getParameterValues("existInfoPath");
+					for(int i = 0; i<existInfoFile.length; i++) {
+						
+						System.out.println(i+"번 기존 파일 이름 : "+existInfoFile[i]);		
+						pf.setpInfoFile(existInfoFile[i]);
+						System.out.println(i+"번 기존 파일 경로 : "+existInfoPath[i]);
+						pf.setpInfoPath(existInfoPath[i]);
+						pf.setpInfoNum(pInfoNumArr[j]);
+						int cnt = as.updateFile(pf);
+					}
+				}
 			}
 		}
-			
+		System.out.println("33");
 		mav.addObject("result", result);
 		mav.setViewName("product/productUptComplete");
 		return mav;

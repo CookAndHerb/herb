@@ -109,7 +109,7 @@
 								<tr>
 									<td>${member.userNum }</td>
 									<td>${member.userId }</td>
-									<td style="width:70px">${member.userName }</td>
+									<td style="width:80px">${member.userName }</td>
 									<td>${member.userPhone }</td>
 									<td>(${member.userAddress1 }) ${member.userAddress2 } ${member.userAddress3 }</td>
 									<td>${member.userEmail }</td>
