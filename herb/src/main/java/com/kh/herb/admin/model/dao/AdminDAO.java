@@ -174,7 +174,9 @@ public class AdminDAO {
 		return sqlSession.update("adminOrder.updateOrder", ao);
 	}
 	
+	//3월 매출
 	public int totalSales() throws Exception{
 		return sqlSession.selectOne("adminOrder.totalSales");
 	}
+
 }

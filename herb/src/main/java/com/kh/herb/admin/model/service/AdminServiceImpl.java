@@ -129,6 +129,6 @@ public class AdminServiceImpl implements AdminService {
 	public int totalSales() throws Exception {
 		return ad.totalSales();
 	}
-	
+
 }
 

@@ -28,10 +28,10 @@ import com.kh.herb.product.model.vo.ProductFile;
 @Controller
 public class AdminController {
 	public static final int LIMIT = 10; //한 페이지에 보여질 정보의 수
-	
+
 	@Autowired
 	private AdminService as;
-	
+
 	//관리자 페이지 메인
 	@RequestMapping("adminMain.do")
 	public ModelAndView adminMain(ModelAndView mav) throws Exception {
@@ -41,98 +41,133 @@ public class AdminController {
 		//mav.setViewName("admin/adminChart");
 		return mav;
 	}
-	
+
 	//상품등록 페이지
 	@RequestMapping("productIns.do")
 	public String productInsPage() {
 		return "product/productIns";
 	}
 
-	
+
 	//상품등록
 	@RequestMapping(value="productIns.do", method=RequestMethod.POST)
 	public ModelAndView insertProduct(ModelAndView mav, Product product, ProductFile pf, 
 			@RequestParam("pInfoFiles") MultipartFile pInfoFiles[], MultipartHttpServletRequest request) throws Exception {
 		Product fileProduct = imageUplode(product, request);
-		
+
 		product.setImageName(fileProduct.getImageName());
 		product.setImagePath(fileProduct.getImagePath());
 
-		
+
 		int result1 = as.insertProduct(product);
 		//System.out.println(product.getpNum());
-		
+
 		ProductFile infoFile = new ProductFile();
-		
+
 		for(MultipartFile productInfo : pInfoFiles) {
-			 infoFile = infoImage(productInfo, request);
-			 pf.setpInfoFile(infoFile.getpInfoFile());
-			 pf.setpInfoPath(infoFile.getpInfoPath());
-			 int cnt = as.insertFile(pf);
+			infoFile = infoImage(productInfo, request);
+			pf.setpInfoFile(infoFile.getpInfoFile());
+			pf.setpInfoPath(infoFile.getpInfoPath());
+			int cnt = as.insertFile(pf);
 		}
-		
-		
-//		pf.setpInfoFile(infoFile.getpInfoFile());
-//		pf.setpInfoPath(infoFile.getpInfoPath());
-//		
-//		int result2 = as.insertFile(pf);
-		
+
+
+		//		pf.setpInfoFile(infoFile.getpInfoFile());
+		//		pf.setpInfoPath(infoFile.getpInfoPath());
+		//		
+		//		int result2 = as.insertFile(pf);
+
 		mav.addObject("result1", result1);
 		mav.setViewName("product/productInsComplete");
 		return mav;
 	}
-	
+
 	//상품 수정
 	@RequestMapping(value="productUpt.do", method=RequestMethod.POST)
 	public ModelAndView updateProduct(ModelAndView mav, Product product, ProductFile pf,
 			@RequestParam("pInfoFiles") MultipartFile pInfoFiles[], MultipartHttpServletRequest request) throws Exception {
-		String image = request.getParameter("image");
+		MultipartFile image = request.getFile("image");
 		int pNum = Integer.parseInt(request.getParameter("pNum"));
 
+		System.out.println("대표 이미지 : "+image.getSize());
+
 		product.setpNum(pNum);
-		
-		if(image != null) {
+
+		if(image.getSize() != 0) {
 			Product fileProduct = imageUplode(product, request);
 			product.setImageName(fileProduct.getImageName());
 			product.setImagePath(fileProduct.getImagePath());
-		}else {
+		}else { //product 테이블의 image는 not null 속성을 가지기 때문에 해줘야함
 			String existImage = request.getParameter("existImage");
 			String existImagePath = request.getParameter("existImagePath");
 			product.setImageName(existImage);
 			product.setImagePath(existImagePath);
 		}
-		
+
 		int result = as.updateProduct(product);
 
 		ProductFile infoFile = new ProductFile();
 		pf.setpNum(pNum);
 		
-		if(pInfoFiles.length > 1) {
-			for(MultipartFile productInfo : pInfoFiles) {
-				infoFile = infoImage(productInfo, request);
-				pf.setpInfoFile(infoFile.getpInfoFile());				
-				System.out.println("파일업데이트 : "+infoFile.getpInfoFile());				
-				pf.setpInfoPath(infoFile.getpInfoPath());				
-				System.out.println("경로업데이트 : "+infoFile.getpInfoPath());				
-				int cnt = as.updateFile(pf);
+		//파일 번호 가져오기
+		String[] pInfoNum = request.getParameterValues("pInfoNum"); 
+		//파일 번호 변환을 위한 int형 배열 선언
+		int[] pInfoNumArr = null;
+		//업로드한 파일이 있을때
+		if(pInfoNum != null) { 
+			pInfoNumArr = new int[pInfoNum.length]; //String으로 가져온 배열의 크기만큼 파일 번호 변환 배열에 크기 지정
+			if(pInfoFiles.length > 1) { //다중파일 업로드시
+				int cnt = as.deleteFile(pNum); //DB에서 기존 파일 삭제
+				String[] existInfoFile = request.getParameterValues("existInfoFile"); //기존파일 삭제를 위해 이룸 가져옴
+				for(int j = 0; j<pInfoNumArr.length; j++){
+					//반복문을 이용해 기존 파일 서버에서 하나씩 삭제
+					String root = request.getSession().getServletContext().getRealPath("resources");
+					String savePath = root+"\\productImg";
+					//기존 파일 삭제
+					File file = new File(savePath+"\\"+existInfoFile[j]);
+					if( file.exists() ){ //파일이 존재하면
+						if(file.delete()){ //삭제하기!
+							System.out.println("파일삭제 성공"); 
+						}else{ 
+							System.out.println("파일삭제 실패"); 
+						} 
+					}else{ 
+						System.out.println("파일이 존재하지 않습니다."); 
+					}
+				}
+				System.out.println("delete 결과 : "+cnt);
+				
+				//파일 새로 등록
+				for(MultipartFile productInfo : pInfoFiles) {
+					infoFile = infoImage(productInfo, request);
+					pf.setpInfoFile(infoFile.getpInfoFile());
+					pf.setpInfoPath(infoFile.getpInfoPath());
+					int insert = as.insertFile(pf);
+					System.out.println("insert 결과 : "+insert);
+				}
+
 			}
-		}else {
-			String[] existInfoFile = request.getParameterValues("existInfoFile");
-			String[] existInfoPath = request.getParameterValues("existInfoPath");
-			for(int i = 0; i<existInfoFile.length; i++) {
-				System.out.println(i+"번 기존 파일 이름 : "+existInfoFile[i]);		
-				pf.setpInfoFile(existInfoFile[i]);
-				System.out.println(i+"번 기존 파일 경로 : "+existInfoPath[i]);
-				pf.setpInfoPath(existInfoPath[i]);
-				int cnt = as.updateFile(pf);
-			}
-		}
-			
+		}//else { 테이블이 다르기 때문에 굳이 업데이트 안 해줘도 돼서 이건 필요없음 그래서 위에 선언한 int 배열도 안 쓰기 때문에 일단 주석처리
+		//			String[] existInfoFile = request.getParameterValues("existInfoFile");
+		//			String[] existInfoPath = request.getParameterValues("existInfoPath");
+		//			for(int j = 0; j<pInfoNumArr.length; j++){
+		//				pInfoNumArr[j]=Integer.parseInt(pInfoNum[j]);
+		//				System.out.println("파일번호 : "+pInfoNum[j]);
+		//				System.out.println(j+"번 기존 파일 이름 : "+existInfoFile[j]);		
+		//				pf.setpInfoFile(existInfoFile[j]);
+		//				System.out.println(j+"번 기존 파일 경로 : "+existInfoPath[j]);
+		//				pf.setpInfoPath(existInfoPath[j]);
+		//				pf.setpInfoNum(pInfoNumArr[j]);
+		//				int cnt = as.updateFile(pf);		
+		//			}
+		//
+		//		}
+
 		mav.addObject("result", result);
 		mav.setViewName("product/productUptComplete");
 		return mav;
 	}
-	
+
 	//상품 대표 이미지 업로드
 	private Product imageUplode(Product product, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
@@ -140,12 +175,12 @@ public class AdminController {
 		String savePath = root+"\\productImg";
 		String filePath = null;
 		MultipartFile image = product.getImage();
-		
+
 		//원본이름 저장
 		String savedName = image.getOriginalFilename();
 		//랜덤생성+파일이름 저장
-		String fileName = (int)(Math.random()*100)+"_"+savedName;
-		
+		String fileName = (int)(Math.random()*1000)+"_"+savedName;
+
 		File folder = new File(savePath);
 		if(!folder.exists())
 			folder.mkdir();
@@ -156,31 +191,31 @@ public class AdminController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		product = new Product();
 		product.setImageName(fileName);
 		product.setImagePath(savePath);
 		return product;
 	}
-	
+
 	//상품 정보 이미지 업로드
 	private ProductFile infoImage(MultipartFile infoImage, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		//String root = "C:\\finalproject\\herb\\herb\\herb\\src\\main\\webapp\\resources";
 		String savePath = root+"\\productImg";
 		String filePath = null;
-		
+
 		MultipartFile image = infoImage;
-		
+
 		//원본이름 저장
 		String savedName = image.getOriginalFilename();
 		//랜덤생성+파일이름 저장
-		String fileName = (int)(Math.random()*100)+"_"+savedName;
-						
+		String fileName = (int)(Math.random()*1000)+"_"+savedName;
+
 		File folder = new File(savePath);
 		if(!folder.exists())
 			folder.mkdir();
-		
+
 		try {
 			filePath = savePath+"\\"+fileName;
 			image.transferTo(new File(filePath));
@@ -188,14 +223,14 @@ public class AdminController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		ProductFile pf = new ProductFile();
 		pf.setpInfoFile(fileName);
 		pf.setpInfoPath(savePath);
 		return pf;
 	}
-	
-	
+
+
 	//회원관리
 	@RequestMapping("adminMember.do")
 	public ModelAndView memberList(@RequestParam(name = "page", defaultValue = "1") int page, ModelAndView mav) throws Exception{		
@@ -218,7 +253,7 @@ public class AdminController {
 		mav.setViewName("admin/adminMember");
 		return mav;
 	}
-	
+
 	//회원 검색
 	@RequestMapping("searchMember.do")
 	public ModelAndView searchMember(ModelAndView mav, @RequestParam(value="selectType", required=false) String selectType, 
@@ -245,20 +280,20 @@ public class AdminController {
 		return mav;
 	}
 
-	
+
 	//상품 조회
 	@RequestMapping("adminProduct.do")
 	public ModelAndView productList(@RequestParam(name = "page", defaultValue = "1") int page, ModelAndView mav) throws Exception{
-//		List<Product> productList = as.productList();
-//		mav.addObject("productList", productList);
-//		mav.setViewName("admin/adminProduct");
-//		return mav;
-		
+		//		List<Product> productList = as.productList();
+		//		mav.addObject("productList", productList);
+		//		mav.setViewName("admin/adminProduct");
+		//		return mav;
+
 		int currentPage = page;
 		//한 페이지당 출력할 목록 갯수
 		int listCount = as.productCount();
 		int maxPage = (int) ((double)listCount/LIMIT + 0.9);
-		
+
 		int naviCountPerPage = 5;
 		int startNavi = ((currentPage-1)/naviCountPerPage)*naviCountPerPage+1;
 		int endNavi = startNavi + naviCountPerPage -1;
@@ -274,7 +309,7 @@ public class AdminController {
 		mav.setViewName("admin/adminProduct");
 		return mav;
 	}
-	
+
 	//상품 수정 페이지
 	@RequestMapping("productUpt.do")
 	public ModelAndView updateProductPage(ModelAndView mav, int pNum) throws Exception{
@@ -285,27 +320,27 @@ public class AdminController {
 		mav.setViewName("product/productUpt");
 		return mav;
 	}
-	
+
 	//상품 삭제
 	@RequestMapping("productDel.do")
 	public ModelAndView deleteProduct(ModelAndView mav, int pNum) throws Exception{
 		int result = as.deleteProduct(pNum);
-		
+
 		mav.addObject("result", result);
 		mav.setViewName("product/productDelComplete");
 		return mav;
 	}
-	
+
 	//상품 검색
 	@RequestMapping("searchProduct.do")
 	public ModelAndView searchProduct(ModelAndView mav, @RequestParam(value="selectType", required=false) String selectType, 
 			@RequestParam(value="keyword", required=false) String keyword, @RequestParam(name = "page", defaultValue = "1") int page) throws Exception{
-	
+
 		int currentPage = page;
 		//한 페이지당 출력할 목록 갯수
 		int listCount = as.searchProductCount(selectType, keyword);
 		int maxPage = (int) ((double)listCount/LIMIT + 0.9);
-		
+
 		int naviCountPerPage = 5;
 		int startNavi = ((currentPage-1)/naviCountPerPage)*naviCountPerPage+1;
 		int endNavi = startNavi + naviCountPerPage -1;
@@ -323,7 +358,7 @@ public class AdminController {
 		mav.setViewName("admin/searchProduct");
 		return mav;
 	}
-	
+
 	//주문 조회
 	@RequestMapping("adminOrder.do")
 	public ModelAndView orderList(@RequestParam(name = "page", defaultValue = "1") int page, ModelAndView mav) throws Exception{
@@ -331,7 +366,7 @@ public class AdminController {
 		//한 페이지당 출력할 목록 갯수
 		int listCount = as.orderCount();
 		int maxPage = (int) ((double)listCount/LIMIT + 0.9);
-		
+
 		int naviCountPerPage = 5;
 		int startNavi = ((currentPage-1)/naviCountPerPage)*naviCountPerPage+1;
 		int endNavi = startNavi + naviCountPerPage -1;
@@ -347,12 +382,12 @@ public class AdminController {
 		mav.setViewName("admin/adminOrder");
 		return mav;
 	}
-	
+
 	//주문 검색
 	@RequestMapping("searchOrder.do")
 	public ModelAndView searchOrder(ModelAndView mav, @RequestParam(value="selectType", required=false) String selectType, 
 			@RequestParam(value="keyword", required=false) String keyword, @RequestParam(name = "page", defaultValue = "1") int page) throws Exception{
-	
+
 		int currentPage = page;
 		//한 페이지당 출력할 목록 갯수
 		int listCount = as.searchOrderCount(selectType, keyword);
@@ -374,7 +409,7 @@ public class AdminController {
 		mav.setViewName("admin/searchOrder");
 		return mav;
 	}
-	
+
 	//주문 상세 페이지
 	@RequestMapping("adminOrderDetail.do")
 	public ModelAndView selectOrder(ModelAndView mav, int orderNum) throws Exception {
@@ -383,20 +418,20 @@ public class AdminController {
 		mav.setViewName("admin/adminOrderDetail");
 		return mav;
 	}
-	
+
 	//배송상태수정
 	@RequestMapping(value="orderUpt.do", method=RequestMethod.POST)
 	@ResponseBody
 	public String updateOrder(@RequestParam(value="orderStatus", required=false) String orderStatus, @RequestParam(value="orderNum", required=false) int orderNum) throws Exception{
 		int result = as.updateOrder(orderStatus, orderNum);
-		
+
 		JSONObject jsonData = new JSONObject();
 		if(result==0){
 			jsonData.put("ok", "");
 		} else {
 			jsonData.put("ok", "dup");
 		}
-		
+
 		return jsonData.toJSONString();
 	}
 }

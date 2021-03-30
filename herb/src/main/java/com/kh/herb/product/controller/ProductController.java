@@ -110,7 +110,7 @@ public class ProductController {
 		page.setEndPage(endRow);
 		page.setpCategory(category);
 		page.setpSelect(pSelect);
-		
+
 		int count = proSe.proCategoryCount(category);
 		
 		List<Product> list = proSe.productCateList(page);
