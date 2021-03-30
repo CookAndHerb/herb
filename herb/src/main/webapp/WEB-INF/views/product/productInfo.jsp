@@ -11,14 +11,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
 
 <title>어른허브</title>
 <!-- Google Font -->
 <link
 	href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap"
 	rel="stylesheet">
-
 <!-- Css Styles -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
@@ -47,10 +45,6 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/style.css"
 	type="text/css">
-<!-- 별점용 -->
-<!-- bar-rating -->
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/fontawesome-stars.css">
 
 <style>
 #rContent {
