@@ -59,7 +59,9 @@
 	padding-top: 10px;
 	margin-bottom: 20px;
 }
-
+.customer-review-option .comment-option .co-item {
+    padding-bottom: 20px;
+}
 .review_btn {
 	height: 40px;
 	width: 100%;
@@ -70,12 +72,6 @@
 	background-color: #252525;
 	border-color: #252525;
 }
-/* 	[type=radio] { 
-	  position: absolute;
-	  opacity: 0;
-	  width: 0;
-	  height: 0;
-	} */
 .star label>span {
 	color: #e7ab3c;
 	font-size: 40px;
@@ -142,6 +138,39 @@
 .img-reply{
 	display: flex;
 	margin-top: 12px;
+}
+
+.rating-stars ul {
+  list-style-type:none;
+  padding:0;
+  margin-bottom: 12px;
+  -moz-user-select:none;
+  -webkit-user-select:none;
+}
+.rating-stars ul > li.star {
+  display:inline-block;
+}
+
+.rating-stars ul > li.star > i.fa {
+  font-size:2.2em;
+  color:#ccc; 
+}
+
+.rating-stars ul > li.star.hover > i.fa {
+  color:#FFCC36;
+}
+.rating-stars ul > li.star.selected > i.fa {
+  color:#FF912C;
+}
+.reh4{
+	text-align: center;
+	height: 12px;
+}
+.recenter{
+	display: flex;
+	justify-content: center;
+	margin-bottom: 60px;
+	border-bottom: 1px solid #e9e9e9;
 }
 
 
@@ -412,27 +441,41 @@
 
 										<!-- 리뷰 쓰기 -->
 										<div id="reWrite" class="leave-comment" style="display: none;">
-											<h4>리뷰 작성</h4>
+											<h4 class="reh4">리뷰 작성</h4>
 											<div class="row">
 												<div class="col-lg-12">
 													<c:set var="pNum" value="${num }"></c:set>
 													<input type="hidden" name="pNum" id="pNum" value="${pNum }">
 													<input type="hidden" id="rWriter" name="rWriter" value="${sessionScope.member.getUserId()}"> 	
-														<select id="rStar" name="rStar">
-														<option value="1">1</option>
-														<option value="2">2</option>
-														<option value="3">3</option>
-														<option value="4">4</option>
-														<option value="5">5</option>
-													</select>
+													
+													<section class='rating-widget'>
+													  <!-- Rating Stars Box -->
+													  <div class='rating-stars text-center'>
+															<ul id='stars' name="rStar">
+																<li class='star' data-value='1'><i
+																	class='fa fa-star fa-fw'></i></li>
+																<li class='star' data-value='2'><i
+																	class='fa fa-star fa-fw'></i></li>
+																<li class='star' data-value='3'><i
+																	class='fa fa-star fa-fw'></i></li>
+																<li class='star' data-value='4'>
+																	<i class='fa fa-star fa-fw'></i>
+																</li>
+																<li class='star' data-value='5'><i
+																	class='fa fa-star fa-fw'></i>
+																</li>
+															</ul>
+														</div>
+													 </section>
 
 
 													<textarea name="rContent" id="rContent"></textarea>
-													<div style="margin-bottom: 20px;">
-														<input type="file" id="userFile" value="사진 업로드" multiple/>
-													</div>
-													<button class="site-btn" id="reSumitBtn"
-														style="margin-bottom: 40px;">리뷰 등록</button>
+														<div style="margin-bottom: 20px;">
+															<input type="file" id="userFile" value="사진 업로드" multiple/>
+														</div>
+														<div class="recenter">
+															<button class="site-btn" id="reSumitBtn" style="margin-bottom: 40px;">리뷰 등록</button>
+														</div>
 												</div>
 											</div>
 										</div>
@@ -526,6 +569,7 @@
 		var userfile = '';
 		var id = $('input[name=rWriter]').val();
 		var num = ${pNum};
+		var rStar;
 		
 		// 아이디 체크 후 리뷰쓰기 버튼 보여주기
 		$(function() {
@@ -546,7 +590,11 @@
 			    success : function(data){
 			    	var sto = "배송완료";
 			    	if(data.order == sto){
-						$('#reWrite').show();
+						if($('#reWrite').css("display") == "none"){
+							$('#reWrite').show();
+						}else{
+							$('#reWrite').hide();
+						}
 			       }else{
 			    	   alert("배송이 완료된 회원만 작성할 수 있습니다.");
 			       }
@@ -555,11 +603,42 @@
 
 		});
 		
-		 $(function() {
-		      $('#rStar').barrating({
-		        theme: 'fontawesome-stars'
-		      });
-		   });
+		// 별점처리
+		$(document).ready(function(){
+			  
+			  $('#stars li').on('mouseover', function(){
+			    var onStar = parseInt($(this).data('value'), 10);
+			   
+			    $(this).parent().children('li.star').each(function(e){
+			      if (e < onStar) {
+			        $(this).addClass('hover');
+			      }
+			      else {
+			        $(this).removeClass('hover');
+			      }
+			    });
+			    
+			  }).on('mouseout', function(){
+			    $(this).parent().children('li.star').each(function(e){
+			      $(this).removeClass('hover');
+			    });
+			  });
+			  
+			  
+			  $('#stars li').on('click', function(){
+			    var onStar = parseInt($(this).data('value'), 10); 
+			    var stars = $(this).parent().children('li.star');
+			    for (i = 0; i < stars.length; i++) {
+			      $(stars[i]).removeClass('selected');
+			    }
+			    for (i = 0; i < onStar; i++) {
+			      $(stars[i]).addClass('selected');
+			    }
+			    rStar = onStar;
+			  });
+			  
+			  
+		});
 		
 		
 		// 리뷰 추가
@@ -622,10 +701,9 @@
 
 			formData.append('pNum', $('#pNum').val());
 			formData.append('rWriter', $("#rWriter").val());
-			formData.append('rStar', $("#rStar").val());
+			formData.append('rStar', rStar);
 			formData.append('rContent', $("#rContent").val());
 
-			console.log($("#rStar").val());
 			// 다중첨부파일
 			if (fileList) {
 				for ( var index in fileList) {
@@ -655,7 +733,7 @@
 		}
 		
 		$(function(){
-//		 	이미지 클릭시 해당 이미지 모달
+		//	이미지 클릭시 해당 이미지 모달
 			$(".imgC").click(function(){
 				$(".modal").show();
 				// 해당 이미지 가겨오기
@@ -686,6 +764,7 @@
 		    }
 		  });
 		});
+		
 	</script>
 
 	<!-- 하단 -->
