@@ -216,7 +216,7 @@ window.onload = function(){
                         <li><a href="cartList.do">Cart</a></li>
                         <li><a href="#">Service Center</a>
                             <ul class="dropdown">
-                                <li><a href="list.do">공지사항</a></li>
+                                <li><a href="noticeList.do">공지사항</a></li>
                                 <li><a href="faqList.do">자주 묻는 질문</a></li>
                                 <li><a href="qaList.do">질문 게시판</a></li>
                             </ul>

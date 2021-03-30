@@ -102,7 +102,7 @@ a {
                     <div class="filter-widget">
                         <h4 class="fw-title">고객 센터</h4>
                         <ul class="filter-catagories" style="font-weight: bold;">
-                            <li><a href="list.do" >공지사항</a></li>
+                            <li><a href="noticeList.do" >공지사항</a></li>
                             <li><a href="faqList.do" >자주 묻는 질문</a></li>
                             <li><a href="qaList.do" >질문 게시판</a></li>
                         </ul>

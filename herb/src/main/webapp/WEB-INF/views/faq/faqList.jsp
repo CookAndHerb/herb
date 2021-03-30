@@ -102,7 +102,7 @@ a {
                     <div class="filter-widget">
                         <h4 class="fw-title">고객 센터</h4>
                         <ul class="filter-catagories" style="font-weight: bold;">
-                            <li><a href="list.do" >공지사항</a></li>
+                            <li><a href="noticeList.do" >공지사항</a></li>
                             <li><a href="faqList.do" >자주 묻는 질문</a></li>
                             <li><a href="qaList.do" >질문 게시판</a></li>
                         </ul>
@@ -157,11 +157,10 @@ a {
 					<c:forEach var="row" items = "${map.list }">
 					<tr>
 						<td class="text-center d-none d-md-table-cell">${number }</td> 
-						<td class="text-center d-none d-md-table-cell">${row.faqCategory }</
+						<td class="text-center d-none d-md-table-cell">${row.faqCategory }</td>
 						<td class="w-50">
-						<a href="faqView.do?qaNum=${row.faqNum}&curPage=${map.curPage}&keyword=${map.keyword}">
+						<a href="faqView.do?faqNum=${row.faqNum}&curPage=${map.curPage}&keyword=${map.keyword}">
 						${row.faqTitle}</a></td>
-						<td class="text-center d-none d-md-table-cell">${row.faqDate }</td>
 						<td class="text-center d-none d-md-table-cell">${row.readcount }</td>
 						<c:set var="number" value="${number-1 }" />
 					</tr>
