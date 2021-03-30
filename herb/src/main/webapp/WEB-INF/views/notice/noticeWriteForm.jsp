@@ -1,6 +1,6 @@
-<%@page import="com.kh.herb.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,43 +23,22 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
-<style>
-#faq_table {
-	border-collapse: separate;
-  	border-spacing: 1px;
-  	text-align: left;
-  	line-height: 1.5;
-  	/* border: 1px solid #ccc; */
-  	margin: 20px 10px;
-}
-.theader {
-	width: 150px;
-  	padding: 10px;
-  	font-weight: bold;
-  	vertical-align: top;
-  	border-bottom: 1px solid #e7ab3c;
-  	background: #e7ab3c;
-}
-table td {
-  width: 350px;
-  padding: 10px;
-  vertical-align: top;
-  border-bottom: 1px solid #e7ab3c;
-}
- #btn_search {
-	background-color : #e7ab3c;
-	border-color : #e7ab3c;
-}
-#btn_write {
-	background-color : #636363;
-	border-color : #636363;
-}
-#btn_update {
-	background-color : #e7ab3c;
-	border-color : #e7ab3c;
-}
- </style>      
     
+     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- 부트스트랩 -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">  
+	
+	<!-- ckeditor -->
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/ckeditor/ckeditor.js"></script>
+
+	<style>
+	.write_btn{
+		float:right;
+		margin-top:20px;
+		margin-botton:20px;
+	}
+	
+	</style>
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -75,7 +54,7 @@ table td {
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="#"><i class="fa fa-home"></i> 고객 센터</a>
-                        <span>자주 묻는 질문</span>
+                        <span>공지사항</span>
                     </div>
                 </div>
             </div>
@@ -94,54 +73,52 @@ table td {
                     <div class="filter-widget">
                         <h4 class="fw-title">고객 센터</h4>
                         <ul class="filter-catagories" style="font-weight: bold;">
-                            <li><a href="noticeList.do" >공지사항</a></li>
-                            <li><a href="faqList.do" style="color:orange;" >자주 묻는 질문</a></li>
-                            <li><a href="qaList.do" >질문 게시판</a></li>
+                            <li><a href="noticeList.do" style="color:orange;">공지사항</a></li>
+                            <li><a href="faqList.do"  >자주 묻는 질문</a></li>
+                            <li><a href="qaList.do"  >질문 게시판</a></li>
                         </ul>
                     </div>
 
                    
                 </div>
                 
-                <!-- 내용 -->
-                <div class="col-lg-9 order-1 order-lg-2">
-                <h3 align="center" style="font-weight:bold;">자주 묻는 질문</h3><br><br>
-                  <form method="post" action="faqView.do">
-					<table id="faq_table" style="width:90%">
-						<tr>
-							<td class="theader">제목</td>
-							<td colspan="4">${faq.faqTitle }</td>
-						</tr>
-						<tr>
-							<td class="theader">카테고리</td>
-							<td>${faq.faqCategory }</td>
-							<td class="theader">조회수</td>
-							<td>${faq.readcount }</td>
-						</tr>
-						<tr style="height:400px;">
-							<td colspan="4">${faq.faqContent }</td>
-						</tr>
-					</table>
-				</form>
-				<div align="center">
-					<input type="button" class="btn btn-light" value="목록" onclick="location.href='faqList.do'">
-					<!-- 관리자만 수정, 삭제 버튼 표시 -->
-					<% Member mb = (Member)session.getAttribute("member"); 
-					 	if(mb != null && mb.getUserNum() < 1000) {
-					%>
-						<input type="button" id="btn_update" class="btn btn-warning" value="수정" onclick="location.href='faqUpdateView.do?faqNum=${faq.faqNum}'">
-						<input type="button" class="btn btn-secondary" value="삭제" onclick="location.href='faqDelete.do?faqNum=${faq.faqNum}'">
-					<% } %>
-				</div>
-                  
-                </div>
+                
+                <div class="col-lg-9 order-1 order-lg-2"> <!-- 내용 -->
+                <h3 style="font-weight:bold; text-align:center;">공지사항 글 등록</h3>
+                <br>
+                <br>
+
+                <form action="noticeWriteForm.do" method="post">
+                  <table class="table table-bordered">   
+                  	<tbody>
+     				 <tr>
+        				<td style="background-color:#d2d2d2; font-weight:bold; text-align:center;">제목</td>
+        				<td> <input type="text" name="noticeTitle" style="width:80%; border-color:#d2d2d2;"></td>
+      				</tr>
+    				</tbody>
+  					</table> 
+					<input type="hidden" name="noticeWriter" value="${sessionScope.member.userId}">                
+                	<textarea id="noticeContent" name="noticeContent"></textarea><br>
+                	<div style="text-align:center; margin-top:20px;">
+                	<button type="submit" class="btn btn-warning" >등록</button>
+                	<button type="button" onclick="history.back(-1);" class="btn btn-secondary" >취소</button>
+                	</div>
+                </form>
+                
+                
+                
+                
+                </div> <!-- 내용 끝 -->
                 
                 
             </div>
         </div>
     </section>
     <!-- content 끝 -->
-
+			<script type="text/javascript">
+				//ck에디터
+				CKEDITOR.replace('noticeContent', {height : 500});
+			</script>
 
 	<!-- 하단 -->
 	<footer>

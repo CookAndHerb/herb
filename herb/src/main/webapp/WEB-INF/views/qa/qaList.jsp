@@ -1,17 +1,15 @@
-<%@page import="com.kh.herb.member.model.vo.Member"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page import="com.kh.herb.member.model.vo.Member"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8">
     <meta name="description" content="Fashi Template">
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">    
 	<title>어른허브</title>
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -27,13 +25,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
     
-    <!-- qaList 설정 -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!-- Bootstrap CDN -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- 부트스트랩 -->
+	<link rel="stylesheet" href="css/bootstrap.min.css"> 
     
     <script>
 		//아래쪽에서 이 함수를 호출해 페이지값을 컨트롤러에 매핑
@@ -54,8 +48,9 @@
 	border-color : #e7ab3c;
 }
 #btn_write {
-	background-color : #636363;
-	border-color : #636363;
+		float:right;
+		margin-top:20px;
+		margin-botton:20px;
 }
 .table_text {
 	color : black;
@@ -82,7 +77,7 @@ a {
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
-                        <a href="#"><i class="fa fa-home"></i>고객 센터</a>
+                        <a href="#"><i class="fa fa-home"></i> 고객 센터</a>
                         <span>질문 게시판</span>
                     </div>
                 </div>
@@ -103,8 +98,8 @@ a {
                         <h4 class="fw-title">고객 센터</h4>
                         <ul class="filter-catagories" style="font-weight: bold;">
                             <li><a href="noticeList.do" >공지사항</a></li>
-                            <li><a href="faqList.do" >자주 묻는 질문</a></li>
-                            <li><a href="qaList.do" >질문 게시판</a></li>
+                            <li><a href="faqList.do"  >자주 묻는 질문</a></li>
+                            <li><a href="qaList.do" style="color:orange;" >질문 게시판</a></li>
                         </ul>
                     </div>
 
@@ -113,7 +108,15 @@ a {
                 
                 <!-- 내용 -->
                 <div class="col-lg-9 order-1 order-lg-2">
-                	<h2 align="center" style="margin: 20px 0 0 0; padding-bottom: 0px;">질문 게시판</h2><br><br>
+                	<h3 style="font-weight:bold; text-align:center;">질문 게시판</h3><br><br>
+                	
+                	<!-- 글 작성 버튼 -->
+					<div>
+						<button type="button" id="btn_write" class="btn btn-dark">글쓰기</button>
+					</div>
+					<br>
+					<br>
+					<br>
                    <form name="formSearch" method="post" action="qaList.do">
                    <div class="input-group mb-3">
                    		<select name="selectMenu">
@@ -129,10 +132,7 @@ a {
                    </div>
 					</form>
 					
-					<!-- 글 작성 버튼 -->
-					<div style ="margin: 15px 25px 15px 0px;" align="right" >
-						<button type="button" id="btn_write" class="btn btn-dark">글쓰기</button>
-					</div>
+					
 					
 					<c:if test="${ count == 0 }">
 						<table class="table text-center table_text">

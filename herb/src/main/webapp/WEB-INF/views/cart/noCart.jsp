@@ -84,7 +84,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
-                        <a href="index.do"><i class="fa fa-home"></i>Home</a>
+                        <a href="index.do"><i class="fa fa-home"></i> Home</a>
                         <span>Shopping Cart</span>
                     </div>
                 </div>

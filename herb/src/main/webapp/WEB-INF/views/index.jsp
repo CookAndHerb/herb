@@ -70,9 +70,6 @@
 	<br>
 	<br>
 	<br>
-	<br>
-	<br>
-	<br>
 	
     <!-- 옆 배너 시작 -->
     <section class="women-banner spad">
