@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,6 +128,20 @@ public class ReviewController {
 		jo.put("result", result);
 		jo.put("num", num);
 		jo.put("moveUrl","productInfo.do");
+		
+		return jo.toJSONString();
+	}
+	@ResponseBody
+	@RequestMapping(value="orderCheck.do", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	public String OrderCheck(@RequestParam("pNum") int pNum, @RequestParam("rWriter") String rWriter) throws Exception{		
+		Review review = new Review();
+		review.setpNum(pNum);
+		review.setrWriter(rWriter);
+		
+		String order = reSe.reviewOrderCheck(review);
+		System.out.println("주문상태: "+order);
+		JSONObject jo = new JSONObject();
+		jo.put("order",order);
 		
 		return jo.toJSONString();
 	}

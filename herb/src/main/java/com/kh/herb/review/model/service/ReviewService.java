@@ -18,4 +18,6 @@ public interface ReviewService {
 	
 	public int reviewFileDelete(int rNum) throws Exception;
 	
+	public String reviewOrderCheck(Review review) throws Exception;
+	
 }

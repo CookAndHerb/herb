@@ -47,5 +47,19 @@
 		<delete id="reviewFileDelete" parameterType="int">
 			delete from review_file where r_num = #{rNum}
 		</delete>
+		<!-- 리뷰 작성 전 배송완료 상태인지 검사 -->
+		<select id="reviewOrderCheck" parameterType="review" resultType="String">
+		<![CDATA[
+			select order_status
+			from (select * from order_table ot
+			JOIN order_detail od 
+			    on od.order_num = ot.order_num
+			WHERE OD.ORDER_DETAIL_P_NUM = #{pNum}
+			AND ot.ORDER_USER_ID = #{rWriter}
+			and ot.order_status = '배송완료' 
+			and ot.order_del = 'N' order by ot.order_date)
+			where rownum <= 1
+		]]>
+		</select>
 		
 </mapper>

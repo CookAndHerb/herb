@@ -62,5 +62,9 @@ public class ReviewDAO {
 	public int reviewCount(int pNum) {
 		return sqlSession.selectOne("Review.reviewCount",pNum);
 	}
+	// 배송상태 조회
+	public String reviewOrderCheck(Review review) {
+		return sqlSession.selectOne("Review.reviewOrderCheck", review);
+	}
 	
 }

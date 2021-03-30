@@ -10,8 +10,9 @@
 <meta name="keywords" content="Fashi, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
+
 <title>어른허브</title>
 <!-- Google Font -->
 <link
@@ -48,13 +49,8 @@
 	type="text/css">
 <!-- 별점용 -->
 <!-- bar-rating -->
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/fontawesome-stars.css">
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
-
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/fontawesome-stars.css">
 
 <style>
 #rContent {
@@ -112,13 +108,50 @@
 	background-color: #252525;
 }
 .reUpDel{
-
 	display: inline-block;
 	float: right;
 	cursor: pointer;
 	margin-left: 5px;
 }
-.
+
+.modal {
+	display: none;
+	z-index: 500;
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal button {
+	position: absolute;
+	top: 3rem;
+	right: 3rem;
+	background: transparent;
+	border: 0;
+	color: #ffffff;
+	font-size: 3rem;
+}
+
+.modalBox {
+	position: relative;
+	top: 20%;
+	left: 50%;
+	transform: translate(-50%, -20%);
+	background-color: #ffffff;
+	width: 30%;
+	height: 30%;
+	text-align: center;
+}
+.img-reply{
+	display: flex;
+	margin-top: 12px;
+}
+
+
+
 </style>
 
 <!-- 주연 장바구니 ajax 부분 -->
@@ -224,7 +257,7 @@
 							<div class="product-pic-zoom">
 								<img class="product-big-img"
 									src="${pageContext.request.contextPath}/resources/productImg/${vo.imageName}"
-									alt="">
+									alt="상품 대표 이미지">
 								<div class="zoom-icon">
 									<i class="fa fa-search-plus"></i>
 								</div>
@@ -236,14 +269,14 @@
 										data-imgbigurl="${pageContext.request.contextPath}/resources/productImg/${vo.imageName}">
 										<img
 											src="${pageContext.request.contextPath}/resources/productImg/${vo.imageName}"
-											alt="">
+											alt="상품 인포 이미지1">
 									</div>
 									<c:forEach var="file" items="${file}">
 										<div class="pt active"
 											data-imgbigurl="${pageContext.request.contextPath}/resources/productImg/${file.pInfoFile}">
 											<img
 												src="${pageContext.request.contextPath}/resources/productImg/${file.pInfoFile}"
-												alt="">
+												alt="상품 인포 이미지2">
 										</div>
 									</c:forEach>
 								</div>
@@ -379,8 +412,7 @@
 								<div class="tab-pane fade" id="tab-3" role="tabpanel">
 									<div class="review_btn">
 										<input type="button" id="reWriteBtn" class="site-btn"
-											value="리뷰 등록하기" onclick="reWriteBtn();"
-											style="display: none;">
+											value="리뷰 등록하기" style="display: none;">
 									</div>
 									<div class="customer-review-option">
 
@@ -403,7 +435,7 @@
 
 													<textarea name="rContent" id="rContent"></textarea>
 													<div style="margin-bottom: 20px;">
-														<input type="file" id="userFile" value="사진 업로드">
+														<input type="file" id="userFile" value="사진 업로드" multiple/>
 													</div>
 													<button class="site-btn" id="reSumitBtn"
 														style="margin-bottom: 40px;">리뷰 등록</button>
@@ -419,8 +451,8 @@
 												<c:set var="rNum" value="${review.rNum}"/>
 													<div class="co-item">
 													<c:if test="${review.rWriter == sessionScope.member.getUserId()}">
-															<button id="reUdateBtn" class="reUpDel btn btn-warning">수정</button>
-															<button id="reDeleteBtn" class="reUpDel btn btn-secondary">삭제</button>
+															<button id="reUdateBtn" name="${review.rNum}" class="reUpDel btn btn-warning">수정</button>
+															<button id="reDeleteBtn" name="${review.rNum}" class="reUpDel btn btn-secondary">삭제</button>
 														</c:if>
 														<div class="avatar-text">
 															<div class="at-rating">
@@ -445,9 +477,20 @@
 															<!-- 리뷰 파일 출력-->
 															<div class="img-reply">
 																<c:forEach var="fileName" items="${review.mFileList}">
-																	<img class="reImg"
-																		src="${pageContext.request.contextPath}/resources/reviewImg/${fileName.rFile}" />
+																	<div class="imgC">
+																		<img class="reImg"
+																			src="${pageContext.request.contextPath}/resources/reviewImg/${fileName.rFile}" />
+																	</div>
 																</c:forEach>
+															</div>
+															
+															<!-- 이미지 모달창 -->
+															<div class="modal">
+																<button>&times;</button>
+																<div class="modalBox">
+																	<img src="" alt="">
+																	<p></p>
+																</div>
 															</div>
 															
 														</div>
@@ -489,46 +532,69 @@
 		var userfile = '';
 		var id = $('input[name=rWriter]').val();
 		var num = ${pNum};
-		var rNum = ${rNum}+1;
-
 		
-		// 리뷰쓰기 버튼 클릭 시 배송상태 체크 예정
+		// 아이디 체크 후 리뷰쓰기 버튼 보여주기
 		$(function() {
-			if (id != null) {
+			console.log(id);
+			if (id.length != 0) {
 				$('#reWriteBtn').show();
 			}
 
 		});
-		function reWriteBtn() {
-			$('#reWrite').show();
-		}
+		// 리뷰쓰기 버튼 누르면 리뷰 입력폼 보이기
+		$('#reWriteBtn').on('click', function() {
+			$.ajax({
+				type : 'GET',
+			    dataType : 'json',
+			    url : 'orderCheck.do',
+			    contentType : "application/json; charset:UTF-8",
+			    data: {pNum:num, rWriter:id},
+			    success : function(data){
+			    	var sto = "배송완료";
+			    	if(data.order == sto){
+						$('#reWrite').show();
+			       }else{
+			    	   alert("배송이 완료된 회원만 작성할 수 있습니다.");
+			       }
+			    }
+			});
+
+		});
+		
+		 $(function() {
+		      $('#rStar').barrating({
+		        theme: 'fontawesome-stars'
+		      });
+		   });
+		
+		
 		// 리뷰 추가
 		$('#reSumitBtn').on('click', reviewList);
 
-
-		$('#rStar').barrating({
-			theme : 'fontawesome-stars',
-			onSelect : function(value, text, event) {
-				// 별점 클릭 후 처리는 여기서 코드
-				// 선택한 별점 값을 value로 받음
-			}
-		});
-
 		$('#userFile').on('change', function() {
 			userfile = $('#userFile');
-			console.log($(userfile[0]).val());
-			fileList.push(userfile[0].files[0]);
+
+			if(userfile.multiple == true){
+				for(var i=0; i<userfile.length; i++){
+					console.log($(userfile[i]).val());
+					fileList.push(userfile[i].files[i]);
+				}
+			}else{
+				console.log($(userfile[0]).val());
+				fileList.push(userfile[0].files[0]);
+			}
 		});
 		
 		// 리뷰 수정 버튼
 		
 		// 리뷰 삭제 버튼	
 		$('#reDeleteBtn').on('click', function(){
+			var rNum = $(this).prop("name");
 			$.ajax({
 		         type : 'GET',
 		         dataType : 'json',
 		         url : 'reviewDelete.do',
-		         data: {rNum:rNum-1,
+		         data: {rNum:rNum,
 		        	 	num:num},
 		         success : function(data){
 		        	 if(data.result > 1){
@@ -543,23 +609,21 @@
 				}
 		      });
 		});
-		// 리뷰 제출 전 예외처리
+		// 리뷰 제출 및 예외처리
 		function reviewList() {
 			if (fileList.length == 0) {
 				alert("후기 사진을 첨부해주세요.");
 				return false;
 			}
 
-			if (fileList.length > 5) {
-				alert("사진은 최대 5개까지 첨부할 수 있습니다.");
+			if (fileList.length >= 6) {
+				alert("사진은 최대 6개까지 첨부할 수 있습니다.");
 				return false;
 			}
-			if ($("#rContent").val().trim() == ""
-					|| $("#rContent").val() == null) {
+			if ($("#rContent").val().trim() == "" || $("#rContent").val() == null) {
 				alert("내용을 적어주세요");
 				return false;
 			}
-
 			var formData = new FormData();
 
 			formData.append('pNum', $('#pNum').val());
@@ -595,6 +659,39 @@
 				}
 			});
 		}
+		
+		$(function(){
+//		 	이미지 클릭시 해당 이미지 모달
+			$(".imgC").click(function(){
+				$(".modal").show();
+				// 해당 이미지 가겨오기
+				var imgSrc = $(this).children("img").attr("src");
+				var imgAlt = $(this).children("img").attr("alt");
+				$(".modalBox img").attr("src", imgSrc);
+				$(".modalBox img").attr("alt", imgAlt);
+				
+				// 해당 이미지 텍스트 가져오기
+				// var imgTit =  $(this).children("p").text();
+				// $(".modalBox p").text(imgTit);
+				
+		   // 해당 이미지에 alt값을 가져와 제목으로
+				$(".modalBox p").text(imgAlt);
+			});
+			
+			//.modal안에 button을 클릭하면 .modal닫기
+			$(".modal button").click(function(){
+				$(".modal").hide();
+			});
+			
+			//.modal밖에 클릭시 닫힘
+			$(".modal").click(function (e) {
+		    if (e.target.className != "modal") {
+		      return false;
+		    } else {
+		      $(".modal").hide();
+		    }
+		  });
+		});
 	</script>
 
 	<!-- 하단 -->

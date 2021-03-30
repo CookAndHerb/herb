@@ -46,4 +46,9 @@ public class ReviewServiceImpl implements ReviewService {
 		return dao.reviewDeleteFile(rNum);
 	}
 
+	@Override
+	public String reviewOrderCheck(Review review) throws Exception {
+		return dao.reviewOrderCheck(review);
+	}
+
 }

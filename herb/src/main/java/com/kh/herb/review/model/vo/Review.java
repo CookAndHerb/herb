@@ -14,6 +14,7 @@ public class Review {
 	private String rContent;
 	private Date rDate;
 	private int rStar;
+	private String orderStadus;
 	
 	private List<ReviewFile> mFileList;	// resultMap 사용하기 위한 변수
 	private List<MultipartFile> fileName;	
@@ -80,6 +81,12 @@ public class Review {
 	}
 	public void setrStar(int rStar) {
 		this.rStar = rStar;
+	}
+	public String getOrderStadus() {
+		return orderStadus;
+	}
+	public void setOrderStadus(String orderStadus) {
+		this.orderStadus = orderStadus;
 	}
 	 
 }
