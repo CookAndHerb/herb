@@ -47,131 +47,131 @@
 	type="text/css">
 
 <style>
-#rContent {
-	width: 100%;
-	resize: none;
-	font-size: 16px;
-	color: #636363;
-	height: 116px;
-	border: 1px solid #ebebeb;
-	border-radius: 5px;
-	padding-left: 20px;
-	padding-top: 10px;
-	margin-bottom: 20px;
-}
-.customer-review-option .comment-option .co-item {
-    padding-bottom: 20px;
-}
-.review_btn {
-	height: 40px;
-	width: 100%;
-}
-
-#reWriteBtn {
-	margin-top: 20px;
-	background-color: #252525;
-	border-color: #252525;
-}
-.star label>span {
-	color: #e7ab3c;
-	font-size: 40px;
-}
-
-.reImg {
-	width: 100px;
-	height: 100px;
-}
-
-#review_none {
-	padding: 80px;
-	width: 100%;
-	border: 1px solid #ebebeb;
-}
-
-#reTest_none {
-	display: flex;
-	justify-content: center;
-	color: #e7ab3c;
-}
-
-.addCart_btn:active {
-	background-color: #252525;
-}
-.reUpDel{
-	display: inline-block;
-	float: right;
-	cursor: pointer;
-	margin-left: 5px;
-}
-
-.modal {
-	display: none;
-	z-index: 500;
-	width: 100%;
-	height: 100vh;
-	position: fixed;
-	top: 0;
-	left: 0;
-	background-color: rgba(0, 0, 0, 0.3);
-}
-
-.modal button {
-	position: absolute;
-	top: 3rem;
-	right: 3rem;
-	background: transparent;
-	border: 0;
-	color: #ffffff;
-	font-size: 3rem;
-}
-
-.modalBox {
-	position: relative;
-	top: 20%;
-	left: 50%;
-	transform: translate(-50%, -20%);
-	background-color: #ffffff;
-	width: 30%;
-	height: 30%;
-	text-align: center;
-}
-.img-reply{
-	display: flex;
-	margin-top: 12px;
-}
-
-.rating-stars ul {
-  list-style-type:none;
-  padding:0;
-  margin-bottom: 12px;
-  -moz-user-select:none;
-  -webkit-user-select:none;
-}
-.rating-stars ul > li.star {
-  display:inline-block;
-}
-
-.rating-stars ul > li.star > i.fa {
-  font-size:2.2em;
-  color:#ccc; 
-}
-
-.rating-stars ul > li.star.hover > i.fa {
-  color:#FFCC36;
-}
-.rating-stars ul > li.star.selected > i.fa {
-  color:#FF912C;
-}
-.reh4{
-	text-align: center;
-	height: 12px;
-}
-.recenter{
-	display: flex;
-	justify-content: center;
-	margin-bottom: 60px;
-	border-bottom: 1px solid #e9e9e9;
-}
+	#rContent {
+		width: 100%;
+		resize: none;
+		font-size: 16px;
+		color: #636363;
+		height: 116px;
+		border: 1px solid #ebebeb;
+		border-radius: 5px;
+		padding-left: 20px;
+		padding-top: 10px;
+		margin-bottom: 20px;
+	}
+	.customer-review-option .comment-option .co-item {
+	    padding-bottom: 20px;
+	}
+	.review_btn {
+		height: 40px;
+		width: 100%;
+	}
+	
+	#reWriteBtn {
+		margin-top: 20px;
+		background-color: #252525;
+		border-color: #252525;
+	}
+	.star label>span {
+		color: #e7ab3c;
+		font-size: 40px;
+	}
+	
+	.reImg {
+		width: 100px;
+		height: 100px;
+	}
+	
+	#review_none {
+		padding: 80px;
+		width: 100%;
+		border: 1px solid #ebebeb;
+	}
+	
+	#reTest_none {
+		display: flex;
+		justify-content: center;
+		color: #e7ab3c;
+	}
+	
+	.addCart_btn:active {
+		background-color: #252525;
+	}
+	.reUpDel{
+		display: inline-block;
+		float: right;
+		cursor: pointer;
+		margin-left: 5px;
+	}
+	
+	.modal {
+		display: none;
+		z-index: 500;
+		width: 100%;
+		height: 100vh;
+		position: fixed;
+		top: 0;
+		left: 0;
+		background-color: rgba(0, 0, 0, 0.3);
+	}
+	
+	.modal button {
+		position: absolute;
+		top: 3rem;
+		right: 3rem;
+		background: transparent;
+		border: 0;
+		color: #ffffff;
+		font-size: 3rem;
+	}
+	
+	.modalBox {
+		position: relative;
+		top: 20%;
+		left: 50%;
+		transform: translate(-50%, -20%);
+		background-color: #ffffff;
+		width: 30%;
+		height: 30%;
+		text-align: center;
+	}
+	.img-reply{
+		display: flex;
+		margin-top: 12px;
+	}
+	
+	.rating-stars ul {
+	  list-style-type:none;
+	  padding:0;
+	  margin-bottom: 12px;
+	  -moz-user-select:none;
+	  -webkit-user-select:none;
+	}
+	.rating-stars ul > li.star {
+	  display:inline-block;
+	}
+	
+	.rating-stars ul > li.star > i.fa {
+	  font-size:2.2em;
+	  color:#ccc; 
+	}
+	
+	.rating-stars ul > li.star.hover > i.fa {
+	  color:#FFCC36;
+	}
+	.rating-stars ul > li.star.selected > i.fa {
+	  color:#FF912C;
+	}
+	.reh4{
+		text-align: center;
+		height: 12px;
+	}
+	.recenter{
+		display: flex;
+		justify-content: center;
+		margin-bottom: 60px;
+		border-bottom: 1px solid #e9e9e9;
+	}
 
 
 
@@ -260,11 +260,11 @@
 						<h4 class="fw-title">상품 목록</h4>
 						<ul class="filter-catagories" style="font-weight: bold;">
 							<li><a href="product.do">상품 전체</a></li>
-							<li><a href="categoryList.do?category=비타민">비타민</a></li>
-							<li><a href="categoryList.do?category=장 건강">장 건강</a></li>
-							<li><a href="categoryList.do?category=눈 건강">눈 건강</a></li>
-							<li><a href="categoryList.do?category=홍삼">홍삼</a></li>
-							<li><a href="categoryList.do?category=기타">기타</a></li>
+							<li><a href="categoryList.do?category=비타민&pSelect=1">비타민</a></li>
+							<li><a href="categoryList.do?category=장 건강&pSelect=1">장 건강</a></li>
+							<li><a href="categoryList.do?category=눈 건강&pSelect=1">눈 건강</a></li>
+							<li><a href="categoryList.do?category=홍삼&pSelect=1">홍삼</a></li>
+							<li><a href="categoryList.do?category=기타&pSelect=1">기타</a></li>
 						</ul>
 					</div>
 
@@ -480,6 +480,7 @@
 											</div>
 										</div>
 										<!-- 리뷰 쓰기 끝 -->
+										
 										<!-- 리뷰 리스트 출력 -->
 										<div class="comment-option">
 											<!-- 사진 리뷰 리스트 -->
@@ -488,8 +489,8 @@
 												<c:set var="rNum" value="${review.rNum}"/>
 													<div class="co-item">
 													<c:if test="${review.rWriter == sessionScope.member.getUserId()}">
-															<button id="reUdateBtn" name="${review.rNum}" class="reUpDel btn btn-warning">수정</button>
-															<button id="reDeleteBtn" name="${review.rNum}" class="reUpDel btn btn-secondary">삭제</button>
+															<button id="${rNum}" class="reUpDel btn btn-warning">수정</button>
+															<button id="${rNum}" class="reUpDel btn btn-secondary">삭제</button>
 														</c:if>
 														<div class="avatar-text">
 															<div class="at-rating">
@@ -531,7 +532,49 @@
 															</div>
 															
 														</div>
+														<!-- 리뷰 수정 폼 -->
+														<div id="reUpdateForm${rNum}" class="leave-comment" style="display: none;">
+															<h4 class="reh4">리뷰 수정</h4>
+															<div class="row">
+																<div class="col-lg-12">
+																	<c:set var="pNum" value="${num }"></c:set>
+																	<input type="hidden" name="pNum" id="pNum" value="${pNum }">
+																	<input type="hidden" id="rWriter" name="rWriter" value="${sessionScope.member.getUserId()}"> 	
+																	
+																	<section class='rating-widget'>
+																	  <!-- Rating Stars Box -->
+																	  <div class='rating-stars text-center'>
+																			<ul id='stars' name="rStar">
+																				<li class='star' data-value='1'><i
+																					class='fa fa-star fa-fw'></i></li>
+																				<li class='star' data-value='2'><i
+																					class='fa fa-star fa-fw'></i></li>
+																				<li class='star' data-value='3'><i
+																					class='fa fa-star fa-fw'></i></li>
+																				<li class='star' data-value='4'>
+																					<i class='fa fa-star fa-fw'></i>
+																				</li>
+																				<li class='star' data-value='5'><i
+																					class='fa fa-star fa-fw'></i>
+																				</li>
+																			</ul>
+																		</div>
+																	 </section>
+				
+				
+																	<textarea name="rContent" id="rContent">${review.rContent}</textarea>
+																		<div style="margin-bottom: 20px;">
+																			<input type="file" id="userFile" value="사진 업로드" multiple/>
+																		</div>
+																		<div class="recenter">
+																			<button class="site-btn" id="reUpdateBtn" style="margin-bottom: 40px;">리뷰 수정</button>
+																		</div>
+																</div>
+															</div>
+														</div>
 													</div>
+
+													<!-- 리뷰 쓰기 끝 -->
 												</c:forEach>
 											</c:if>
 
@@ -643,6 +686,7 @@
 		
 		// 리뷰 추가
 		$('#reSumitBtn').on('click', reviewList);
+		
 
 		$('#userFile').on('change', function() {
 			userfile = $('#userFile');
@@ -658,30 +702,55 @@
 			}
 		});
 		
-		// 리뷰 수정 버튼
+		// 수정, 삭제 버튼 눌렀을 때 연결
+		$(document).on('click', '.reUpDel', reviewUpDel);
 		
-		// 리뷰 삭제 버튼	
-		$('#reDeleteBtn').on('click', function(){
-			var rNum = $(this).prop("name");
-			$.ajax({
-		         type : 'GET',
-		         dataType : 'json',
-		         url : 'reviewDelete.do',
-		         data: {rNum:rNum,
-		        	 	num:num},
-		         success : function(data){
-		        	 if(data.result > 1){
-		        		 alert("리뷰 삭제를 완료했습니다.");
-		        		 location.href = data.moveUrl + "?num=" + data.num;
-		        	 }else{
-		        		 alert("리뷰 삭제를 실패하였습니다.");
-		        	 }
-		         },
-		         error : function() {
-					alert("리뷰 삭제를 실패하였습니다.")
+		//리뷰 수정
+/* 		$('#reUpdateBtn').on('click',reUpdateList); */
+		
+		// 수정, 삭제 버튼 눌렀을 때
+		function reviewUpDel(){
+			if($(this).text() == '삭제'){
+				var idNum = $(this).prop("id");
+				console.log(idNum);
+				
+				$.ajax({
+			         type : 'GET',
+			         dataType : 'json',
+			         url : 'reviewDelete.do',
+			         data: {rNum:idNum,
+			        	 	num:num},
+			         success : function(data){
+			        	 if(data.result > 1){
+			        		 alert("리뷰 삭제를 완료했습니다.");
+			        		 location.href = data.moveUrl + "?num=" + data.num;
+			        	 }else{
+			        		 alert("리뷰 삭제를 실패하였습니다.");
+			        	 }
+			         },
+			         error : function() {
+						alert("리뷰 삭제를 실패하였습니다.")
+					}
+			      });
+			}
+			else if($(this).text() == '수정'){
+ 				var idNum = $(this).prop("id");
+				if($('#reUpdateForm'+idNum).css('display') == "none"){
+					$('#reUpdateForm'+idNum).show();
+					//멀티 파일 가져오기
+				      $.ajax({
+				         type : 'GET',
+				         dataType : 'json',
+				         url : 'reviewGetFile.do?rNum=' + idNum,
+				         success : modiImg_list
+				      });
+				}else{
+					$('#reUpdateForm'+idNum).hide();
 				}
-		      });
-		});
+			}
+			
+		}
+		
 		// 리뷰 제출 및 예외처리
 		function reviewList() {
 			if (fileList.length == 0) {
