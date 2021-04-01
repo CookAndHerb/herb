@@ -43,12 +43,16 @@
 	<beans:property name="order" value="0"></beans:property>
 	</beans:bean>
 	
+	<!-- Websocket -->
 	<beans:bean id="chattingHandler" class="com.kh.herb.chat.controller.ChattingHandler"/>
 	<websocket:handlers>
-	<websocket:mapping handler="chattingHandler" path="chat"/>
-	<websocket:sockjs></websocket:sockjs>
+		<websocket:mapping handler="chattingHandler" path="chat" />
+		<!-- HTTPSESSION값을 가져오기 위하여 -->
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+		</websocket:handshake-interceptors>	
+		<websocket:sockjs />
 	</websocket:handlers>
-
 	
 	<context:component-scan base-package="com.kh" />
 	
