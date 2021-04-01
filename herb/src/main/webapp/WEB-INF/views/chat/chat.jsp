@@ -79,7 +79,7 @@
 		$('#message').val('')
 	});
 
-	let sock = new SockJS("http://localhost:8181/herb/chat");
+	let sock = new SockJS("http://localhost:8282/herb/chat");
 	sock.onmessage = onMessage;
 	sock.onclose = onClose;
 	// 메시지 전송
