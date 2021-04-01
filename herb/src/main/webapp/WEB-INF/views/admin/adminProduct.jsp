@@ -136,7 +136,7 @@
 										<td><a class="aTag" href="productUpt.do?pNum=${product.pNum }&page=${currentPage}">수정</a></td>
 										<td><a class="aDel" href="productDel.do?pNum=${product.pNum }&page=${currentPage}" onclick="return delchk();">삭제</a></td>
 									</tr>
-								</c:forEach>
+								</c:forEach> 
 						</table>
 					</div>
 					
