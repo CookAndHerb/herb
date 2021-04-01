@@ -59,6 +59,18 @@
 		padding-top: 10px;
 		margin-bottom: 20px;
 	}
+	#rContent2 {
+		width: 100%;
+		resize: none;
+		font-size: 16px;
+		color: #636363;
+		height: 116px;
+		border: 1px solid #ebebeb;
+		border-radius: 5px;
+		padding-left: 20px;
+		padding-top: 10px;
+		margin-bottom: 20px;
+	}
 	.customer-review-option .comment-option .co-item {
 	    padding-bottom: 20px;
 	}
@@ -538,8 +550,8 @@
 															<div class="row">
 																<div class="col-lg-12">
 																	<c:set var="pNum" value="${num }"></c:set>
-																	<input type="hidden" name="pNum" id="pNum" value="${pNum }">
-																	<input type="hidden" id="rWriter" name="rWriter" value="${sessionScope.member.getUserId()}"> 	
+																	<input type="hidden" name="pNum" id="pNum2" value="${pNum }">
+																	<input type="hidden" id="rWriter2" name="rWriter" value="${sessionScope.member.getUserId()}"> 	
 																	
 																	<section class='rating-widget'>
 																	  <!-- Rating Stars Box -->
@@ -562,12 +574,13 @@
 																	 </section>
 				
 				
-																	<textarea name="rContent" id="rContent">${review.rContent}</textarea>
+																	<textarea name="rContent" id="rContent2">${review.rContent}</textarea>
+																		<span id="oldfile${rNum}" style="color: #C3C3C3;">기존파일:<br/></span>
 																		<div style="margin-bottom: 20px;">
-																			<input type="file" id="userFile" value="사진 업로드" multiple/>
+																			<input type="file" id="userFile2" value="사진 업로드" multiple/>
 																		</div>
 																		<div class="recenter">
-																			<button class="site-btn" id="reUpdateBtn" style="margin-bottom: 40px;">리뷰 수정</button>
+																			<button class="site-btn" id="reUpdateBtn${rNum}" style="margin-bottom: 40px;">리뷰 수정</button>
 																		</div>
 																</div>
 															</div>
@@ -613,6 +626,9 @@
 		var id = $('input[name=rWriter]').val();
 		var num = ${pNum};
 		var rStar;
+		var oldFile = [];
+		var fileList2 = [];
+		var idNum;
 		
 		// 아이디 체크 후 리뷰쓰기 버튼 보여주기
 		$(function() {
@@ -705,13 +721,10 @@
 		// 수정, 삭제 버튼 눌렀을 때 연결
 		$(document).on('click', '.reUpDel', reviewUpDel);
 		
-		//리뷰 수정
-/* 		$('#reUpdateBtn').on('click',reUpdateList); */
-		
 		// 수정, 삭제 버튼 눌렀을 때
 		function reviewUpDel(){
 			if($(this).text() == '삭제'){
-				var idNum = $(this).prop("id");
+				idNum = $(this).prop("id");
 				console.log(idNum);
 				
 				$.ajax({
@@ -734,21 +747,106 @@
 			      });
 			}
 			else if($(this).text() == '수정'){
- 				var idNum = $(this).prop("id");
+ 				idNum = $(this).prop("id");
 				if($('#reUpdateForm'+idNum).css('display') == "none"){
 					$('#reUpdateForm'+idNum).show();
 					//멀티 파일 가져오기
 				      $.ajax({
-				         type : 'GET',
+				         type : 'POST',
 				         dataType : 'json',
-				         url : 'reviewGetFile.do?rNum=' + idNum,
-				         success : modiImg_list
+				         url : 'getReviewFile.do',
+				         data: {rNum:idNum},
+				         success : function(data){
+				        	$.each(data, function(index, value){
+				        		var str1 = value.rFile;
+				        		oldFile[index] = str1;
+				        		var str2 = str1.split("_").reverse()[0];
+				        		$('#oldfile'+idNum).append(str2+'<br/>');
+				        	});
+				         },
+				         error : function(request, status, error) {
+								alert('기존 파일을 가져오지 못했습니다.');
+								//location.href= data.moveUrl + "?num=" + data.num ;
+								console.log("code = " + request.status + " message = "
+										+ request.responseText + " error = " + error);
+							}
 				      });
 				}else{
 					$('#reUpdateForm'+idNum).hide();
 				}
 			}
+		}
+		function load(){
+			console.log(idNum);
+		});
+		
+		//리뷰 수정
+		$('#reUpdateBtn'+idNum).on('click',reUpdateList);
+		
+		// 리뷰 수정할 때 새로운 파일
+		$('#userFile2').on('change', function() {
+			userfile2 = $('#userFile2');
+
+			if(userfile2.multiple == true){
+				for(var i=0; i<userfile2.length; i++){
+					console.log($(userfile2[i]).val());
+					fileList2.push(userfile2[i].files[i]);
+				}
+			}else{
+				console.log($(userfile2[0]).val());
+				fileList2.push(userfile2[0].files[0]);
+			}
+		});
+		
+		// 리뷰 수정 업로드 및 예외처리
+		function reUpdateList(){
+			console.log(oldFile.length);
+			if (fileList2.length + oldFile.length == 0) {
+				alert("후기 사진을 첨부해주세요.");
+				return false;
+			}
+
+			if (fileList2.length + oldFile.length > 6) {
+				alert("사진은 최대 6개까지 첨부할 수 있습니다.");
+				return false;
+			}
+			if ($("#rContent2").val().trim() == "" || $("#rContent2").val() == null) {
+				alert("내용을 적어주세요");
+				return false;
+			}
+			var formData2 = new FormData();
 			
+			formData2.append('pNum', $('#pNum2').val());
+			formData2.append('rNum', idNum);
+			formData2.append('rWriter', $("#rWriter2").val());
+			formData2.append('rStar', rStar);
+			formData2.append('rContent', $("#rContent2").val());
+
+			// 다중첨부파일
+			if (fileList2) {
+				for ( var index in fileList2) {
+					formData2.append('fileName', fileList2[index]);
+				}
+			}
+			$.ajax({
+				dataType : 'json',
+				url : 'reviewUpdate.do',
+				type : 'POST',
+				data : formData2,
+				contentType : false,
+				enctype : 'multipart/form-data',
+				processData : false,
+				success : function(data) {
+					alert("리뷰 수정을 완료했습니다.");
+					location.href = data.moveUrl + "?num=" + data.num;
+				},
+				error : function(request, status, error) {
+					alert('리뷰 수정을 실패하였습니다.');
+					//location.href= data.moveUrl + "?num=" + data.num ;
+					console.log("code = " + request.status + " message = "
+							+ request.responseText + " error = " + error);
+				}
+			});		
 		}
 		
 		// 리뷰 제출 및 예외처리
@@ -758,7 +856,7 @@
 				return false;
 			}
 
-			if (fileList.length >= 6) {
+			if (fileList.length > 6) {
 				alert("사진은 최대 6개까지 첨부할 수 있습니다.");
 				return false;
 			}

@@ -66,5 +66,29 @@ public class ReviewDAO {
 	public String reviewOrderCheck(Review review) {
 		return sqlSession.selectOne("Review.reviewOrderCheck", review);
 	}
-	
+	// 리뷰 수정할 때 기존 파일 가져오기
+	public List<ReviewFile> getReviewFile(int rNum){
+		System.out.println("getReviewFile Dao 실행");
+		System.out.println("getReviewFile Dao rNum: "+rNum);
+		return sqlSession.selectList("Review.getReviewFile", rNum);
+	}
+	// 리뷰 수정
+	public int reviewUpdate(Review review) {
+		System.out.println("ReviewDao Update 메서드 실행");
+		// 리뷰 수정
+		int result = sqlSession.update("Review.reviewUpdate", review);
+			
+		if(review.getmFileList() != null) {		
+			for (ReviewFile reFile : review.getmFileList()) {
+				reFile.setrNum(review.getrNum());
+				System.out.println("rFile" + reFile.getrFile());
+				System.out.println("rNum : " + reFile.getrNum());
+				System.out.println("pNum : " + reFile.getpNum());
+					
+				sqlSession.insert("Review.reviewFileInsert", reFile);
+			}
+		}
+		return result;
+			
+	}
 }

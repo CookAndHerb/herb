@@ -109,8 +109,8 @@ public class ReviewController {
 	}
 	
 	//리뷰 삭제
-	@RequestMapping(value="reviewDelete.do", method=RequestMethod.GET)
 	@ResponseBody
+	@RequestMapping(value="reviewDelete.do", method=RequestMethod.GET)
 	public String reviewDelete(@RequestParam("rNum") int rNum, @RequestParam("num") int num) throws Exception{
 		System.out.println("controller reviewDelete 메서드 실행");
 		System.out.println("rNum: "+rNum);
@@ -131,6 +131,7 @@ public class ReviewController {
 		
 		return jo.toJSONString();
 	}
+	// 배송상태 체크
 	@ResponseBody
 	@RequestMapping(value="orderCheck.do", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	public String OrderCheck(@RequestParam("pNum") int pNum, @RequestParam("rWriter") String rWriter) throws Exception{		
@@ -144,6 +145,83 @@ public class ReviewController {
 		jo.put("order",order);
 		
 		return jo.toJSONString();
+	}
+	// 리뷰 수정할 때 기존파일 가져오기
+	@ResponseBody
+	@RequestMapping(value="getReviewFile.do", method=RequestMethod.POST)
+	public List<ReviewFile> getReviewFile(int rNum) throws Exception{
+		List<ReviewFile> reFile = reSe.getReviewFile(rNum);
+		
+		for(int i=0; i<reFile.size(); i++) {
+			System.out.println("파일이름: "+reFile.get(i).getrFile());
+		}
+		return reFile;
+	}
+	// 리뷰 수정
+	@ResponseBody
+	@RequestMapping(value="reviewUpdate.do", method=RequestMethod.POST)
+	public String reUpdate(Review review, HttpServletRequest request) throws Exception{	
+		
+		System.out.println(review.getrWriter());
+		System.out.println(review.getpNum());
+		System.out.println(review.getrContent());
+		System.out.println("Controller reUpdate 메서드 실행");
+		
+		// 새로운 파일
+		List<MultipartFile> files = review.getFileName();
+		List<ReviewFile> fList = new ArrayList<ReviewFile>();
+		
+		if(files != null) {
+			for(MultipartFile file : files) {
+				// 원래 파일명
+				String fileName = file.getOriginalFilename();
+				System.out.println("fileName: "+fileName);
+				
+				// 중복 제거를 위해 난수 발생 후 파일명을 db테이블에 저장
+				UUID random = UUID.randomUUID();
+				String filePath = request.getSession().getServletContext().getRealPath("resources");
+				String saveDirectory = filePath + File.separator + "reviewImg";
+				System.out.println("파일 루트: "+saveDirectory);
+				
+				File fe = new File(saveDirectory);
+				if(!fe.exists()) {
+					System.out.println("폴더 생성");
+					fe.mkdir();
+				}
+				
+				// fileName과 난수 합치기
+				File ff = new File(saveDirectory, random +"_"+fileName);
+				System.out.println("서버에 저장할 파일 이름: "+ff);
+				
+				// 파일 안에 있는 내용 읽어와서 서버에 저장
+				try {
+					FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(ff));
+				}catch(FileNotFoundException e) {
+					e.printStackTrace();
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+				
+				// 파일 경로, 상품번호, 댓글번호 저장 후 mFilelist로 넘김
+				ReviewFile reFile = new ReviewFile();
+				reFile.setpNum(review.getpNum());
+				reFile.setrFile(random +"_"+fileName);
+				reFile.setrNum(review.getrNum());
+				
+				fList.add(reFile);
+				review.setmFileList(fList); 
+			}	
+		}
+		int result = reSe.reviewUpdate(review);
+		System.out.println("리뷰 업데이트:"+result);
+		int avg = proSe.starAvg(review.getpNum()); // 리뷰 평균 업데이트
+		System.out.println("리뷰 평균 업데이트: "+avg);
+		
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("num", review.getpNum());
+		jsonObject.put("moveUrl", "productInfo.do");
+		
+		return jsonObject.toJSONString();
 	}
 	
 }

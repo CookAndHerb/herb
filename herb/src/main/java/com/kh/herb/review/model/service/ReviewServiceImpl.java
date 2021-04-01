@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.herb.review.model.dao.ReviewDAO;
 import com.kh.herb.review.model.vo.Review;
+import com.kh.herb.review.model.vo.ReviewFile;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -49,6 +50,16 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public String reviewOrderCheck(Review review) throws Exception {
 		return dao.reviewOrderCheck(review);
+	}
+
+	@Override
+	public List<ReviewFile> getReviewFile(int rNum) throws Exception {
+		return dao.getReviewFile(rNum);
+	}
+
+	@Override
+	public int reviewUpdate(Review review) throws Exception {
+		return dao.reviewUpdate(review);
 	}
 
 }
