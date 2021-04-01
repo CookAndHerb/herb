@@ -33,6 +33,7 @@
     		float: right;
     	}
     </style>
+    
     <script type="text/javascript">
 	function showPopup(){
 		window.open("chat", "chat", "width=370, height=400");
@@ -87,9 +88,11 @@
 	<br>
 	
 	 <!--채팅 아이콘-->
-	<div id="chatIcon">
-    <img src="${pageContext.request.contextPath}/resources/img/채팅아이콘.png" onclick="showPopup();" />
-	</div>
+	 <c:if test="${not empty sessionScope.member}">
+		<div id="chatIcon">
+	    	<img src="${pageContext.request.contextPath}/resources/img/채팅아이콘.png" onclick="showPopup();" />
+		</div>
+	</c:if>
 	
     <!-- 옆 배너 시작 -->
     <section class="women-banner spad">
