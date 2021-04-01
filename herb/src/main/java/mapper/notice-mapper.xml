@@ -4,4 +4,61 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Notice">
 
+<!-- NOTICE mapper -> dao -> service -> controller 순으로 작성-->
+
+<resultMap id="resultNotice" type="Notice">
+ <result property="rNum" column="RNUM" />
+ <result property="noticeNum" column="NOTICE_NUM"/>
+ <result property="noticeTitle" column="NOTICE_TITLE" />
+ <result property="noticeContent" column="NOTICE_CONTENT" />
+ <result property="noticeWriter" column="NOTICE_WRITER" />
+ <result property="noticeDate" column="NOTICE_DATE" />
+ <result property="noticeReadCount" column="NOTICE_READCOUNT" />
+</resultMap>
+
+<!-- 글 갯수 조회 -->
+<select id="noticeListCount" resultType="int">
+ SELECT COUNT(*) cnt FROM NOTICE
+ </select>
+ 
+<!-- 리스트 -->
+<select id="noticeList" parameterType="com.kh.herb.notice.model.vo.NoticePage" resultMap="resultNotice">
+<![CDATA[
+SELECT * FROM( 
+    SELECT ROW_NUMBER() OVER(ORDER BY NOTICE_NUM DESC) AS RNUM, 
+NOTICE_NUM, NOTICE_TITLE, NOTICE_WRITER, NOTICE_CONTENT, NOTICE_DATE,  
+NOTICE_READCOUNT FROM NOTICE) WHERE RNUM >= #{start} AND RNUM <= #{end}
+ ]]>
+</select>
+
+<!-- 상세 글 조회 -->
+<select id="selectNotice" parameterType="Notice" resultMap="resultNotice">
+	SELECT * FROM NOTICE WHERE NOTICE_NUM = ${noticeNum}
+</select>
+
+<!-- 조회수 업데이트 -->
+<update id="readCount" parameterType="Notice">
+	UPDATE NOTICE
+		SET NOTICE_READCOUNT = NOTICE_READCOUNT + 1
+		WHERE NOTICE_NUM = #{noticeNum}
+</update>
+
+<!-- 글 작성 -->
+<insert id="insertNotice" parameterType="Notice">
+	INSERT INTO NOTICE VALUES(NOTICE_SEQ.NEXTVAL, #{noticeTitle},#{noticeWriter},#{noticeContent},SYSDATE,0)
+</insert>
+
+<!-- 글 수정 -->
+<update id="updateNotice" parameterType="Notice">
+	UPDATE NOTICE
+		SET NOTICE_TITLE = #{noticeTitle}, NOTICE_CONTENT = #{noticeContent}
+		WHERE NOTICE_NUM = #{noticeNum}
+
+</update>
+
+
+<!-- 글 삭제 -->
+<delete id="deleteNotice" parameterType="Notice">
+	DELETE FROM NOTICE WHERE NOTICE_NUM = #{noticeNum} 
+</delete>
 </mapper>

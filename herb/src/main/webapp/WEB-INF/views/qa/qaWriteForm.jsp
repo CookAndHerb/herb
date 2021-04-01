@@ -49,7 +49,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
-                        <a href="#"><i class="fa fa-home"></i>고객 센터</a>
+                        <a href="#"><i class="fa fa-home"></i> 고객 센터</a>
                         <span>질문 게시판</span>
                     </div>
                 </div>
@@ -70,8 +70,8 @@
                         <h4 class="fw-title">고객 센터</h4>
                         <ul class="filter-catagories" style="font-weight: bold;">
                             <li><a href="noticeList.do" >공지사항</a></li>
-                            <li><a href="faqList.do" >자주 묻는 질문</a></li>
-                            <li><a href="qaList.do" >질문 게시판</a></li>
+                            <li><a href="faqList.do"  >자주 묻는 질문</a></li>
+                            <li><a href="qaList.do" style="color:orange;" >질문 게시판</a></li>
                         </ul>
                     </div>
 
@@ -80,6 +80,7 @@
                 
                 <!-- 내용 -->
                 <div class="col-lg-9 order-1 order-lg-2">
+                <h3 style="font-weight:bold; text-align:center;">질문 게시판 글 작성</h3><br><br>
                    <form method="post" action="qaInsert.do">
 						<div class="input-group mb-3">
 							<div class="input-group-prepend"><label class="input-group-text px-4">제목</label></div>

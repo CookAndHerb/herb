@@ -45,7 +45,7 @@
 	href="${pageContext.request.contextPath}/resources/css/style.css"
 	type="text/css">
 
-</style>
+
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -61,14 +61,17 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
-                        <a href="#"><i class="fa fa-home"></i>Contact</a>
+                        <a href="index.do"><i class="fa fa-home"></i> Home</a>
+                        <span>Contact</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Breadcrumb Section Begin -->
-
+    <div style="text-align:center; margin-top:40px;">
+	<img src="${pageContext.request.contextPath}/resources/img/회사소개로고.png" style="width:350px; height:200px;">
+	</div>
     <!-- Map Section Begin -->
     <div class="map spad">
         <div class="container">

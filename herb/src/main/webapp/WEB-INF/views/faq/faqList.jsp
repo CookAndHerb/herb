@@ -6,12 +6,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8">
     <meta name="description" content="Fashi Template">
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">    
 	<title>어른허브</title>
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -27,13 +26,10 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
     
-    <!-- qaList 설정 -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!-- Bootstrap CDN -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- 부트스트랩 -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">  
+	
     
     <script>
 		//아래쪽에서 이 함수를 호출해 페이지값을 컨트롤러에 매핑
@@ -53,16 +49,21 @@
 	background-color : #e7ab3c;
 	border-color : #e7ab3c;
 }
+
 #btn_write {
-	background-color : #636363;
-	border-color : #636363;
+		float:right;
+		margin-top:20px;
+		margin-botton:20px;
 }
+
 .table_text {
 	color : black;
 }
+
 #title_color {
 	color : black;
 }
+
 a {
 	color : black;
 }
@@ -82,7 +83,7 @@ a {
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
-                        <a href="#"><i class="fa fa-home"></i>고객 센터</a>
+                        <a href="#"><i class="fa fa-home"></i> 고객 센터</a>
                         <span>자주 묻는 질문</span>
                     </div>
                 </div>
@@ -103,7 +104,7 @@ a {
                         <h4 class="fw-title">고객 센터</h4>
                         <ul class="filter-catagories" style="font-weight: bold;">
                             <li><a href="noticeList.do" >공지사항</a></li>
-                            <li><a href="faqList.do" >자주 묻는 질문</a></li>
+                            <li><a href="faqList.do" style="color:orange;" >자주 묻는 질문</a></li>
                             <li><a href="qaList.do" >질문 게시판</a></li>
                         </ul>
                     </div>
@@ -113,9 +114,23 @@ a {
                 
                 <!-- 내용 -->
                 <div class="col-lg-9 order-1 order-lg-2">
-                	<h2 align="center" style="margin: 20px 0 0 0; padding-bottom: 0px;">자주 묻는 질문</h2><br><br>
+                	<h3 align="center" style="font-weight:bold;">자주 묻는 질문</h3><br><br>
+                	
+                	<% Member mvo = (Member)session.getAttribute("member"); // 로그인 돼있는 경우만 글쓰기 버튼 보이도록
+	
+						if(mvo != null && mvo.getUserNum() < 1000){
+						%>
+					<!-- 글 작성 버튼 -->
+					<div >
+						<button type="button" id="btn_write" class="btn btn-dark">글 작성</button>
+						<br>
+						<br>
+						<br>
+					</div>
+					 <%} %>
+					 
                    <form name="formSearch" method="post" action="faqList.do">
-                   <div class="input-group mb-3">
+                   <div class="input-group mb-3" style="clear:both;">
                    		
                    		<input name="keyword" class="form-control" placeholder="검색어를 입력해주세요" value="${map.keyword }">
                    		<div class="input-group-append">
@@ -123,16 +138,6 @@ a {
                    		</div>
                    </div>
 					</form>
-					
-					<% Member mvo = (Member)session.getAttribute("member"); // 로그인 돼있는 경우만 글쓰기 버튼 보이도록
-	
-						if(mvo != null && mvo.getUserNum() < 1000){
-						%>
-					<!-- 글 작성 버튼 -->
-					<div style ="margin: 15px 25px 15px 0px;" align="right" >
-						<button type="button" id="btn_write" class="btn btn-dark">글쓰기</button>
-					</div>
-					 <%} %>
 					
 					<c:if test="${ count == 0 }">
 						<table class="table text-center table_text">
@@ -142,7 +147,7 @@ a {
 						</table>
 					</c:if>
 					
-					<div class="card shadow">
+					<div class="card shadow" style="clear:both;">
 					<div class="card-body">
 					
 					<c:set var="number" value="${map.number }" />
