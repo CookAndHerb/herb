@@ -69,6 +69,10 @@
 		<update id="reviewUpdate" parameterType="review">
 			update review set r_content = #{rContent}, r_date = sysdate, r_star = #{rStar} where r_num = #{rNum}
 		</update>
+		<!-- 업데이트 시 선택한 기존파일 삭제 -->
+		<delete id="oldFileDelete" parameterType="ReviewFile">
+			delete from review_file where r_file_path = #{rFile} and r_num = #{rNum}
+		</delete>
 		
 		
 </mapper>

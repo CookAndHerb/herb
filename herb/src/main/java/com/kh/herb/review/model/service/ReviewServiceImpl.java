@@ -62,4 +62,9 @@ public class ReviewServiceImpl implements ReviewService {
 		return dao.reviewUpdate(review);
 	}
 
+	@Override
+	public int oldFileDelete(Review review) throws Exception {
+		return dao.oldFileDelete(review);
+	}
+
 }

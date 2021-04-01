@@ -25,4 +25,6 @@ public interface ReviewService {
 	
 	public int reviewUpdate(Review review) throws Exception;
 	
+	public int oldFileDelete(Review review) throws Exception;
+	
 }

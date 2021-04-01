@@ -91,4 +91,19 @@ public class ReviewDAO {
 		return result;
 			
 	}
+	// 선택한 기존파일 삭제
+	public int oldFileDelete(Review review) {
+		System.out.println("ReviewDao oldFileDelete 메서드 실행");
+		int result = 0;
+		if(review.getOldFileList() != null) {
+			for(ReviewFile file : review.getOldFileList()) {
+				System.out.println("rFile: "+file.getrFile());
+				System.out.println("rNum: "+file.getrNum());
+				System.out.println("pNum: "+file.getpNum());
+				
+				result = sqlSession.delete("Review.oldFileDelete", file);
+			}
+		}
+		return result;
+	}
 }

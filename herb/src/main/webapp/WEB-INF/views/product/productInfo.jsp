@@ -575,12 +575,13 @@
 				
 				
 																	<textarea name="rContent" id="rContent2">${review.rContent}</textarea>
-																		<span id="oldfile${rNum}" style="color: #C3C3C3;">기존파일:<br/></span>
+																		<span style="color: #b1b1b1;">기존파일:<br/></span>
+																		<span id="oldfileList${rNum}" style="color: #b1b1b1;"></span>
 																		<div style="margin-bottom: 20px;">
 																			<input type="file" id="userFile2" value="사진 업로드" multiple/>
 																		</div>
 																		<div class="recenter">
-																			<button class="site-btn" id="reUpdateBtn${rNum}" style="margin-bottom: 40px;">리뷰 수정</button>
+																			<button class="site-btn" id="reUpdateBtn" style="margin-bottom: 40px;">리뷰 수정</button>
 																		</div>
 																</div>
 															</div>
@@ -626,7 +627,7 @@
 		var id = $('input[name=rWriter]').val();
 		var num = ${pNum};
 		var rStar;
-		var oldFile = [];
+		var oldFileList = [];
 		var fileList2 = [];
 		var idNum;
 		
@@ -748,6 +749,7 @@
 			}
 			else if($(this).text() == '수정'){
  				idNum = $(this).prop("id");
+ 				
 				if($('#reUpdateForm'+idNum).css('display') == "none"){
 					$('#reUpdateForm'+idNum).show();
 					//멀티 파일 가져오기
@@ -759,9 +761,12 @@
 				         success : function(data){
 				        	$.each(data, function(index, value){
 				        		var str1 = value.rFile;
-				        		oldFile[index] = str1;
+				        		console.log(str1);
 				        		var str2 = str1.split("_").reverse()[0];
-				        		$('#oldfile'+idNum).append(str2+'<br/>');
+				        		$('#oldfileList'+idNum).append("<input type='checkbox' id='' value='' name='fileCheck'/>"+"<lable>"+str2+"</lable>"+"<br/>");
+				        		$("input:checkbox[Name='fileCheck']").prop('checked','checked');
+				        		$("input:checkbox[Name='fileCheck']:eq("+index+")").attr('id','check'+index);
+				        		$("#check"+index).attr('value',str1);
 				        	});
 				         },
 				         error : function(request, status, error) {
@@ -776,12 +781,9 @@
 				}
 			}
 		}
-		function load(){
-			console.log(idNum);
-		});
-		
+	
 		//리뷰 수정
-		$('#reUpdateBtn'+idNum).on('click',reUpdateList);
+		$('#reUpdateBtn').on('click',reUpdateList);
 		
 		// 리뷰 수정할 때 새로운 파일
 		$('#userFile2').on('change', function() {
@@ -800,13 +802,21 @@
 		
 		// 리뷰 수정 업로드 및 예외처리
 		function reUpdateList(){
-			console.log(oldFile.length);
-			if (fileList2.length + oldFile.length == 0) {
+			var ix = 0;
+			$("input:checkbox[Name='fileCheck']").each(function(){
+				if($(this).is(":checked") != true) {
+					oldFileList[ix] = $(this).val();
+					alert(oldFileList.length);
+					ix = ix+1;
+				}
+			});
+			
+			if (fileList2.length + oldFileList.length == 0) {
 				alert("후기 사진을 첨부해주세요.");
 				return false;
 			}
 
-			if (fileList2.length + oldFile.length > 6) {
+			if (fileList2.length + oldFileList.length > 6) {
 				alert("사진은 최대 6개까지 첨부할 수 있습니다.");
 				return false;
 			}
@@ -822,11 +832,18 @@
 			formData2.append('rStar', rStar);
 			formData2.append('rContent', $("#rContent2").val());
 
-			// 다중첨부파일
+			// 다중 파일
 			if (fileList2) {
 				for ( var index in fileList2) {
 					formData2.append('fileName', fileList2[index]);
 				}
+			}
+			//기존 다중 파일
+			if (oldFileList) {
+			    for (var index in oldFileList) {
+			    	alert(oldFileList[index]);
+			        formData2.append('oldFileName', oldFileList[index]);
+			    }
 			}
 			$.ajax({
 				dataType : 'json',

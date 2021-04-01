@@ -160,12 +160,29 @@ public class ReviewController {
 	// 리뷰 수정
 	@ResponseBody
 	@RequestMapping(value="reviewUpdate.do", method=RequestMethod.POST)
-	public String reUpdate(Review review, HttpServletRequest request) throws Exception{	
+	public String reUpdate(Review review, HttpServletRequest request) throws Exception{
 		
+		System.out.println("Controller reUpdate 메서드 실행");
 		System.out.println(review.getrWriter());
 		System.out.println(review.getpNum());
 		System.out.println(review.getrContent());
-		System.out.println("Controller reUpdate 메서드 실행");
+		
+		// 선택한 기존 파일 삭제
+		if(review.getOldFileName() != null) {
+			List<ReviewFile> oldfList = new ArrayList<ReviewFile>();
+			for(int i=0; i<review.getOldFileName().size(); i++) {
+				System.out.println("기존 파일: "+review.getOldFileName().get(i));
+				ReviewFile odfile = new ReviewFile();
+				odfile.setpNum(review.getpNum());
+				odfile.setrFile(review.getOldFileName().get(i));
+				odfile.setrNum(review.getrNum());
+				oldfList.add(odfile);
+				review.setOldFileList(oldfList);
+			}
+			int del = reSe.oldFileDelete(review);
+			System.out.println("삭제한 기존파일 개수: "+del);
+		}
+		
 		
 		// 새로운 파일
 		List<MultipartFile> files = review.getFileName();
