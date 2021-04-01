@@ -23,6 +23,21 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <style type="text/css">
+    	#chatIcon{
+    		width: 80px;
+    		height: 80xp;
+    		float: right;
+    	}
+    </style>
+    <script type="text/javascript">
+	function showPopup(){
+		window.open("chat", "chat", "width=370, height=400");
+	}
+    </script>
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -70,6 +85,11 @@
 	<br>
 	<br>
 	<br>
+	
+	 <!--채팅 아이콘-->
+	<div id="chatIcon">
+    <img src="${pageContext.request.contextPath}/resources/img/채팅아이콘.png" onclick="showPopup();" />
+	</div>
 	
     <!-- 옆 배너 시작 -->
     <section class="women-banner spad">
@@ -195,6 +215,7 @@
                 <a href="#" class="primary-btn">Shop Now</a>
             </div>
         </div>
+        
     </section>
     <!-- Deal Of The Week Section End -->   
     

@@ -10,32 +10,32 @@
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
 
-
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
     <!-- Css Styles -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/themify-icons.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
-    
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.min.css" type="text/css">    
     
 <style>
+	*{
+		margin: auto;
+	}
 	#sendBtn{
 		background: #e7ab3c;
 		color: white;
 		border: white;
 	}
-	#messageArea{
-		width: 300px;
-		height: 270px;
-	}
 	#chatArea{
-		width: 300px;
+		width: 320px;
 		height: 300px;
+		text-align: center;
+	}
+	#message{
+		width: 250px;
+	}
+	#messageArea{
+		width: 320px;
 	}
 
 
@@ -69,22 +69,24 @@
 		<div class="container2"></div>
 	</div>
 	<div id="chatArea">
-		<input type="text" id="message" /> 
-		<input type="button" id="sendBtn" class="btn" value="전송" />
+		<input type="text" id="message"/> 
+		<input type="button" id="sendBtn" class="btn" value="전송"/>
 	</div>
 </body>
 <script type="text/javascript">
-	$("#sendBtn").click(function() {
+ 	$("#sendBtn").click(function() {
 		sendMessage();
 		$('#message').val('')
-	});
+	}); 
 
 	let sock = new SockJS("http://localhost:8181/herb/chat");
 	sock.onmessage = onMessage;
 	sock.onclose = onClose;
+	
 	// 메시지 전송
 	function sendMessage() {
 		sock.send($("#message").val());
+		
 	}
 	// 서버로부터 메시지를 받았을 때
 	function onMessage(msg) {
