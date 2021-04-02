@@ -92,7 +92,7 @@ public class AdminController {
 		System.out.println("대표 이미지 : "+image.getSize());
 
 		product.setpNum(pNum);
-		
+
 		//상품 대표 이미지
 		if(image.getSize() != 0) { //사이즈로 업로드 여부 판단
 			Product fileProduct = imageUplode(product, request);
@@ -105,66 +105,55 @@ public class AdminController {
 			product.setImagePath(existImagePath);
 		}
 		int result = as.updateProduct(product);
+
 		
-		ProductFile infoFile = new ProductFile();
-		pf.setpNum(pNum);
-		
+		////////////////////////////////////파일테이블 다중 파일 업로드 수정 처리 시작//////////////////////////////////
 		//파일 번호 변환을 위한 int형 배열 선언
 		//상품 정보 이미지의 번호를 배열로 받아옴
 		String[] pInfoNum = request.getParameterValues("pInfoNum");
 		int[] pInfoNumArr = null;
-		//업로드한 파일이 있을때
-		if(pInfoNum != null) { 
+		if(pInfoNum!=null) { //업로드한 파일이 없을 수도 잇어서 if문 처리함
 			pInfoNumArr = new int[pInfoNum.length];
-			if(pInfoFiles.length >= 1) { //다중파일 업로드시
-				int cnt = as.deleteFile(pNum); //DB에서 기존 파일 삭제		
+		}
+
+		for(int i = 0; i<pInfoFiles.length; i++) {
+			if(pInfoFiles[i].getSize() != 0) { //업로드한 파일이 있을때
+				ProductFile infoFile = new ProductFile();
+				pf.setpNum(pNum);
+				int cnt = as.deleteFile(pNum); //DB에서 기존 파일 삭제	
 				//이전에 서버에 올린 이미지의 이름을 가져옴
 				String[] existInfoFile = request.getParameterValues("existInfoFile");
 				//가져온 이미지들의 서버 경로를 구함
-				for(int j = 0; j<pInfoNumArr.length; j++){
-					//반복문을 이용해 기존 파일 서버에서 하나씩 삭제
-					String root = request.getSession().getServletContext().getRealPath("resources");
-					String savePath = root+"\\productImg";
-	
-					//기존 파일 이름 가져와서 서버에서 삭제
-					File file = new File(savePath+"\\"+existInfoFile[j]);
-					if( file.exists() ){ //파일이 존재하면
-						if(file.delete()){ //삭제하기!
-							System.out.println("파일삭제 성공"); 
+				if(pInfoNumArr!=null) {
+					for(int j = 0; j<pInfoNumArr.length; j++){
+						//반복문을 이용해 기존 파일 서버에서 하나씩 삭제
+						String root = request.getSession().getServletContext().getRealPath("resources");
+						String savePath = root+"\\productImg";
+
+						//기존 파일 이름 가져와서 서버에서 삭제
+						File file = new File(savePath+"\\"+existInfoFile[j]);
+						if( file.exists() ){ //파일이 존재하면
+							if(file.delete()){ //삭제하기!
+								System.out.println("파일삭제 성공"); 
+							}else{ 
+								System.out.println("파일삭제 실패"); 
+							} 
 						}else{ 
-							System.out.println("파일삭제 실패"); 
-						} 
-					}else{ 
-						System.out.println("파일이 존재하지 않습니다."); 
+							System.out.println("파일이 존재하지 않습니다."); 
+						}	
 					}
 				}
 				System.out.println("delete 결과 : "+cnt);
-				
-				//이미지 새로 등록
 				for(MultipartFile productInfo : pInfoFiles) {
 					infoFile = infoImage(productInfo, request);
 					pf.setpInfoFile(infoFile.getpInfoFile());
 					pf.setpInfoPath(infoFile.getpInfoPath());
-					int insert = as.insertFile(pf);
-					System.out.println("insert 결과 : "+insert);
+					as.insertFile(pf);
 				}
-
+				break; //이중 for문 실행하고 for문은 아예 빠져 나옴
 			}
-		}//else { 테이블이 다르기 때문에 굳이 업데이트 안 해줘도 돼서 이건 필요없음 그래서 위에 선언한 int 배열도 안 쓰기 때문에 일단 주석처리
-		//			String[] existInfoFile = request.getParameterValues("existInfoFile");
-		//			String[] existInfoPath = request.getParameterValues("existInfoPath");
-		//			for(int j = 0; j<pInfoNumArr.length; j++){
-		//				pInfoNumArr[j]=Integer.parseInt(pInfoNum[j]);
-		//				System.out.println("파일번호 : "+pInfoNum[j]);
-		//				System.out.println(j+"번 기존 파일 이름 : "+existInfoFile[j]);		
-		//				pf.setpInfoFile(existInfoFile[j]);
-		//				System.out.println(j+"번 기존 파일 경로 : "+existInfoPath[j]);
-		//				pf.setpInfoPath(existInfoPath[j]);
-		//				pf.setpInfoNum(pInfoNumArr[j]);
-		//				int cnt = as.updateFile(pf);		
-		//			}
-		//
-		//		}
+		}
+		////////////////////////////////////파일테이블 다중 파일 업로드 수정 처리 끝//////////////////////////////////
 
 		mav.addObject("result", result);
 		mav.setViewName("product/productUptComplete");
