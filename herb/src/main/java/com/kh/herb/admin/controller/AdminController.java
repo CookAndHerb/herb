@@ -92,8 +92,9 @@ public class AdminController {
 		System.out.println("대표 이미지 : "+image.getSize());
 
 		product.setpNum(pNum);
-
-		if(image.getSize() != 0) {
+		
+		//상품 대표 이미지
+		if(image.getSize() != 0) { //사이즈로 업로드 여부 판단
 			Product fileProduct = imageUplode(product, request);
 			product.setImageName(fileProduct.getImageName());
 			product.setImagePath(fileProduct.getImagePath());
@@ -103,22 +104,26 @@ public class AdminController {
 			product.setImageName(existImage);
 			product.setImagePath(existImagePath);
 		}
-
 		int result = as.updateProduct(product);
-
+		
 		ProductFile infoFile = new ProductFile();
 		pf.setpNum(pNum);
-
+		
+		//상품 정보 이미지의 번호를 배열로 받아옴
 		String[] pInfoNum = request.getParameterValues("pInfoNum");
 		int[] pInfoNumArr = null;
 		if(pInfoNum != null) { 
 			pInfoNumArr = new int[pInfoNum.length];
-			if(pInfoFiles.length > 1) { //다중파일 업로드시
+			if(pInfoFiles.length >= 1) { //다중파일 업로드시
 				int cnt = as.deleteFile(pNum); //DB에서 기존 파일 삭제
+				
+				//이전에 서버에 올린 이미지의 이름을 가져옴
 				String[] existInfoFile = request.getParameterValues("existInfoFile");
+				//가져온 이미지들의 서버 경로를 구함
 				for(int j = 0; j<pInfoNumArr.length; j++){
 					String root = request.getSession().getServletContext().getRealPath("resources");
 					String savePath = root+"\\productImg";
+					
 					//기존 파일 이름 가져와서 서버에서 삭제
 					File file = new File(savePath+"\\"+existInfoFile[j]);
 					if( file.exists() ){ 
@@ -133,7 +138,7 @@ public class AdminController {
 				}
 				System.out.println("delete 결과 : "+cnt);
 				
-				//새로 등록
+				//이미지 새로 등록
 				for(MultipartFile productInfo : pInfoFiles) {
 					infoFile = infoImage(productInfo, request);
 					pf.setpInfoFile(infoFile.getpInfoFile());
