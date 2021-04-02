@@ -244,7 +244,7 @@
          <div class="row">
             <div class="col-lg-12">
                <div class="breadcrumb-text">
-                  <a href="product.do"><i class="fa fa-home"> </i>상품 목록</a> <span>${vo.pCategory }</span>
+                  <a href="product.do" ><i class="fa fa-home"> </i>상품 목록</a> <span>${vo.pCategory }</span>
                </div>
             </div>
          </div>

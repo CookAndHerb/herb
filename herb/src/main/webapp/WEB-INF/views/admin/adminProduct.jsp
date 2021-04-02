@@ -133,12 +133,12 @@
 										<td>${product.pCategory}</td>
 										<td>${product.pType}</td>
 										<td>${product.pCost}</td>
-										<td>${product.pMaDate}</td>
-										<td>${product.pExDate}</td>
+										<td><fmt:formatDate value="${product.pMaDate}" pattern="yy/MM/dd" /></td>
+										<td><fmt:formatDate value="${product.pExDate}" pattern="yy/MM/dd" /></td>
 										<td><a class="aTag" href="productUpt.do?pNum=${product.pNum }&page=${currentPage}">수정</a></td>
 										<td><a class="aDel" href="productDel.do?pNum=${product.pNum }&page=${currentPage}" onclick="return delchk();">삭제</a></td>
 									</tr>
-								</c:forEach>
+								</c:forEach>  
 						</table>
 					</div>
 					
