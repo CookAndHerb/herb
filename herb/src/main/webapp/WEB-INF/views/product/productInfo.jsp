@@ -616,7 +616,7 @@
 		var rStar;
 		var oldFileList = [];
 		var fileList2 = [];
-		var idNum;
+		var idNum; // 리뷰 댓글 번호
 		
 		// 아이디 체크 후 리뷰쓰기 버튼 보여주기
 		$(function() {
