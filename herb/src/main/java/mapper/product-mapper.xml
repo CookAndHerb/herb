@@ -17,6 +17,7 @@
 		<result property="pCapacity" column="P_CAPACITY"></result>
 		<result property="pType" column="P_TYPE"></result>
 		<result property="pCategory" column="P_CATEGORY"></result>
+		<result property="pStarAvg" column="P_STAR_AVG"></result>
 	</resultMap>
 
 	<!-- 상품 리스트 가져오기 -->
