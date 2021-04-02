@@ -28,7 +28,6 @@
 	}
 	#chatArea{
 		width: 320px;
-		height: 300px;
 		text-align: center;
 	}
 	#message{
@@ -69,7 +68,7 @@
 		<div class="container2"></div>
 	</div>
 	<div id="chatArea">
-		<input type="text" id="message"/> 
+		<input type="text" id="message" /> 
 		<input type="button" id="sendBtn" class="btn" value="전송"/>
 	</div>
 </body>
@@ -78,6 +77,14 @@
 		sendMessage();
 		$('#message').val('')
 	}); 
+ 	
+ 	
+ 	$('#message').keypress(function(e){
+ 		if(e.keyCode == 13){
+ 			sendMessage();
+ 			$('#message').val('')
+ 		}
+ 	});
 
 	let sock = new SockJS("http://localhost:8282/herb/chat");
 	sock.onmessage = onMessage;
