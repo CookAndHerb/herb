@@ -111,7 +111,7 @@ a {
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="breadcrumb-text">
-						<a href="product.do"><i class="fa fa-home"></i>상품 목록</a> <span>${category}</span>
+						<a href="product.do" style="color: #e7ab3c"><i class="fa fa-home"></i>상품 목록</a> <span>${category}</span>
 					</div>
 				</div>
 			</div>
@@ -213,18 +213,17 @@ a {
 											</div>
 											<div class="pi-text">
 												<div class="catagory-name">${list.pCategory }</div>
-												<a href="#"> <a href="productInfo.do?num=${list.pNum}"><h5>${list.pName }</h5></a>
-												</a>
+												<a href="productInfo.do?num=${list.pNum}"><h5>${list.pName }</h5></a>
 												<div class="pd-rating">
 													<!-- 리뷰가 있을 경우 -->
 													<c:if test="${list.pStar ne 0 || list.pStarAvg ne 0}">
-														<c:forEach begin="0" end="${list.pStarAvg+1}" var="star">
+													<fmt:parseNumber var="pStarAvg" value="${list.pStarAvg }" integerOnly="true" />
+														<c:forEach begin="1" end="${pStarAvg}">
 															<i class="fa fa-star"></i>
 														</c:forEach>
 
 														<c:if test="${list.pStarAvg ne 5}">
-															<c:forEach var="rStar" begin="0"
-																end="${5-(list.pStarAvg+3)}">
+															<c:forEach var="rStar" begin="0" end="${5-(list.pStarAvg+1)}">
 																<i class="fa fa-star-o"></i>
 															</c:forEach>
 														</c:if>

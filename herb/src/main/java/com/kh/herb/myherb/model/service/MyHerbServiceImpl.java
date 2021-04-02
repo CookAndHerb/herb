@@ -9,6 +9,7 @@ import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.myherb.model.dao.MyHerbDAO;
 import com.kh.herb.myherb.model.vo.OrderDetailList;
 import com.kh.herb.myherb.model.vo.OrderList;
+import com.kh.herb.myherb.model.vo.ReviewList;
 
 @Service
 public class MyHerbServiceImpl implements MyHerbService {
@@ -54,6 +55,21 @@ public class MyHerbServiceImpl implements MyHerbService {
 	@Override
 	public int orderDel(int orderNum) throws Exception {
 		return myHerbDAO.orderDel(orderNum);
+	}
+
+	@Override
+	public int reviewListCount(String userId) throws Exception {
+		return myHerbDAO.reviewListCount(userId);
+	}
+
+	@Override
+	public List<ReviewList> reviewList(String userId, int startPage, int limit) throws Exception {
+		return myHerbDAO.reviewList(userId, startPage, limit);
+	}
+
+	@Override
+	public int deleteReview(int rNum) throws Exception {
+		return myHerbDAO.deleteReview(rNum);
 	}
 
 	

@@ -17,6 +17,7 @@
 		<result property="pCapacity" column="P_CAPACITY"></result>
 		<result property="pType" column="P_TYPE"></result>
 		<result property="pCategory" column="P_CATEGORY"></result>
+		<result property="pStarAvg" column="P_STAR_AVG"></result>
 	</resultMap>
 
 	<!-- 상품 리스트 가져오기 -->
@@ -36,7 +37,7 @@
 			<when test="pSelect == 4">
 				order by p_cost desc))
 			</when>
-			<otherwise>))</otherwise>
+			<otherwise>order by p_num desc))</otherwise>
 		</choose>
 	</trim>
 	<![CDATA[where rnum >= #{startPage} and rnum <= #{endPage}]]>
@@ -60,7 +61,7 @@
 				<when test="pSelect == 4">
 					order by p_cost desc))
 				</when>
-				<otherwise>))</otherwise>
+				<otherwise>order by p_num desc))</otherwise>
 			</choose>
 		</trim>
 		<![CDATA[where rnum >= #{startPage} and rnum <= #{endPage}]]>
@@ -85,7 +86,7 @@
 				<when test="pSelect == 4">
 					order by p_cost desc))
 				</when>
-				<otherwise>))</otherwise>
+				<otherwise>order by p_num desc))</otherwise>
 			</choose>
 		</when>
 		<when test='pCategory == "전체"'>
@@ -99,7 +100,7 @@
 				<when test="pSelect == 4">
 					order by p_cost desc))
 				</when>
-				<otherwise>))</otherwise>
+				<otherwise>order by p_num desc))</otherwise>
 			</choose>
 		</when>
 	</choose>

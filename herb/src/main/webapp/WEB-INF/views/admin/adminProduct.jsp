@@ -89,12 +89,14 @@
                 &nbsp;&nbsp;&nbsp;
                 <button class="btn btn-sm" id="productIns" onclick="location.href = 'productIns.do';">상품등록</button>
 				
+				<!-- 검색 -->
 				<div id="searchDiv">
 				<form action="searchProduct.do">
                         <div class="form-inline serch">
                             <select name="selectType" class="custom-select-sm">
                             <option value="pNum">상품번호</option>
                             <option value="pName">상품명</option>
+                            <option value="pCategory">카테고리</option>
                             </select>
                             <div class="input-group">
                                 <input type="text" class="control-sm" name="keyword">
@@ -127,16 +129,16 @@
 								<c:forEach var="product" items="${productList }">
 									<tr>
 										<td>${product.pNum}</td>
-										<td style="width: 180px;"><a id="proDetail" href="productInfo.do?num=${product.pNum}">${product.pName}</a></td>
+										<td style="width: 195px;"><a id="proDetail" href="productInfo.do?num=${product.pNum}">${product.pName}</a></td>
 										<td>${product.pCategory}</td>
 										<td>${product.pType}</td>
 										<td>${product.pCost}</td>
-										<td>${product.pMaDate}</td>
-										<td>${product.pExDate}</td>
+										<td><fmt:formatDate value="${product.pMaDate}" pattern="yy/MM/dd" /></td>
+										<td><fmt:formatDate value="${product.pExDate}" pattern="yy/MM/dd" /></td>
 										<td><a class="aTag" href="productUpt.do?pNum=${product.pNum }&page=${currentPage}">수정</a></td>
 										<td><a class="aDel" href="productDel.do?pNum=${product.pNum }&page=${currentPage}" onclick="return delchk();">삭제</a></td>
 									</tr>
-								</c:forEach>
+								</c:forEach>  
 						</table>
 					</div>
 					

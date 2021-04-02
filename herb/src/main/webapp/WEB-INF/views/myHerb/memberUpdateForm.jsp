@@ -217,6 +217,7 @@ function execPostCode() {
                         <h4 class="fw-title">My Herb</h4>
                         <ul class="filter-catagories" style="font-weight: bold;">
                             <li><a href="memberOrder.do" >주문 조회</a></li>
+                            <li><a href="memberReview.do" >구매 후기</a></li>
                             <li><a href="#" style="color:orange;" >개인 정보 수정</a></li>
                             <li><a href="memberDelete.do" >탈퇴하기</a></li>
                         </ul>

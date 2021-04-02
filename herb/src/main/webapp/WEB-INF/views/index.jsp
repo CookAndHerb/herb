@@ -23,6 +23,28 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <style type="text/css">
+    	#chatIcon{
+    		/* 해상도에 고정시켜서 따라다니는 방법 */
+    		width: 80px;
+    		height: 80xp;
+    		position:fixed;
+			right:10px; /* 창에서 오른쪽 길이 */ 
+			top:85%; /* 창에서 위에서 부터의 높이 */ 
+			margin:0;
+			z-index:999;
+    	}
+    </style>
+    
+    <script type="text/javascript">
+	function showPopup(){
+		window.open("chat", "chat", "width=370, height=400");
+	}
+    </script>
+
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -71,6 +93,13 @@
 	<br>
 	<br>
 	
+	<!--채팅 아이콘-->
+	 <c:if test="${not empty sessionScope.member}">
+		<div id="chatIcon">
+	    	<img src="${pageContext.request.contextPath}/resources/img/chat.png" onclick="showPopup();" />
+		</div>
+	</c:if>
+	
     <!-- 옆 배너 시작 -->
     <section class="women-banner spad">
         <div class="container-fluid">
@@ -90,7 +119,7 @@
                         <div class="product-item">
                             <div class="pi-pic">
                            	 	<a href="productInfo.do?num=${topList[0].pNum}" style="color:black; font-weight:bold;">
-                                	<img src="${pageContext.request.contextPath}/resources/${topList[0].pImageName}" alt="">
+                                	<img style="width:300px; height:400px;" src="${pageContext.request.contextPath}/resources/productImg/${topList[0].pImageName}" alt="">
                                 </a>
                                 <div class="sale">BEST</div>
                                 
@@ -110,7 +139,7 @@
                         <div class="product-item">
                             <div class="pi-pic">
                            	 <a href="productInfo.do?num=${topList[1].pNum}" style="color:black; font-weight:bold;">
-                                <img src="${pageContext.request.contextPath}/resources/${topList[1].pImageName}" alt="">
+                                <img style="width:300px; height:400px;" src="${pageContext.request.contextPath}/resources/productImg/${topList[1].pImageName}" alt="">
                               </a>
                             </div>
                             <div class="pi-text">
@@ -126,7 +155,7 @@
                         <div class="product-item">
                             <div class="pi-pic">
                             	<a href="productInfo.do?num=${topList[2].pNum}" style="color:black; font-weight:bold;">
-                                <img src="${pageContext.request.contextPath}/resources/${topList[2].pImageName}" alt="">
+                                <img style="width:300px; height:400px;" src="${pageContext.request.contextPath}/resources/productImg/${topList[2].pImageName}" alt="">
                             	</a>
                             </div>
                             <div class="pi-text">
@@ -142,7 +171,7 @@
                         <div class="product-item">
                             <div class="pi-pic">
                             <a href="productInfo.do?num=${topList[3].pNum}" style="color:black; font-weight:bold;">
-                                <img src="${pageContext.request.contextPath}/resources/productImg/${topList[3].pImageName}" alt="">
+                                <img style="width:300px; height:400px;" src="${pageContext.request.contextPath}/resources/productImg/${topList[3].pImageName}" alt="">
                              </a>
                             </div>
                             <div class="pi-text">

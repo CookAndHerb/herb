@@ -53,6 +53,19 @@
 		<result property="pCost" column="P_COST"/>
 	</resultMap>
 	
+	<resultMap id="reviewList" type="com.kh.herb.myherb.model.vo.ReviewList">
+		<id property="rwNum" column="RWNUM"/>
+		<result property="rNum" column="R_NUM"/>
+		<result property="pNum" column="P_NUM"/>
+		<result property="rWriter" column="R_WRITER"/>
+		<result property="rContent" column="R_CONTENT"/>
+		<result property="rDate" column="R_DATE"/>
+		<result property="rStar" column="R_STAR"/>
+		<result property="pName" column="P_NAME"/>		
+	</resultMap>
+		
+		
+	
 	<!-- 회원 정보 가져오기 -->
 	<select id="selectMember" parameterType="Member" resultMap="resultMember">
 		SELECT * FROM MEMBER WHERE USER_ID = #{userId} AND USER_PW = #{userPw}
@@ -115,4 +128,28 @@
 		SET ORDER_DEL = 'Y'
 		WHERE ORDER_NUM = #{orderNum}
 	</update>
+	
+	<!-- 리뷰 개수 세기 -->
+	<select id="reviewListCount" parameterType="string" resultType="int">
+ 		SELECT COUNT(*) cnt FROM REVIEW WHERE R_WRITER = #{rWriter}
+ 	</select>
+ 	
+ 	<!-- 리뷰 목록 불러오기 -->
+	<select id="reviewList" parameterType="com.kh.herb.myherb.model.vo.OrderListPage" resultMap="reviewList">
+	  <![CDATA[
+	SELECT * FROM(
+        SELECT
+        ROW_NUMBER() OVER(ORDER BY R.R_DATE DESC)AS RWNUM, R.R_NUM , R.R_CONTENT,R.R_DATE, R.R_STAR, R.P_NUM, R.R_WRITER, P.P_NAME
+        FROM REVIEW R
+        	 INNER JOIN PRODUCT P
+            	 on R.P_NUM = P.P_NUM
+     	WHERE R.R_WRITER = #{orderUserId}) 
+      WHERE RWNUM >= #{start} AND RWNUM <= #{end}
+       ]]>
+	</select>
+	
+	<!-- 리뷰 삭제 -->
+	<delete id="deleteReview" parameterType="int" >
+		DELETE FROM REVIEW WHERE R_NUM = #{rNUm}
+	</delete>
 </mapper>
