@@ -53,6 +53,9 @@ public class MemberController {
 	@Autowired
 	private JavaMailSender mailSender;
 	
+	@Autowired
+	private Sha256Util enc;
+	
 	// 로그인 폼으로 가는 주소
 	@RequestMapping(value="memberLogin.do", method=RequestMethod.GET)
 	public ModelAndView memberLogin(HttpSession session, ModelAndView mv)  {
@@ -142,9 +145,13 @@ public class MemberController {
 
 		System.out.println(member.getUserId());
 		System.out.println(member.getUserPw());
-
+		
+		String userPwd = member.getUserPw();		
+		String encryUserPwd = enc.encryData(userPwd);
+		member.setUserPw(encryUserPwd);
 		member = memberService.selectMember(member);
-
+		
+		
 		session.setAttribute("member", member);
 		mv.addObject("member", member);
 		mv.setViewName("member/memberLoginComplete");
@@ -172,6 +179,9 @@ public class MemberController {
 	@RequestMapping(value="memberJoin.do", method=RequestMethod.POST)
 	public ModelAndView memberJoin(
 			Member member, ModelAndView mv) throws Exception{
+		String userPwd = member.getUserPw(); // 비밀번호 꺼내기
+		String encryUserPwd = enc.encryData(userPwd);
+		member.setUserPw(encryUserPwd);
 		
 		int result = memberService.insertMember(member);
 		
@@ -309,6 +319,10 @@ public class MemberController {
 	@RequestMapping(value="memberPwUpdate.do", method=RequestMethod.POST)
 	public ModelAndView memberPwUpdate(HttpServletResponse resp, Member member, ModelAndView mv) throws Exception{
 		resp.setContentType("text/html;charset=utf-8");
+		
+		String userPwd = member.getUserPw();
+		String encryUserPwd = enc.encryData(userPwd);
+		member.setUserPw(encryUserPwd);
 		
 		int result = memberService.updatePw(member);
 		
