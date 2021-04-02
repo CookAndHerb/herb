@@ -184,25 +184,18 @@
 		margin-bottom: 60px;
 		border-bottom: 1px solid #e9e9e9;
 	}
-
-
-
 </style>
 
 <!-- 주연 장바구니 ajax 부분 -->
 <script>
 	$(
 			function() {
-
 				$(document).on('click', '.addCart_btn', addfunction);
 				function addfunction() {
-
 					var cartPnum2 = $("#productNumber").val();
 					var cartStock2 = $(".numBox").val();
 					if (cartStock2 > 0) {
-
 						$.ajax({
-
 							type : "get",
 							url : "addCart.do?cartPnum=" + cartPnum2
 									+ '&cartStock=' + cartStock2,
@@ -215,7 +208,6 @@
 									if (data.result == "login") {
 										alert("로그인 해주세요.");
 										$(".numBox").val("1");
-
 									} else if (data.result == "dup") {
 										alert("이미 카트에 상품이 존재합니다.");
 										$(".numBox").val("1");
@@ -225,16 +217,12 @@
 							error : function() {
 								alert("카트에 상품 담기 실패")
 							}
-
 						}); // ajax 끝
-
 					} else {
 						alert("수량을 1개 이상 선택해주세요.");
 					}
-
 				}
 				; // function 끝
-
 			})
 </script>
 
@@ -246,7 +234,6 @@
 		<%@ include file="../template/header.jsp"%>
 	</header>
 	<!-- ##### Hero Area Start ##### -	->
-
 	<!-- Breadcrumb Section Begin -->
 
 	<div class="breacrumb-section">
@@ -581,7 +568,7 @@
 																			<input type="file" id="userFile2" value="사진 업로드" multiple/>
 																		</div>
 																		<div class="recenter">
-																			<button class="site-btn" id="reUpdateBtn" style="margin-bottom: 40px;">리뷰 수정</button>
+																			<button class="site-btn" id="reUpdateBtn${rNum}" style="margin-bottom: 40px;">리뷰 수정</button>
 																		</div>
 																</div>
 															</div>
@@ -637,7 +624,6 @@
 			if (id.length != 0) {
 				$('#reWriteBtn').show();
 			}
-
 		});
 		// 리뷰쓰기 버튼 누르면 리뷰 입력폼 보이기
 		$('#reWriteBtn').on('click', function() {
@@ -660,7 +646,6 @@
 			       }
 			    }
 			});
-
 		});
 		
 		// 별점처리
@@ -704,10 +689,8 @@
 		// 리뷰 추가
 		$('#reSumitBtn').on('click', reviewList);
 		
-
 		$('#userFile').on('change', function() {
 			userfile = $('#userFile');
-
 			if(userfile.multiple == true){
 				for(var i=0; i<userfile.length; i++){
 					console.log($(userfile[i]).val());
@@ -725,7 +708,7 @@
 		// 수정, 삭제 버튼 눌렀을 때
 		function reviewUpDel(){
 			if($(this).text() == '삭제'){
-				idNum = $(this).prop("id");
+				idNum = $(this).prop("id"); // 버튼 아이디에 들어갈 숫자
 				console.log(idNum);
 				
 				$.ajax({
@@ -748,7 +731,7 @@
 			      });
 			}
 			else if($(this).text() == '수정'){
- 				idNum = $(this).prop("id");
+ 				idNum = $(this).prop("id");	// 버튼 아이디에 들어갈 숫자
  				
 				if($('#reUpdateForm'+idNum).css('display') == "none"){
 					$('#reUpdateForm'+idNum).show();
@@ -783,12 +766,11 @@
 		}
 	
 		//리뷰 수정
-		$('#reUpdateBtn').on('click',reUpdateList);
+		$('#reUpdateBtn'+idNum).on('click',reUpdateList);
 		
 		// 리뷰 수정할 때 새로운 파일
 		$('#userFile2').on('change', function() {
 			userfile2 = $('#userFile2');
-
 			if(userfile2.multiple == true){
 				for(var i=0; i<userfile2.length; i++){
 					console.log($(userfile2[i]).val());
@@ -806,7 +788,6 @@
 			$("input:checkbox[Name='fileCheck']").each(function(){
 				if($(this).is(":checked") != true) {
 					oldFileList[ix] = $(this).val();
-					alert(oldFileList.length);
 					ix = ix+1;
 				}
 			});
@@ -815,7 +796,6 @@
 				alert("후기 사진을 첨부해주세요.");
 				return false;
 			}
-
 			if (fileList2.length + oldFileList.length > 6) {
 				alert("사진은 최대 6개까지 첨부할 수 있습니다.");
 				return false;
@@ -831,7 +811,6 @@
 			formData2.append('rWriter', $("#rWriter2").val());
 			formData2.append('rStar', rStar);
 			formData2.append('rContent', $("#rContent2").val());
-
 			// 다중 파일
 			if (fileList2) {
 				for ( var index in fileList2) {
@@ -841,7 +820,6 @@
 			//기존 다중 파일
 			if (oldFileList) {
 			    for (var index in oldFileList) {
-			    	alert(oldFileList[index]);
 			        formData2.append('oldFileName', oldFileList[index]);
 			    }
 			}
@@ -872,7 +850,6 @@
 				alert("후기 사진을 첨부해주세요.");
 				return false;
 			}
-
 			if (fileList.length > 6) {
 				alert("사진은 최대 6개까지 첨부할 수 있습니다.");
 				return false;
@@ -882,12 +859,10 @@
 				return false;
 			}
 			var formData = new FormData();
-
 			formData.append('pNum', $('#pNum').val());
 			formData.append('rWriter', $("#rWriter").val());
 			formData.append('rStar', rStar);
 			formData.append('rContent', $("#rContent").val());
-
 			// 다중첨부파일
 			if (fileList) {
 				for ( var index in fileList) {
