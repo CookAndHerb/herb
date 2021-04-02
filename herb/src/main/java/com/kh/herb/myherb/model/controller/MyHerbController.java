@@ -15,11 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.herb.cart.model.vo.Cart;
 import com.kh.herb.member.controller.Sha256Util;
 import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.myherb.model.service.MyHerbService;
 import com.kh.herb.myherb.model.vo.OrderDetailList;
 import com.kh.herb.myherb.model.vo.OrderList;
+import com.kh.herb.myherb.model.vo.ReviewList;
+import com.kh.herb.product.model.service.ProductService;
+import com.kh.herb.review.model.service.ReviewService;
 
 @Controller
 public class MyHerbController {
@@ -31,6 +35,13 @@ public class MyHerbController {
 	@Autowired
 	Sha256Util enc;
 	
+	@Autowired
+	ReviewService reSe;
+	
+	@Autowired
+	ProductService proSe;
+	
+	
 	public static final int LIMIT = 5;
 	
 	// 개인정보 수정 로직
@@ -39,7 +50,7 @@ public class MyHerbController {
 		
 		String userPwd = member.getUserPw();
 		String encryUserPwd = enc.encryData(userPwd);
-		member.setUserPw(encryUserPwd);
+		member.setUserPw(encryUserPwd);  
 		
 		int result = myHerbService.updateMember(member);
 		Member mb = new Member();
@@ -59,9 +70,11 @@ public class MyHerbController {
 	// 회원 탈퇴 처리
 	@RequestMapping(value="memberDelete.do", method =RequestMethod.POST)
 	public ModelAndView memberDelete(Member member, ModelAndView mv, HttpServletRequest request) throws Exception{
+		
 		String userPwd = member.getUserPw();
 		String encryUserPwd = enc.encryData(userPwd);
-		member.setUserPw(encryUserPwd);          
+		member.setUserPw(encryUserPwd);  
+		
 		boolean result = myHerbService.checkPw(member);
 		if(result == true) { // 비밀번호가 맞다면 삭제 후 메인페이지 이동
 			myHerbService.deleteMember(member);
@@ -172,4 +185,82 @@ public class MyHerbController {
 		return obj.toJSONString();
 	}
 	
+	
+	@RequestMapping(value = "memberReview.do", method=RequestMethod.GET)
+	public ModelAndView reviewList(@RequestParam(name="page", defaultValue="1") int page,
+			HttpSession session, ModelAndView mv) throws Exception {
+		try {
+			int currentPage = page;
+			// 한 페이지당 출력할 목록 갯수
+			Member member = (Member)session.getAttribute("member");
+			if(member == null) { // 로그인 안됐을 경우
+				
+				mv.setViewName("cart/noLogin");
+			
+			} else {
+			
+			String userId = member.getUserId();
+			int listCount = myHerbService.reviewListCount(userId); // 리뷰 총 개수
+			
+			int maxPage = (int) ((double) listCount / LIMIT + 0.9);
+		
+			// <startNavi 구하는 공식>
+			// startNavi = ((현재페이지-1)/보여질 navi 개수) * 보여질 navi 개수 +1;
+			int naviCountPerPage = 5;
+			int startNavi = ((currentPage-1)/naviCountPerPage)*naviCountPerPage+1;
+			
+			// <endNavi 구하는 공식>
+			// endNavi = 시작 navi번호 + 보여질 navi 개수 -1;
+			int endNavi = startNavi + naviCountPerPage -1;
+			if(endNavi > maxPage) {
+				endNavi = maxPage;
+			}
+			
+			List<ReviewList> reviewList =  myHerbService.reviewList(userId, currentPage, LIMIT);
+			
+			if(reviewList.size() == 0) { // 리뷰 내역 없을 경우
+				mv.setViewName("myHerb/noReviewList");
+				
+			}else { // 리뷰 내역 있을 경우
+				mv.addObject("reviewList", reviewList);
+				mv.addObject("currentPage", currentPage); // 현재 페이지
+				mv.addObject("maxPage", maxPage); // 완전 마지막 페이지
+				mv.addObject("startNavi", startNavi);
+				mv.addObject("endNavi", endNavi); 
+				mv.addObject("listCount", listCount); // 리뷰 총 개수
+				mv.setViewName("myHerb/reviewList");
+				}
+			}
+			
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("myHerb/errorPage");
+		}
+		return mv;
 	}
+	
+	// 리뷰 하나만 삭제
+	@RequestMapping(value="deleteMemberReview.do", method=RequestMethod.GET)
+	public @ResponseBody String deleteCart(HttpSession session, @RequestParam("rNum") int rNum, @RequestParam("num") int num) throws Exception{
+		
+		
+		int rf = reSe.reviewFileDelete(rNum);
+		int re = reSe.reviewDelete(rNum);
+		
+		int count = proSe.starCount(num); // 리뷰 총 개수 업데이트
+		int avg = proSe.starAvg(num); // 리뷰 평균 업데이트
+		
+		JSONObject obj = new JSONObject();
+		
+		if(re > 0) { // 리뷰 삭제 성공
+			obj.put("result", "ok");
+		
+		}else {
+			obj.put("result", "");
+		}
+		
+		return obj.toJSONString();
+	}
+	
+	}
+

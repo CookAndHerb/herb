@@ -5,6 +5,7 @@ import java.util.List;
 import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.myherb.model.vo.OrderDetailList;
 import com.kh.herb.myherb.model.vo.OrderList;
+import com.kh.herb.myherb.model.vo.ReviewList;
 
 public interface MyHerbService {
 
@@ -23,4 +24,11 @@ public interface MyHerbService {
 	public List<OrderDetailList> orderDetailList(OrderDetailList orderDetailList) throws Exception;
 	
 	public int orderDel(int orderNum) throws Exception;
+	
+	public int reviewListCount(String userId) throws Exception;
+	
+ 	public List<ReviewList> reviewList(String userId, int startPage, int limit) throws Exception;
+ 	
+ 	public int deleteReview(int rNum) throws Exception;
 }
+
