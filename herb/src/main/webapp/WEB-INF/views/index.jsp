@@ -96,7 +96,7 @@
 	<!--채팅 아이콘-->
 	 <c:if test="${not empty sessionScope.member}">
 		<div id="chatIcon">
-	    	<img src="${pageContext.request.contextPath}/resources/img/채팅아이콘.png" onclick="showPopup();" />
+	    	<img src="${pageContext.request.contextPath}/resources/img/chat.png" onclick="showPopup();" />
 		</div>
 	</c:if>
 	
