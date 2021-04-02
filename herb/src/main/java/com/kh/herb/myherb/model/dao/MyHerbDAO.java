@@ -10,6 +10,7 @@ import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.myherb.model.vo.OrderDetailList;
 import com.kh.herb.myherb.model.vo.OrderList;
 import com.kh.herb.myherb.model.vo.OrderListPage;
+import com.kh.herb.myherb.model.vo.ReviewList;
 
 @Repository
 public class MyHerbDAO {
@@ -68,5 +69,24 @@ public class MyHerbDAO {
 	public int orderDel(int orderNum)throws Exception{
 			return sqlSession.update("Myherb.orderDel", orderNum);
 		}
+	
+	// 리뷰 개수 불러오기
+	public int reviewListCount(String userId) throws Exception {
+		 return sqlSession.selectOne("Myherb.reviewListCount", userId);
+	 }
+	
+	// 리뷰 목록 불러오기
+	 public List<ReviewList> reviewList(String userId, int startPage, int limit) throws Exception{
+		 int startRow = (startPage - 1) * limit;
+		 OrderListPage orderListPage = new OrderListPage();
+		 orderListPage.setOrderUserId(userId);
+		 orderListPage.setStart(startRow+1);
+		 orderListPage.setEnd(startRow+5);
+		 return sqlSession.selectList("Myherb.reviewList", orderListPage);
+	 }
 	 
+	 // 리뷰 삭제
+	 public int deleteReview(int rNum) throws Exception{
+			return sqlSession.update("Myherb.deleteReview", rNum);
+		} 
 }

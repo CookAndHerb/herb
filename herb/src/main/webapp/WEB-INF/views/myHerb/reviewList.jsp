@@ -46,7 +46,45 @@
 		
 
 	</style>
+
+
+	<script type="text/javascript">
 	
+	$(function(){
+		
+		$(document).on('click', '.cartDel', deletefunction);
+	
+	
+	function deletefunction(){ // 하나만 선택 삭제
+	
+		var num = $(this).attr("data-pNum");
+		
+	   $.ajax({
+	      type : 'GET',
+	      dataType : 'json',
+	      url : 'deleteMemberReview.do?rNum='+$(this).val()+'&num='+num,
+	      success : function(data){
+		    	 if(data.result == "ok"){
+		         location.href="memberReview.do"
+		         }else{
+		           alert("삭제 실패");
+		         }
+		                                					
+		      },error : function(data){
+		          alert('전송오류');
+		         console.log("서버 호출을 정상적으로 처리하지 못 했습니다.");
+				}
+		  }); // ajax끝
+	} // deletefunction() 끝
+	
+
+	
+	
+	});// script 끝
+	
+	</script>
+	
+		
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -81,8 +119,8 @@
                     <div class="filter-widget">
                         <h4 class="fw-title">My Herb</h4>
                         <ul class="filter-catagories" style="font-weight: bold;">
-                            <li><a href="memberOrder.do" style="color:orange;">주문 조회</a></li>
-                            <li><a href="memberReview.do" >구매 후기</a></li>
+                            <li><a href="memberOrder.do">주문 조회</a></li>
+                            <li><a href="memberReview.do" style="color:orange;">구매 후기</a></li>
                             <li><a href="memberUpdate.do"  >개인 정보 수정</a></li>
                             <li><a href="memberDelete.do" >탈퇴하기</a></li>
                         </ul>
@@ -97,30 +135,47 @@
                 <h2 style="font-weight:bold;">${member.userName}님의 허브</h2>
            		<h4 style="font-weight:bold; color:gray;">${member.userEmail}</h4>
            		<br>
-           		<h3 style="font-weight:bold;">주문 조회</h3>
+           		<h3 style="font-weight:bold;">구매 후기</h3>
            		<br>
            		<br>
-           
-                <!-- 주문 목록 시작 -->
+           		
+           		<!-- 리뷰 목록 시작 -->
                 
                 <div id="content">
  
- 					<ul class="orderList" style="list-style:none;">
-  						<c:forEach items="${orderList}" var="orderList">
+ 					<ul class="reviewList" style="list-style:none;">
+  						<c:forEach items="${reviewList}" var="reviewList">
   					
   							<li>
  								 <div>
-  									 <p><span>주문번호</span><a href="memberOrderDetail.do?orderNum=${orderList.orderNum}" style="font-weight:bold ; color:#e7ab3c; ">${orderList.orderNum}</a></p>
-  									 <p><span>주문일자</span><fmt:formatDate value="${orderList.orderDate}" type="date"/></p>
-  									 <p><span>수령인</span>${orderList.orderRecvName}</p>
-   									 <p><span>주소</span>(${orderList.orderRecvAddress1}) ${orderList.orderRecvAddress2} ${orderList.orderRecvAddress3}</p>
-     							     <p><span>가격</span><fmt:formatNumber pattern="###,###,###" value="${orderList.orderAmount}" /> 원</p>
+  									 <p><a href="productInfo.do?num=${reviewList.pNum}"> ${reviewList.pName}</a>
+  									 	<button 
+  									 	style="float:right;"
+  									 	type="button" class="cartDel btn btn-secondary btn-sm" value="${reviewList.rNum}" data-pNum="${reviewList.pNum}">삭제</button>
+  									 	</p>
+  									 <hr>
+  									 
+  									 <p><c:if test="${!empty reviewList}">
+                           				<fmt:parseNumber var="rStar" value="${reviewList.rStar}" integerOnly="true" />
+                              			<c:forEach begin="1" end="${rStar}">
+                                 			<i class="fa fa-star" style="color: #e7ab3c;"></i>
+                              			</c:forEach>
+
+                              			<c:if test="${rStar ne 5}">
+                                 			<c:forEach begin="1" end="${5-rStar}">
+                                  				<i class="fa fa-star-o"></i>
+                                		 	</c:forEach>
+                              			</c:if>
+                             	 		<span style="color:#bebebe;">(${reviewList.rStar}) <fmt:formatDate value="${reviewList.rDate}" type="date"/></span>
+                           				</c:if></p>
+   									 <p>${reviewList.rContent}</p>
+     							    
            						</div>
   							</li>
   						</c:forEach>
  					</ul>
 
-				</div> <!-- 주문 목록 끝 -->
+				</div> <!-- 리뷰 목록 끝 -->
    
    				<!-- 페이징 시작-->
    				<!-- Center-aligned -->
@@ -131,7 +186,7 @@
            						 <li class="page-item disabled"><a class="page-link" href="#">이전</a></li>
 							</c:when>
 							<c:otherwise>
- 								<li class="page-item"><a class="page-link" href="memberOrder.do?page=${currentPage-1}">이전</a></li>
+ 								<li class="page-item"><a class="page-link" href="memberReview.do?page=${currentPage-1}">이전</a></li>
 							</c:otherwise>
 						</c:choose>
 
@@ -142,7 +197,7 @@
 								</c:when>
 	
 								<c:otherwise>
-            						<li class="page-item "><a class="page-link" href="memberOrder.do?page=${page}" style="color:black;">${page}</a></li>
+            						<li class="page-item "><a class="page-link" href="memberReview.do?page=${page}" style="color:black;">${page}</a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
@@ -153,12 +208,14 @@
             					<li class="page-item disabled" ><a class="page-link" href="#">다음</a></li>	
             				</c:when>
 							<c:otherwise>
-	 							<li class="page-item"><a class="page-link" href="memberOrder.do?page=${endNavi+1}">다음</a></li>
+	 							<li class="page-item"><a class="page-link" href="memberReview.do?page=${endNavi+1}">다음</a></li>
 							</c:otherwise>
 						</c:choose>   
 				</ul>
    					
    				<!-- 페이징 끝 -->
+              
+   
     			</div> <!-- content 끝 -->
                </div>  
                 
