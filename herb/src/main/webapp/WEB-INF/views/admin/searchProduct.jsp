@@ -89,6 +89,7 @@
                             <select name="selectType" class="custom-select-sm">
                             <option ${(param.selectType)=="pNum" ? "selected" : "" } value="pNum">상품번호</option>
                             <option ${(param.selectType)=="pName" ? "selected" : "" } value="pName">상품명</option>
+                            <option ${(param.selectType)=="pCategory" ? "selected" : "" } value="pCategory">카테고리</option>
                             </select>
                             <div class="input-group">
                                 <input type="text" class="control-sm" name="keyword" value="${keyword }">
