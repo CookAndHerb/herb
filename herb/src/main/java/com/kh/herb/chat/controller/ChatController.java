@@ -28,6 +28,6 @@ public class ChatController {
 		
 		model.addAttribute("userId", userId);
 		
-		return "chat/chat";
+		return "chat/chat"; 
 	}
 }

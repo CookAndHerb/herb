@@ -25,7 +25,7 @@ import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.product.model.vo.Product;
 import com.kh.herb.product.model.vo.ProductFile;
 
-@Controller
+@Controller 
 public class AdminController {
 	public static final int LIMIT = 10; //한 페이지에 보여질 정보의 수
 

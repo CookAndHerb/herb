@@ -27,7 +27,7 @@
 		P_CAPACITY, P_TYPE, P_CATEGORY) 
 		VALUES (PRODUCT_SEQ.NEXTVAL, #{pName}, #{pCost}, #{imageName}, #{imagePath}, #{pContent}, 
 		#{pMaDate}, #{pExDate}, #{pCapacity}, #{pType}, #{pCategory})
-	</insert>
+	</insert> 
 
 	
 	<!-- 상품 조회 -->
