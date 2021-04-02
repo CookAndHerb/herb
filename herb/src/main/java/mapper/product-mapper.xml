@@ -37,7 +37,7 @@
 			<when test="pSelect == 4">
 				order by p_cost desc))
 			</when>
-			<otherwise>))</otherwise>
+			<otherwise>order by p_num desc))</otherwise>
 		</choose>
 	</trim>
 	<![CDATA[where rnum >= #{startPage} and rnum <= #{endPage}]]>
@@ -61,7 +61,7 @@
 				<when test="pSelect == 4">
 					order by p_cost desc))
 				</when>
-				<otherwise>))</otherwise>
+				<otherwise>order by p_num desc))</otherwise>
 			</choose>
 		</trim>
 		<![CDATA[where rnum >= #{startPage} and rnum <= #{endPage}]]>
@@ -86,7 +86,7 @@
 				<when test="pSelect == 4">
 					order by p_cost desc))
 				</when>
-				<otherwise>))</otherwise>
+				<otherwise>order by p_num desc))</otherwise>
 			</choose>
 		</when>
 		<when test='pCategory == "전체"'>
@@ -100,7 +100,7 @@
 				<when test="pSelect == 4">
 					order by p_cost desc))
 				</when>
-				<otherwise>))</otherwise>
+				<otherwise>order by p_num desc))</otherwise>
 			</choose>
 		</when>
 	</choose>
