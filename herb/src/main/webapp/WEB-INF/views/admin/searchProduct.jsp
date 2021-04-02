@@ -89,6 +89,7 @@
                             <select name="selectType" class="custom-select-sm">
                             <option ${(param.selectType)=="pNum" ? "selected" : "" } value="pNum">상품번호</option>
                             <option ${(param.selectType)=="pName" ? "selected" : "" } value="pName">상품명</option>
+                            <option ${(param.selectType)=="pCategory" ? "selected" : "" } value="pCategory">카테고리</option>
                             </select>
                             <div class="input-group">
                                 <input type="text" class="control-sm" name="keyword" value="${keyword }">
@@ -121,7 +122,7 @@
 								<c:forEach var="product" items="${productList }">
 									<tr>
 										<td>${product.pNum}</td>
-										<td style="width: 180px;">${product.pName}</td>
+										<td style="width: 180px;"><a id="proDetail" href="productInfo.do?num=${product.pNum}">${product.pName}</a></td>
 										<td>${product.pCategory}</td>
 										<td>${product.pType}</td>
 										<td>${product.pCost}</td>

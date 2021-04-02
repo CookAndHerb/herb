@@ -67,13 +67,14 @@
 		SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY P_NUM DESC)AS
 		ROW_NUM, PRODUCT.* FROM PRODUCT
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
-			<if
-				test="selectType=='pNum' and keyword != null and keyword != ''">
+			<if test="selectType=='pNum' and keyword != null and keyword != ''">
 				AND P_NUM LIKE '%'||#{keyword}||'%'
 			</if>
-			<if
-				test="selectType=='pName' and keyword != null and keyword != ''">
+			<if test="selectType=='pName' and keyword != null and keyword != ''">
 				AND P_NAME LIKE '%'||#{keyword}||'%'
+			</if>
+			<if test="selectType=='pCategory' and keyword != null and keyword != ''">
+				AND P_CATEGORY LIKE '%'||#{keyword}||'%'
 			</if>
 			AND P_DEL='N'
 		</trim>
@@ -83,13 +84,14 @@
 	<select id="searchProductCount" resultType="_int" parameterType="Pagination">
 		SELECT COUNT(*) FROM PRODUCT
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
-			<if
-				test="selectType=='pNum' and keyword != null and keyword != ''">
+			<if test="selectType=='pNum' and keyword != null and keyword != ''">
 				AND P_NUM LIKE '%'||#{keyword}||'%'
 			</if>
-			<if
-				test="selectType=='pName' and keyword != null and keyword != ''">
+			<if test="selectType=='pName' and keyword != null and keyword != ''">
 				AND P_NAME LIKE '%'||#{keyword}||'%'
+			</if>
+			<if test="selectType=='pCategory' and keyword != null and keyword != ''">
+				AND P_CATEGORY LIKE '%'||#{keyword}||'%'
 			</if>
 			AND P_DEL='N'
 		</trim>

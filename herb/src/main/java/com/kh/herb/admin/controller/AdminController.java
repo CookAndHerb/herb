@@ -25,7 +25,7 @@ import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.product.model.vo.Product;
 import com.kh.herb.product.model.vo.ProductFile;
 
-@Controller
+@Controller 
 public class AdminController {
 	public static final int LIMIT = 10; //한 페이지에 보여질 정보의 수
 
@@ -92,8 +92,9 @@ public class AdminController {
 		System.out.println("대표 이미지 : "+image.getSize());
 
 		product.setpNum(pNum);
-
-		if(image.getSize() != 0) {
+		
+		//상품 대표 이미지
+		if(image.getSize() != 0) { //사이즈로 업로드 여부 판단
 			Product fileProduct = imageUplode(product, request);
 			product.setImageName(fileProduct.getImageName());
 			product.setImagePath(fileProduct.getImagePath());
@@ -103,27 +104,29 @@ public class AdminController {
 			product.setImageName(existImage);
 			product.setImagePath(existImagePath);
 		}
-
 		int result = as.updateProduct(product);
-
+		
 		ProductFile infoFile = new ProductFile();
 		pf.setpNum(pNum);
 		
-		//파일 번호 가져오기
-		String[] pInfoNum = request.getParameterValues("pInfoNum"); 
 		//파일 번호 변환을 위한 int형 배열 선언
+		//상품 정보 이미지의 번호를 배열로 받아옴
+		String[] pInfoNum = request.getParameterValues("pInfoNum");
 		int[] pInfoNumArr = null;
 		//업로드한 파일이 있을때
 		if(pInfoNum != null) { 
-			pInfoNumArr = new int[pInfoNum.length]; //String으로 가져온 배열의 크기만큼 파일 번호 변환 배열에 크기 지정
-			if(pInfoFiles.length > 1) { //다중파일 업로드시
-				int cnt = as.deleteFile(pNum); //DB에서 기존 파일 삭제
-				String[] existInfoFile = request.getParameterValues("existInfoFile"); //기존파일 삭제를 위해 이룸 가져옴
+			pInfoNumArr = new int[pInfoNum.length];
+			if(pInfoFiles.length >= 1) { //다중파일 업로드시
+				int cnt = as.deleteFile(pNum); //DB에서 기존 파일 삭제		
+				//이전에 서버에 올린 이미지의 이름을 가져옴
+				String[] existInfoFile = request.getParameterValues("existInfoFile");
+				//가져온 이미지들의 서버 경로를 구함
 				for(int j = 0; j<pInfoNumArr.length; j++){
 					//반복문을 이용해 기존 파일 서버에서 하나씩 삭제
 					String root = request.getSession().getServletContext().getRealPath("resources");
 					String savePath = root+"\\productImg";
-					//기존 파일 삭제
+	
+					//기존 파일 이름 가져와서 서버에서 삭제
 					File file = new File(savePath+"\\"+existInfoFile[j]);
 					if( file.exists() ){ //파일이 존재하면
 						if(file.delete()){ //삭제하기!
@@ -137,7 +140,7 @@ public class AdminController {
 				}
 				System.out.println("delete 결과 : "+cnt);
 				
-				//파일 새로 등록
+				//이미지 새로 등록
 				for(MultipartFile productInfo : pInfoFiles) {
 					infoFile = infoImage(productInfo, request);
 					pf.setpInfoFile(infoFile.getpInfoFile());

@@ -28,9 +28,14 @@
     
     <style type="text/css">
     	#chatIcon{
+    		/* 해상도에 고정시켜서 따라다니는 방법 */
     		width: 80px;
     		height: 80xp;
-    		float: right;
+    		position:fixed;
+			right:10px; /* 창에서 오른쪽 길이 */ 
+			top:85%; /* 창에서 위에서 부터의 높이 */ 
+			margin:0;
+			z-index:999;
     	}
     </style>
     
@@ -39,6 +44,7 @@
 		window.open("chat", "chat", "width=370, height=400");
 	}
     </script>
+
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -87,7 +93,7 @@
 	<br>
 	<br>
 	
-	 <!--채팅 아이콘-->
+	<!--채팅 아이콘-->
 	 <c:if test="${not empty sessionScope.member}">
 		<div id="chatIcon">
 	    	<img src="${pageContext.request.contextPath}/resources/img/채팅아이콘.png" onclick="showPopup();" />
@@ -218,7 +224,6 @@
                 <a href="#" class="primary-btn">Shop Now</a>
             </div>
         </div>
-        
     </section>
     <!-- Deal Of The Week Section End -->   
     

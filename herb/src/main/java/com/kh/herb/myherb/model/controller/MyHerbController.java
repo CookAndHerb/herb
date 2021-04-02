@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.herb.member.controller.Sha256Util;
 import com.kh.herb.member.model.vo.Member;
 import com.kh.herb.myherb.model.service.MyHerbService;
 import com.kh.herb.myherb.model.vo.OrderDetailList;
@@ -27,12 +28,18 @@ public class MyHerbController {
 	@Autowired
 	MyHerbService myHerbService;
 	
+	@Autowired
+	Sha256Util enc;
+	
 	public static final int LIMIT = 5;
 	
 	// 개인정보 수정 로직
 	@RequestMapping(value="memberUpdate.do", method=RequestMethod.POST)
 	public ModelAndView memberUpdate(Member member, ModelAndView mv, HttpServletRequest request) throws Exception{
 		
+		String userPwd = member.getUserPw();
+		String encryUserPwd = enc.encryData(userPwd);
+		member.setUserPw(encryUserPwd);
 		
 		int result = myHerbService.updateMember(member);
 		Member mb = new Member();
@@ -52,7 +59,9 @@ public class MyHerbController {
 	// 회원 탈퇴 처리
 	@RequestMapping(value="memberDelete.do", method =RequestMethod.POST)
 	public ModelAndView memberDelete(Member member, ModelAndView mv, HttpServletRequest request) throws Exception{
-		                      
+		String userPwd = member.getUserPw();
+		String encryUserPwd = enc.encryData(userPwd);
+		member.setUserPw(encryUserPwd);          
 		boolean result = myHerbService.checkPw(member);
 		if(result == true) { // 비밀번호가 맞다면 삭제 후 메인페이지 이동
 			myHerbService.deleteMember(member);
