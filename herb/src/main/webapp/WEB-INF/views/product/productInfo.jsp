@@ -227,6 +227,7 @@
             }
             ; // function 끝
          })
+        
 </script>
 
 <!-- 주연 끝 -->
@@ -244,7 +245,7 @@
          <div class="row">
             <div class="col-lg-12">
                <div class="breadcrumb-text">
-                  <a href="product.do" ><i class="fa fa-home"> </i>상품 목록</a> <span>${vo.pCategory }</span>
+                  <a href="product.do"><i class="fa fa-home"> </i>상품 목록</a> <span>${vo.pCategory }</span>
                </div>
             </div>
          </div>
@@ -261,12 +262,12 @@
                <div class="filter-widget">
                   <h4 class="fw-title">상품 목록</h4>
                   <ul class="filter-catagories" style="font-weight: bold;">
-                     <li><a href="product.do">상품 전체</a></li>
-                     <li><a href="categoryList.do?category=비타민&pSelect=1">비타민</a></li>
-                     <li><a href="categoryList.do?category=장 건강&pSelect=1">장 건강</a></li>
-                     <li><a href="categoryList.do?category=눈 건강&pSelect=1">눈 건강</a></li>
-                     <li><a href="categoryList.do?category=홍삼&pSelect=1">홍삼</a></li>
-                     <li><a href="categoryList.do?category=기타&pSelect=1">기타</a></li>
+                     <li><a href="product.do" id="cateAll">상품 전체</a></li>
+                     <li><a href="categoryList.do?category=비타민&pSelect=1" id="cate1">비타민</a></li>
+                     <li><a href="categoryList.do?category=장 건강&pSelect=1" id="cate2">장 건강</a></li>
+                     <li><a href="categoryList.do?category=눈 건강&pSelect=1" id="cate3">눈 건강</a></li>
+                     <li><a href="categoryList.do?category=홍삼&pSelect=1" id="cate4">홍삼</a></li>
+                     <li><a href="categoryList.do?category=기타&pSelect=1" id="cate5">기타</a></li>
                   </ul>
                </div>
 
@@ -341,8 +342,7 @@
                         </div>
                         <div class="pd-desc">
                            <h4>
-                              <fmt:formatNumber value="${vo.pCost }" pattern="#,###" />
-                              원
+                              <fmt:formatNumber value="${vo.pCost }" pattern="#,###" /> 원
                            </h4>
                         </div>
                         <div class="pd-size-choose">
@@ -602,7 +602,7 @@
             </div>
 
             <!-- 내용 -->
-
+			<c:set var="category" value="${vo.pCategory}"/>
 
             <!-- 탭 -->
             <div class="col-lg-9 order-1 order-lg-2"></div>
@@ -623,9 +623,24 @@
       var idNum; // 리뷰 댓글 번호
       var upBtnClick = 0; // 기존파일 불러왔었는지 체크
       
+      $(document).ready(function(){
+ 		 if("비타민"== '<c:out value="${vo.pCategory}"/>'){
+ 		  	$('#cate1').css('color','#e7ab3c');
+ 		 }else if("장 건강"== '<c:out value="${vo.pCategory}"/>'){
+ 			 $('#cate2').css('color','#e7ab3c');
+ 		 }else if("눈 건강"== '<c:out value="${vo.pCategory}"/>'){
+ 			 $('#cate3').css('color','#e7ab3c');
+ 		 }else if("홍삼"== '<c:out value="${vo.pCategory}"/>'){
+ 			 $('#cate4').css('color','#e7ab3c');
+ 		 }else if("기타"== '<c:out value="${vo.pCategory}"/>'){
+ 			 $('#cate5').css('color','#e7ab3c');
+ 		 }else{
+ 			$('#cateAll').css('color','#e7ab3c');
+ 		 }
+ 	  });
       // 아이디 체크 후 리뷰쓰기 버튼 보여주기
       $(function() {
-         console.log(id);
+    	 console.log(id);
          if (id.length != 0) {
             $('#reWriteBtn').show();
          }
@@ -686,7 +701,7 @@
              }
              rStar = onStar;
            });
-           
+           // 리뷰쓰기 버튼 클릭 시 함수 연결
            $('button[id^=reUpdateBtn]').on('click',function() {
               reUpdateList();
               //reUpdateList
@@ -698,6 +713,7 @@
             } ); */
            
       });
+      
       
       
       // 리뷰 추가
