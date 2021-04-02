@@ -35,8 +35,8 @@ public class AdminController {
 	//관리자 페이지 메인
 	@RequestMapping("adminMain.do")
 	public ModelAndView adminMain(ModelAndView mav) throws Exception {
-		//int totalSales = as.totalSales();
-		//mav.addObject("totalSales", totalSales);
+		int totalSales = as.totalSales();
+		mav.addObject("totalSales", totalSales);
 		mav.setViewName("admin/adminMain");
 		//mav.setViewName("admin/adminChart");
 		return mav;

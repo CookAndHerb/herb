@@ -89,11 +89,14 @@
                 <br>
 
                 <form action="noticeUpdateForm.do" method="post">
-                  
-  					<div class="input-group mb-3">
-                     <div class="input-group-prepend"><label class="input-group-text px-4">제목</label></div>
-                     <input type="text" class="form-control" name="noticeTitle" value="${notice.noticeTitle }"/>
-                 	 </div>
+                  <table class="table table-bordered">   
+                  	<tbody>
+     				 <tr>
+        				<td style="background-color:#d2d2d2; font-weight:bold; text-align:center;">제목</td>
+        				<td> <input type="text" name="noticeTitle" style="width:80%; border-color:#d2d2d2;" value="${notice.noticeTitle }"></td>
+      				</tr>
+    				</tbody>
+  					</table> 
 					<input type="hidden" name="noticeNum" value="${notice.noticeNum}">                
                 	<textarea id="noticeContent" name="noticeContent">${notice.noticeContent}</textarea><br>
                 	<div style="text-align:center;">

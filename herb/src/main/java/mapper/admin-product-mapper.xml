@@ -26,7 +26,7 @@
 		(P_NUM, P_NAME, P_COST, P_IMAGE_NAME, P_IMAGE_PATH, P_CONTENT, P_MA_DATE, P_EX_DATE, 
 		P_CAPACITY, P_TYPE, P_CATEGORY) 
 		VALUES (PRODUCT_SEQ.NEXTVAL, #{pName}, #{pCost}, #{imageName}, #{imagePath}, #{pContent}, 
-		#{pMaDate}, #{pExDate}, #{pCapacity}, #{pType}, #{pCategory})
+		TO_DATE(#{pMaDate},'YYYY-MM-DD'), TO_DATE(#{pExDate},'YYYY-MM-DD'), #{pCapacity}, #{pType}, #{pCategory})
 	</insert>
 
 	

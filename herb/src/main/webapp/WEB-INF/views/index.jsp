@@ -44,6 +44,7 @@
 		window.open("chat", "chat", "width=370, height=400");
 	}
     </script>
+
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -91,13 +92,6 @@
 	<br>
 	<br>
 	<br>
-	
-	 <!--채팅 아이콘-->
-	 <c:if test="${not empty sessionScope.member}">
-		<div id="chatIcon">
-	    	<img src="${pageContext.request.contextPath}/resources/img/채팅아이콘.png" onclick="showPopup();" />
-		</div>
-	</c:if>
 	
     <!-- 옆 배너 시작 -->
     <section class="women-banner spad">
@@ -223,7 +217,6 @@
                 <a href="#" class="primary-btn">Shop Now</a>
             </div>
         </div>
-        
     </section>
     <!-- Deal Of The Week Section End -->   
     

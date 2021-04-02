@@ -13,7 +13,7 @@
 			<!-- 리뷰 파일 -->
 			<collection property="mFileList" javaType="java.util.List"
 			ofType="ReviewFile" autoMapping="true">
-			<result column="R_FILE_PATH" property="rFile" />
+				<result property="rFile" column="R_FILE_PATH"></result>
 			</collection>
 		</resultMap>
 
@@ -47,5 +47,32 @@
 		<delete id="reviewFileDelete" parameterType="int">
 			delete from review_file where r_num = #{rNum}
 		</delete>
+		<!-- 리뷰 작성 전 배송완료 상태인지 검사 -->
+		<select id="reviewOrderCheck" parameterType="review" resultType="String">
+		<![CDATA[
+			select order_status
+			from (select * from order_table ot
+			JOIN order_detail od 
+			    on od.order_num = ot.order_num
+			WHERE OD.ORDER_DETAIL_P_NUM = #{pNum}
+			AND ot.ORDER_USER_ID = #{rWriter}
+			and ot.order_status = '배송완료' 
+			and ot.order_del = 'N' order by ot.order_date)
+			where rownum <= 1
+		]]>
+		</select>
+		<!-- 수정 하기 전에 원래 파일 가져오기 -->
+		<select id="getReviewFile" parameterType="int" resultType="ReviewFile">
+			select r_file_path as rFile from review_file where r_num = #{rNum}
+		</select>
+		<!-- 리뷰 업데이트 -->
+		<update id="reviewUpdate" parameterType="review">
+			update review set r_content = #{rContent}, r_date = sysdate, r_star = #{rStar} where r_num = #{rNum}
+		</update>
+		<!-- 업데이트 시 선택한 기존파일 삭제 -->
+		<delete id="oldFileDelete" parameterType="ReviewFile">
+			delete from review_file where r_file_path = #{rFile} and r_num = #{rNum}
+		</delete>
+		
 		
 </mapper>

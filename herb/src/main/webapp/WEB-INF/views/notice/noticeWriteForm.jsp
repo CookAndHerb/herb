@@ -89,12 +89,14 @@
                 <br>
 
                 <form action="noticeWriteForm.do" method="post">
-                  
-     				 <div class="input-group mb-3">
-     				 	<div class="input-group-prepend"><label class="input-group-text px-4">제목</label></div>
-                     	<input type="text" class="form-control" name="noticeTitle" placeholder="글 제목을 입력하세요">
-                     </div>
-     				 
+                  <table class="table table-bordered">   
+                  	<tbody>
+     				 <tr>
+        				<td style="background-color:#d2d2d2; font-weight:bold; text-align:center;">제목</td>
+        				<td> <input type="text" name="noticeTitle" style="width:80%; border-color:#d2d2d2;"></td>
+      				</tr>
+    				</tbody>
+  					</table> 
 					<input type="hidden" name="noticeWriter" value="${sessionScope.member.userId}">                
                 	<textarea id="noticeContent" name="noticeContent"></textarea><br>
                 	<div style="text-align:center; margin-top:20px;">
