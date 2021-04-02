@@ -78,15 +78,15 @@
 					<br>
 					<form action="productIns.do" method="post" enctype="multipart/form-data">
 						  <div class="custom-file col-sm-12">
-    						<input type="file" class="custom-file-input" name="image" id="image">
+    						<input type="file" class="custom-file-input" name="image" id="image" required>
     						<label class="custom-file-label" for="image">상품 대표 이미지</label>
   						</div>
   						<br><br>
   						<div class="form-inline">
 						<label for="pName">상품 명</label> &nbsp;&nbsp;&nbsp; 
-						<input type="text" class="col-sm-8 form-control" name="pName" id="pName">&nbsp; 
+						<input type="text" class="col-sm-8 form-control" name="pName" id="pName" required>&nbsp; 
 						<label for="pCategory"></label> 
-						<select class="form-control col-sm-3" id="pCategory" name="pCategory">
+						<select class="form-control col-sm-3" id="pCategory" name="pCategory" required>
 							<option value="">카테고리 선택</option>
 							<option value="비타민">비타민</option>
 							<option value="홍삼">홍삼</option>
@@ -97,15 +97,15 @@
 						</div><br>
 						<div class="form-inline">
 							<label for="pMaDate">제조일자</label>&nbsp;
-							<input type="date" class="col-sm-5 form-control" name="pMaDate" id="pMaDate">
+							<input type="date" class="col-sm-5 form-control" name="pMaDate" id="pMaDate" required>
 							&nbsp;
 							<label for="pExDate">유통기한</label> &nbsp;
-							<input type="date" class="col-sm-5 form-control" name="pExDate" id="pExDate">
+							<input type="date" class="col-sm-5 form-control" name="pExDate" id="pExDate" required>
 						</div><br>
 						<div class="form-inline">
 						<label for="pCapacity">포장 단위별 용량</label> &nbsp;&nbsp;&nbsp; 
-						<input type="text" class="col-sm-7 form-control" name="pCapacity" id="pCapacity">&nbsp;
-						<select class="form-control col-sm-3" id="sel1" name="pType">
+						<input type="text" class="col-sm-7 form-control" name="pCapacity" id="pCapacity" required>&nbsp;
+						<select class="form-control col-sm-3" id="sel1" name="pType" required>
 							<option value="">식품유형 선택</option>
 							<option value="건강기능식품">건강기능식품</option>
 							<option value="홍삼제품">홍삼제품</option>
@@ -114,13 +114,13 @@
 						</div><br>
 						<div class="form-inline">
 						<label for="pCost">판매가</label> &nbsp;&nbsp;&nbsp; 
-						<input type="number" class="col-sm-11 form-control" name="pCost" id="pCost">
+						<input type="number" class="col-sm-11 form-control" name="pCost" id="pCost" required>
 						</div><br>
 						<div class="form-inline">
 							<label for="ImageName">상품 정보 이미지 </label>&nbsp;&nbsp;&nbsp; 
-    						<input type="file" class="col-sm-10" name="pInfoFiles" id="pInfoFiles" multiple="multiple">
+    						<input type="file" class="col-sm-10" name="pInfoFiles" id="pInfoFiles" multiple="multiple" required>
   						</div><br>
-  						<textarea id="pContent" name="pContent"></textarea><br>
+  						<textarea id="pContent" name="pContent" required></textarea><br>
   						<div class="insButton">
 						<input type="submit" class="btn btn-warning" value="등록">
 						<input type="reset" class="btn btn-secondary" value="취소">
