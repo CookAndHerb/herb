@@ -28,9 +28,14 @@
     
     <style type="text/css">
     	#chatIcon{
+    		/* 해상도에 고정시켜서 따라다니는 방법 */
     		width: 80px;
     		height: 80xp;
-    		float: right;
+    		position:fixed;
+			right:10px; /* 창에서 오른쪽 길이 */ 
+			top:85%; /* 창에서 위에서 부터의 높이 */ 
+			margin:0;
+			z-index:999;
     	}
     </style>
     
