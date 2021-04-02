@@ -111,7 +111,7 @@ a {
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="breadcrumb-text">
-						<a href="product.do"><i class="fa fa-home"></i>상품 목록</a> <span>${category}</span>
+						<a href="product.do" style="color: #e7ab3c"><i class="fa fa-home"></i>상품 목록</a> <span>${category}</span>
 					</div>
 				</div>
 			</div>
