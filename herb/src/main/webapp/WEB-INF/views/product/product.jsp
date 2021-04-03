@@ -111,7 +111,7 @@ a {
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="breadcrumb-text">
-						<a href="product.do" style="color: #e7ab3c"><i class="fa fa-home"></i>상품 목록</a> <span>${category}</span>
+						<a href="product.do"><i class="fa fa-home"></i>상품 목록</a> <span>${category}</span>
 					</div>
 				</div>
 			</div>
@@ -130,12 +130,12 @@ a {
 					<div class="filter-widget">
 						<h4 class="fw-title">상품 목록</h4>
 						<ul class="filter-catagories" style="font-weight: bold;">
-							<li><a href="product.do">상품 전체</a></li>
-							<li><a href="categoryList.do?category=비타민&pSelect=1">비타민</a></li>
-							<li><a href="categoryList.do?category=장 건강&pSelect=1">장 건강</a></li>
-							<li><a href="categoryList.do?category=눈 건강&pSelect=1">눈 건강</a></li>
-							<li><a href="categoryList.do?category=홍삼&pSelect=1">홍삼</a></li>
-							<li><a href="categoryList.do?category=기타&pSelect=1">기타</a></li>
+							<li><a href="product.do" id="cateAll">상품 전체</a></li>
+							<li><a href="categoryList.do?category=비타민&pSelect=1" id="cate1">비타민</a></li>
+							<li><a href="categoryList.do?category=장 건강&pSelect=1" id="cate2">장 건강</a></li>
+							<li><a href="categoryList.do?category=눈 건강&pSelect=1" id="cate3">눈 건강</a></li>
+							<li><a href="categoryList.do?category=홍삼&pSelect=1" id="cate4">홍삼</a></li>
+							<li><a href="categoryList.do?category=기타&pSelect=1" id="cate5">기타</a></li>
 						</ul>
 					</div>
 
@@ -208,7 +208,7 @@ a {
 											<div class="pi-pic">
 												<a href="productInfo.do?num=${list.pNum}"> <img
 													src="${pageContext.request.contextPath}/resources/productImg/${list.imageName}"
-													alt="">
+													alt="" style="height: 252px;">
 												</a>
 											</div>
 											<div class="pi-text">
@@ -361,7 +361,25 @@ a {
 	<footer>
 		<%@ include file="../template/footer.jsp"%>
 	</footer>
-
+	<script>
+	  $(document).ready(function(){
+		 if("비타민"== '<c:out value="${category}"/>'){
+		  	$('#cate1').css('color','#e7ab3c');
+		 }else if("장 건강"== '<c:out value="${category}"/>'){
+			 $('#cate2').css('color','#e7ab3c');
+		 }else if("눈 건강"== '<c:out value="${category}"/>'){
+			 $('#cate3').css('color','#e7ab3c');
+		 }else if("홍삼"== '<c:out value="${category}"/>'){
+			 $('#cate4').css('color','#e7ab3c');
+		 }else if("기타"== '<c:out value="${category}"/>'){
+			 $('#cate5').css('color','#e7ab3c');
+		 }else{
+			$('#cateAll').css('color','#e7ab3c');
+		 }
+	  });
+		
+		
+	</script>
 	<!-- Js Plugins -->
 	<script
 		src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>

@@ -228,9 +228,9 @@ window.onload = function(){
                     	<c:when test="${sessionScope.member.userNum > 0 && sessionScope.member.userNum <= 999}">
                         <li><a href="adminMain.do">admin</a>
                             <ul class="dropdown">
-                                <li><a href="#">상품관리</a></li>
-                                <li><a href="#">주문관리</a></li>
-                                <li><a href="#">회원관리</a></li>
+                                <li><a href="adminProduct.do">상품관리</a></li>
+                                <li><a href="adminOrder.do">주문관리</a></li>
+                                <li><a href="adminMember.do">회원관리</a></li>
                             </ul>
                         </li>
                        </c:when>
