@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.herb.cart.model.vo.CartList;
+import com.kh.herb.myherb.model.vo.OrderDetailList;
 import com.kh.herb.order.model.vo.Order;
 import com.kh.herb.order.model.vo.OrderDetail;
 
@@ -44,5 +45,9 @@ public class OrderDAO {
 
 	public int deleteCart(String userId) {
 		return sqlSession.delete("Order.deleteCart", userId);
+	}
+
+	public List<OrderDetailList> orderDetailList(int orderNum) {
+		return sqlSession.selectList("Order.orderDetailList", orderNum);
 	}
 }

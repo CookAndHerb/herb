@@ -26,10 +26,6 @@ public class OrderController {
 	@Autowired
 	OrderService orderService;
 	
-	@Autowired
-	MyHerbService myHerbService;
-	
-	
 	// 카트 목록 불러와서 결제페이지로 이동하기
 	@RequestMapping(value="orderForm.do", method=RequestMethod.GET)
 	public ModelAndView goOrder(HttpSession session, ModelAndView mv) throws Exception{
@@ -80,7 +76,7 @@ public class OrderController {
 			
 			int result3 = orderService.insertOrderDetail(orderDetail);
 					
-    //result2 = orderService.insertOrderDetail(orderNum);
+			//result2 = orderService.insertOrderDetail(orderNum);
 			if (result3 > 0) { // 주문 상세 정보 삽입 완료
 				List<CartList> cartList = orderService.cartList(userId);
 				order = orderService.getOrder(orderNum);
@@ -104,19 +100,20 @@ public class OrderController {
 				Order order, HttpSession session) throws Exception {
 		
 			// 1. orderDetail list 가져오기
+			//List<CartList> cartList = orderService.cartList(userId)
 			Member member = (Member)session.getAttribute("member");
 			String userId = member.getUserId();
 			
-			OrderDetailList odl = new OrderDetailList();
+			//OrderDetailList odl = new OrderDetailList();
 			int orderNum = orderService.getOrderNum(userId);
-			odl.setOrderUserId(userId);
-			odl.setOrderNum(orderNum);
+			//odl.setOrderUserId(userId);
+			//odl.setOrderNum(orderNum);
 			
-			mv.addObject("orderDetailList", myHerbService.orderDetailList(odl));
+			List<OrderDetailList> orderDetailList = orderService.orderDetailList(orderNum);
+			mv.addObject("orderDetailList",orderDetailList);
 			
 			// 2. cart 비우기
 			int result = orderService.deleteCart(userId);
-			mv.addObject("odl",odl);
 			mv.setViewName("order/orderList");
 			
 			return mv;

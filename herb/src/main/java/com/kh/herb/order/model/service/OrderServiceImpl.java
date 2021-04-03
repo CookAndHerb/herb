@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.herb.cart.model.vo.CartList;
+import com.kh.herb.myherb.model.vo.OrderDetailList;
 import com.kh.herb.order.model.dao.OrderDAO;
 import com.kh.herb.order.model.vo.Order;
 import com.kh.herb.order.model.vo.OrderDetail;
@@ -50,5 +51,10 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public int deleteCart(String userId) throws Exception {
 		return orderDAO.deleteCart(userId);
+	}
+
+	@Override
+	public List<OrderDetailList> orderDetailList(int orderNum) throws Exception {
+		return orderDAO.orderDetailList(orderNum);
 	}
 }
