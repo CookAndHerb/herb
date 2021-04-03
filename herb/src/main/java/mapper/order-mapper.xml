@@ -39,6 +39,52 @@
 	<result property="orderNum" column="ORDER_NUM" />
 	<result property="orderDetailPNum" column="ORDER_DETAIL_P_NUM" />
 	</resultMap>
+	
+	<!-- <resultMap id="resultOrderDetailList" type="com.kh.herb.myherb.model.vo.OrderDetailList">
+		<result property="orderRecvName" column="ORDER_RECV_NAME" />
+		<result property="orderRecvAddr1" column="ORDER_RECV_ADDRESS1" />
+		<result property="orderRecvAddr2" column="ORDER_RECV_ADDRESS2" />
+		<result property="orderRecvAddr3" column="ORDER_RECV_ADDRESS3" />
+		<result property="orderRecvPhone" column="ORDER_RECV_PHONE" />
+		<result property="orderNum" column="ORDER_NUM" />
+		<result property="orderDate" column="ORDER_DATE" />
+		<result property="orderDel" column="ORDER_DEL" />
+		<result property="orderAmount" column="ORDER_AMOUNT" />
+		<result property="orderMessage" column="ORDER_MESSAGE" />
+		<result property="orderStatus" column="ORDER_STATUS" />
+		<result property="orderUserId" column="ORDER_USER_ID" />
+		<result property="orderDetailNumber" column="ORDER_DETAIL_NUM" />
+		<result property="orderDetailStock" column="ORDER_DETAIL_STOCK" />
+		<result property="orderDetailPNum" column="ORDER_DETAIL_P_NUM" />
+		<result property="pName" column="P_NAME"/>
+		<result property="pCost" column="P_COST"/>
+		<result property="pImageName" column="P_IMAGE_NAME"/>
+	</resultMap> -->
+	
+	<resultMap id="resultOrderDetailList" type="com.kh.herb.myherb.model.vo.OrderDetailList">
+		<result property="orderNum" column="ORDER_NUM"/>
+		<result property="orderRecvName" column="ORDER_RECV_NAME"/>
+		<result property="orderRecvAddress1" column="ORDER_RECV_ADDRESS1"/>
+		<result property="orderRecvAddress2" column="ORDER_RECV_ADDRESS2"/>
+		<result property="orderRecvAddress3" column="ORDER_RECV_ADDRESS3"/>
+		<result property="orderRecvPhone" column="ORDER_RECV_PHONE"/>
+		<result property="orderDate" column="ORDER_DATE"/>
+		<result property="orderDel" column="ORDER_DEL"/>
+		<result property="orderAmount" column="ORDER_AMOUNT"/>
+		<result property="orderMessage" column="ORDER_MESSAGE"/>
+		<result property="orderStatus" column="ORDER_STATUS"/>
+		<result property="orderUserId" column="ORDER_USER_ID"/>
+		<result property="orderDetailNumber" column="ORDER_DETAIL_NUM"/>
+		<result property="orderDetailStock" column="ORDER_DETAIL_STOCK"/>
+		<result property="orderDetailPnum" column="ORDER_DETAIL_P_NUM"/>
+		<result property="pName" column="P_NAME"/>
+		<result property="pImageName" column="P_IMAGE_NAME"/>
+		<result property="pCost" column="P_COST"/>
+	</resultMap>
+	
+	
+	
+	
 		<!-- 카트 리스트 -->
 	<select id="cartList" parameterType="String" resultMap="resultCartList">
 	SELECT
@@ -49,6 +95,64 @@
     	INNER JOIN PRODUCT P
         	ON C.CART_P_NUM = P.P_NUM
     	WHERE C.CART_USER_ID = #{userId}
+	</select>
+	
+	<!-- 주문 삽입 -->
+	<insert id="insertOrder">
+		INSERT INTO ORDER_TABLE(ORDER_NUM,ORDER_RECV_NAME,ORDER_RECV_ADDRESS1,ORDER_RECV_ADDRESS2,ORDER_RECV_ADDRESS3,
+			ORDER_RECV_PHONE,ORDER_DATE,ORDER_AMOUNT,ORDER_MESSAGE,ORDER_USER_ID)
+			VALUES (ORDER_TABLE_SEQ.NEXTVAL,#{orderRecvName},#{orderRecvAddr1},#{orderRecvAddr2},#{orderRecvAddr3},
+				#{orderRecvPhone},SYSDATE,#{orderAmount},#{orderMessage},#{orderUserId})
+	</insert>
+	
+	<!-- 주문번호 조회 -->
+	<select id="getOrderNum" resultType="int">
+		SELECT MAX(ORDER_NUM) FROM ORDER_TABLE WHERE ORDER_USER_ID = #{userId}
+	</select>
+	
+	<!-- 주문 상세 삽입 -->
+	<insert id="insertOrderDetail" parameterType="OrderDetail">
+		INSERT INTO ORDER_DETAIL(ORDER_DETAIL_NUM,ORDER_DETAIL_STOCK,ORDER_NUM,ORDER_DETAIL_P_NUM)
+			SELECT ORDER_DETAIL_SEQ.NEXTVAL, CART_STOCK, #{orderNum}, CART_P_NUM FROM CART
+				WHERE CART_USER_ID = #{userId}
+	</insert>
+	
+	<!-- 주문정보 하나  가져오기 -->
+	<select id="getOrder" resultType="Order" resultMap="resultOrder">
+		SELECT * FROM ORDER_TABLE
+			WHERE ORDER_NUM = #{orderNum}
+	</select>
+	
+	<!-- 장바구니 지우기 -->
+	<delete id="deleteCart" parameterType="String">
+		DELETE FROM CART WHERE CART_USER_ID = #{userId}
+	</delete>
+	
+	<!-- 주문 상세 리스트 -->
+		<!-- 카트 리스트 -->
+	<!-- <select id="orderDetailList" parameterType="int" resultMap="resultOrderDetailList">
+	SELECT
+  		ROW_NUMBER() OVER(ORDER BY O.ORDER_DETAIL_NUM DESC) AS ORDER_DETAIL_NUM,
+   		O.ORDER_DETAIL_NUM, O.ORDER_DETAIL_P_NUM, O.ORDER_DETAIL_STOCK,
+    	P.P_NAME, P.P_COST, P.P_IMAGE_NAME
+	FROM ORDER_DETAIL O
+    	INNER JOIN PRODUCT P
+        	ON O.ORDER_DETAIL_P_NUM = P.P_NUM
+    	WHERE O.ORDER_NUM = #{orderNum}
+	</select> -->
+	<!-- 주문 상세 목록 불러오기 -->
+	<select id="orderDetailList" parameterType="int" resultMap="resultOrderDetailList">
+	 SELECT
+		o.ORDER_NUM , o.ORDER_RECV_NAME , o.ORDER_RECV_ADDRESS1,  o.ORDER_RECV_ADDRESS2, o.ORDER_RECV_ADDRESS3,
+		o.ORDER_RECV_PHONE, o.ORDER_DATE, o.ORDER_DEL, o.ORDER_AMOUNT, o.ORDER_MESSAGE, o.ORDER_STATUS, o.ORDER_USER_ID,
+     	d.ORDER_DETAIL_NUM, d.ORDER_DETAIL_STOCK, d.ORDER_DETAIL_P_NUM,
+     	g.P_NAME, g.P_IMAGE_NAME, P_COST
+ 		FROM ORDER_TABLE o
+        	 INNER JOIN ORDER_DETAIL d
+            	 on o.ORDER_NUM = d.ORDER_NUM
+         	INNER JOIN PRODUCT g
+            	 on d.ORDER_DETAIL_P_NUM = g.P_NUM
+     	WHERE o.ORDER_NUM = #{orderNum}
 	</select>
 	
 </mapper>

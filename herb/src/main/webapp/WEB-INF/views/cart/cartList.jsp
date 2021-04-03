@@ -194,10 +194,10 @@
                         <table>
                             <thead>
                                 <tr>
-                                	<th><input style="background-color:yellow;"type="checkbox" name="allCheck" id="allCheck" /><label for="allCheck">&nbsp;&nbsp;모두 선택</label></th>
+                                	<th style="width:100px;"><input style="background-color:yellow;"type="checkbox" name="allCheck" id="allCheck" /><label for="allCheck">&nbsp;&nbsp;모두 선택</label></th>
                                   
-                                    <th>상품 이미지</th>
-                                    <th class="p-name">상품명</th>
+                                    <th style="width:100px;">상품 이미지</th>
+                                    <th class="p-name" style="width:200px;">상품명</th>
                                     <th>개당 가격</th>
                                     <th>수량</th>
                                     <th>총 가격</th>
@@ -214,7 +214,7 @@
                                 <tr>
                                 	<td><input type="checkbox" name="chBox" class="chBox" data-cartNum="${cartList.cartNum}"/></td>
                                     <td class="cart-pic first-row"><a href="productInfo.do?num=${cartList.cartPnum}"><img style="width:100px; height:100px;" src="${pageContext.request.contextPath}/resources/productImg/${cartList.pImageName}" alt=""></a></td>
-                                    <td class="cart-title first-row"><h5 style="font-weight:bold; "><a style="color:black;" href="productInfo.do?num=${cartList.cartPnum}">${cartList.pName}</a></h5></td>
+                                    <td class="cart-title first-row"><h5 style="font-weight:bold; "><a style="color:black; font-size:16px;" href="productInfo.do?num=${cartList.cartPnum}">${cartList.pName}</a></h5></td>
                                     <td class="p-price first-row"><fmt:formatNumber pattern="###,###,###" value="${cartList.pCost}" />원</td>
                                     <td class="qua-col first-row">
                                         <div class="quantity">

@@ -85,6 +85,11 @@ public class QaServiceImpl implements QaService {
 		return qaDao.reInsert(qa);
 	}
 
+	@Override
+	public int getQaNum() throws Exception {
+		return qaDao.getQaNum();
+	}
+
 
 	
 
