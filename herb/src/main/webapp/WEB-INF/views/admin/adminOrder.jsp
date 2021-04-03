@@ -208,7 +208,7 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting:before,
 									<td>${order.orderRecvName }</td>
 									<td>(${order.orderRecvAddress1}) ${order.orderRecvAddress2} ${order.orderRecvAddress3}</td>
 									<td>${order.orderRecvPhone }</td>
-									<td>${order.orderAmount }</td>
+									<td><fmt:formatNumber pattern="###,###,###" value="${order.orderAmount }" />원</td>
 									<td>
 										<c:choose>
 											<c:when test="${order.orderDel == 'Y'}">
