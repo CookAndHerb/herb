@@ -163,7 +163,7 @@ public class AdminController {
 	//상품 대표 이미지 업로드
 	private Product imageUplode(Product product, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		//String root = "C:\\finalproject\\herb\\herb\\herb\\src\\main\\webapp\\resources";
+		//String root2 = "C:\\finalproject\\herb\\herb\\herb\\src\\main\\webapp\\resources";
 		String savePath = root+"\\productImg";
 		String filePath = null;
 		MultipartFile image = product.getImage();
