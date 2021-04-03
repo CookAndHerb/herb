@@ -165,10 +165,10 @@
                 				<table style="border-style:hidden; width:100%">
                 						<tr style="border-style:hidden;">
                 							<td rowspan="2" style="width:23%; border-style:hidden;"> <!-- 이미지 -->
-                								<img style="width:90px; height:90px;"src="${pageContext.request.contextPath}/resources/img/cart-page/product-1.jpg" alt="">
+                								<img style="width:90px; height:100px;"src="${pageContext.request.contextPath}/resources/productImg/${orderDetailList.pImageName}" alt="">
                 							</td>
                 							<td>
-                								${orderDetailList.pName}
+                								<a style="color:black; font-size:18px;" href="productInfo.do?num=${orderDetailList.orderDetailPnum}">${orderDetailList.pName}</a>
                 							</td>
                 						</tr>
                 							
