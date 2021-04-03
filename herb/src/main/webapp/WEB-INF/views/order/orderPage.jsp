@@ -44,7 +44,7 @@ $(function(){
         merchant_uid : '${order.orderNum}',
         name : '어른허브 결제',
         amount : '${order.orderAmount}',
-        //buyer_email : 'wngmlgksk2@naver.com',
+        buyer_email : 'wngmlgksk2@naver.com',
         buyer_name : '${order.orderRecvName}',
         buyer_tel : '${order.orderRecvPhone}',
         buyer_addr : '${order.orderRecvAddr2}'+' '+'${order.orderRecvAddr3}',
@@ -82,6 +82,7 @@ $(function(){
             msg = '결제에 실패하였습니다.';
             msg += '에러내용 : ' + rsp.error_msg;
             //실패시 이동할 페이지
+            <%-- location.href="<%=request.getContextPath()%>/order/payFail" --%>
             location.href="<%=request.getContextPath()%>/order/payFail";
             alert(msg);
         }

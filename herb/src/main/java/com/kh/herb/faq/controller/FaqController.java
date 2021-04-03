@@ -76,7 +76,9 @@ public class FaqController {
 		
 		int result = faqService.insertFaq(faq);
 		if (result > 0) {
-			modelAndView.setViewName("faq/faqList");
+			
+			modelAndView.addObject("faq",faq);
+			modelAndView.setViewName("faq/faqView");
 		} else {
 			modelAndView.setViewName("faq/faqWriteFail");
 		}

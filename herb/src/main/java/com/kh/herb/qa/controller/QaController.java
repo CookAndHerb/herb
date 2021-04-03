@@ -92,6 +92,8 @@ public class QaController {
 		
 		result = qaService.insertQa(qa);
 		if(result > 0) {
+			int qaNum = qaService.getQaNum();
+			qa = qaService.read(qaNum);
 			modelAndView.addObject("qa",qa);
 			modelAndView.setViewName("qa/qaView");
 		} else {
@@ -243,6 +245,8 @@ public class QaController {
 		//int result = qaService.reInsert(qa);
 		int result = qaService.insertQa(qa);
 		if(result > 0) {
+			int qaNum = qaService.getQaNum();
+			qa = qaService.read(qaNum);
 			modelAndView.addObject("qa",qa);
 			modelAndView.setViewName("qa/qaView");
 		} else {

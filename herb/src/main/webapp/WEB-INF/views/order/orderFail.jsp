@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<script>
+	alert("주문이 실패했습니다.");
+	history.back(-1); // 
+</script>
 </body>
 </html>

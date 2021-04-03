@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.kh.herb.cart.model.vo.CartList;
 import com.kh.herb.order.model.dao.OrderDAO;
+import com.kh.herb.order.model.vo.Order;
+import com.kh.herb.order.model.vo.OrderDetail;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -18,5 +20,35 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<CartList> cartList(String userId) throws Exception {
 		return orderDAO.cartList(userId);
+	}
+
+	@Override
+	public int insertOrder(Order order) throws Exception {
+		return orderDAO.insertOrder(order);
+	}
+
+	@Override
+	public int getOrderNum(String userId) throws Exception {
+		return orderDAO.getOrderNum(userId);
+	}
+
+	/*@Override
+	public int insertOrderDetail(int orderNum) throws Exception {
+		return orderDAO.insertOrderDetail(orderNum);
+	}*/
+	
+	@Override
+	public int insertOrderDetail(OrderDetail orderDetail) throws Exception {
+		return orderDAO.insertOrderDetail(orderDetail);
+	}
+
+	@Override
+	public Order getOrder(int orderNum) throws Exception {
+		return orderDAO.getOrder(orderNum);
+	}
+
+	@Override
+	public int deleteCart(String userId) throws Exception {
+		return orderDAO.deleteCart(userId);
 	}
 }

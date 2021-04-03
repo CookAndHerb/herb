@@ -30,5 +30,7 @@ public interface QaService {
 
 	public int reInsert(Qa qa) throws Exception;
 
+	public int getQaNum() throws Exception;
+
 
 }

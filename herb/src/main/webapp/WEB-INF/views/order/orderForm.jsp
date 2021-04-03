@@ -69,11 +69,11 @@ function execPostCode() {
             }   */
             
             
-            $("[name=mem_oaddress]").val(data.zonecode);
-            $("[name=mem_address]").val(fullRoadAddr);
+            $("[name=orderRecvAddr1]").val(data.zonecode);
+            $("[name=orderRecvAddr2]").val(fullRoadAddr);
             
-            document.getElementById('mem_oaddress').value = data.zonecode; //5자리 새우편번호 사용
-            document.getElementById('mem_address').value = fullRoadAddr;
+            document.getElementById('orderRecvAddr1').value = data.zonecode; //5자리 새우편번호 사용
+            document.getElementById('orderRecvAddr2').value = fullRoadAddr;
             //document.getElementById('mem_detailaddress').value = data.jibunAddress; 
         }
      }).open();
@@ -122,13 +122,13 @@ function execPostCode() {
                             <!-- 이름 -->
                             <div class="col-lg-12">
                                 <label for="orderRecvName">이름<span>*</span></label>
-                                <input type="text" id="orderRecvName">
+                                <input type="text" id="orderRecvName" name="orderRecvName">
                             </div>
                             
                             <!-- 연락처 -->
                             <div class="col-lg-12">
                                 <label for="orderRecvPhone">전화번호<span>*</span></label>
-                                <input type="text" id="orderRecvPhone">
+                                <input type="text" id="orderRecvPhone" name="orderRecvPhone">
                             </div>
                             
                             <!-- 배송메세지 입력 -->
@@ -137,7 +137,7 @@ function execPostCode() {
                                 
                                 <div class="input-group mb-3">
 			                   		
-			                   		<input type="text" list="orderMessage" />
+			                   		<input type="text" list="orderMessage" name="orderMessage"/>
 										<datalist id="orderMessage">
 										  <option value="배송 전에 미리 연락 바랍니다.">배송 전에 미리 연락 바랍니다.</option>
 										  <option value="부재시 경비실에 맡겨주세요.">부재시 경비실에 맡겨주세요.</option>
@@ -208,7 +208,7 @@ function execPostCode() {
                                     <li class="fw-normal" style="color:gray; font-weight:bold;">배송비 <span>2,500원</span></li>
                                     <li class="total-price">총 합계 <span><fmt:formatNumber pattern="###,###,###" value="${sum + 2500}" />원</span></li>
                                 </ul>
-                                
+                                <input type="hidden" name="orderAmount" id="orderAmount" value="${sum+2500 }">
                                 <div class="order-btn">
                                     <button type="submit" class="site-btn place-btn" onclick="location.href='orderInsert.do'">결제 하기</button>
                                 </div>

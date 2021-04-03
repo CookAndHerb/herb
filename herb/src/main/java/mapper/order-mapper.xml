@@ -51,4 +51,34 @@
     	WHERE C.CART_USER_ID = #{userId}
 	</select>
 	
+	<!-- 주문 삽입 -->
+	<insert id="insertOrder">
+		INSERT INTO ORDER_TABLE(ORDER_NUM,ORDER_RECV_NAME,ORDER_RECV_ADDRESS1,ORDER_RECV_ADDRESS2,ORDER_RECV_ADDRESS3,
+			ORDER_RECV_PHONE,ORDER_DATE,ORDER_AMOUNT,ORDER_MESSAGE,ORDER_USER_ID)
+			VALUES (ORDER_TABLE_SEQ.NEXTVAL,#{orderRecvName},#{orderRecvAddr1},#{orderRecvAddr2},#{orderRecvAddr3},
+				#{orderRecvPhone},SYSDATE,#{orderAmount},#{orderMessage},#{orderUserId})
+	</insert>
+	
+	<!-- 주문번호 조회 -->
+	<select id="getOrderNum" resultType="int">
+		SELECT MAX(ORDER_NUM) FROM ORDER_TABLE WHERE ORDER_USER_ID = #{userId}
+	</select>
+	
+	<!-- 주문 상세 삽입 -->
+	<insert id="insertOrderDetail" parameterType="OrderDetail">
+		INSERT INTO ORDER_DETAIL(ORDER_DETAIL_NUM,ORDER_DETAIL_STOCK,ORDER_NUM,ORDER_DETAIL_P_NUM)
+			SELECT ORDER_DETAIL_SEQ.NEXTVAL, CART_STOCK, #{orderNum}, CART_P_NUM FROM CART
+				WHERE CART_USER_ID = #{userId}
+	</insert>
+	
+	<!-- 주문정보 하나  가져오기 -->
+	<select id="getOrder" resultType="Order" resultMap="resultOrder">
+		SELECT * FROM ORDER_TABLE
+			WHERE ORDER_NUM = #{orderNum}
+	</select>
+	
+	<!-- 장바구니 지우기 -->
+	<delete id="deleteCart" parameterType="int">
+		DELETE FROM CART WHERE CART_USER_ID = #{userId}
+	</delete>
 </mapper>

@@ -67,5 +67,9 @@ public class QaDAO {
 		return sqlSession.insert("Qa.reInsert",qa);
 	}
 
+	public int getQaNum() {
+		return sqlSession.selectOne("Qa.getQaNum");
+	}
+
 
 }

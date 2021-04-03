@@ -98,6 +98,11 @@
 			WHERE QA_NUM = #{qaNum}
 	</select>
 	
+	<!-- qaNum 찾기 -->
+	<select id="getQaNum" resultType="int">
+		SELECT MAX(QA_NUM) FROM QA
+	</select>
+	
 	<!-- 게시글 수정 -->
 	<update id="updateQa" parameterType="Qa">
 		UPDATE QA SET
