@@ -208,7 +208,7 @@ a {
 											<div class="pi-pic">
 												<a href="productInfo.do?num=${list.pNum}"> <img
 													src="${pageContext.request.contextPath}/resources/productImg/${list.imageName}"
-													alt="">
+													alt="" style="height: 252px;">
 												</a>
 											</div>
 											<div class="pi-text">

@@ -245,7 +245,7 @@
          <div class="row">
             <div class="col-lg-12">
                <div class="breadcrumb-text">
-                  <a href="product.do"><i class="fa fa-home"> </i>상품 목록</a> <span>${vo.pCategory }</span>
+                  <a href="product.do"><i class="fa fa-home"> </i>&nbsp;상품 목록</a> <span>${vo.pCategory }</span>
                </div>
             </div>
          </div>
@@ -391,7 +391,7 @@
                         <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
                            <div class="product-content">
                               <div class="row">
-                                 <div class="col-lg-7">
+                                 <div class="col-lg-12">
                                     <p>${vo.pContent }</p>
                                  </div>
                               </div>
