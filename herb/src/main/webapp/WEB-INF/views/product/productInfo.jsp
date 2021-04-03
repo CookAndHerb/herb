@@ -302,7 +302,7 @@
                                  data-imgbigurl="${pageContext.request.contextPath}/resources/productImg/${file.pInfoFile}">
                                  <img
                                     src="${pageContext.request.contextPath}/resources/productImg/${file.pInfoFile}"
-                                    alt="상품 인포 이미지2">
+                                    alt="상품 인포 이미지2" >
                               </div>
                            </c:forEach>
                         </div>
