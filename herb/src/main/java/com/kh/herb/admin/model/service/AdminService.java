@@ -4,8 +4,10 @@ import java.util.List;
 
 import com.kh.herb.admin.model.vo.AdminOrder;
 import com.kh.herb.member.model.vo.Member;
+import com.kh.herb.notice.model.vo.Notice;
 import com.kh.herb.product.model.vo.Product;
 import com.kh.herb.product.model.vo.ProductFile;
+import com.kh.herb.qa.model.vo.Qa;
 
 public interface AdminService {
 
@@ -31,5 +33,11 @@ public interface AdminService {
 	public List<AdminOrder> searchOrder(int startPage, int limit, String selectType, String keyword) throws Exception;
 	public List<AdminOrder> selectOrder(int orderNum) throws Exception;
 	public int updateOrder(String orderStatus, int orderNum) throws Exception;
+	public int sales3() throws Exception;
+	public int sales4() throws Exception;
+	public int sell3() throws Exception;
+	public int sell4() throws Exception;
 	public int totalSales() throws Exception;
+	public List<Notice> adminNoticeList() throws Exception;
+	public List<Qa> adminQaList() throws Exception;
 }

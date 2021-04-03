@@ -64,8 +64,6 @@
 <body>
 	<div id="messageArea">
 		<div class="container"></div>
-		<input type="hidden" id="userId" value="${userId }">
-		<div class="container2"></div>
 	</div>
 	<div id="chatArea">
 		<input type="text" id="message" /> 
@@ -98,8 +96,6 @@
 	// 서버로부터 메시지를 받았을 때
 	function onMessage(msg) {
 		var data = msg.data;
-		var dataId = null; //데이터를 보낸 사람
-		var userId = '${userId}'; //현재 세션에 로그인한 사람
 
 		$(".container").append(data + "<br/>");
 	}

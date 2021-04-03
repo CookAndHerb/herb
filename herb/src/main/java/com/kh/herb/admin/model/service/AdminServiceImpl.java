@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import com.kh.herb.admin.model.dao.AdminDAO;
 import com.kh.herb.admin.model.vo.AdminOrder;
 import com.kh.herb.member.model.vo.Member;
+import com.kh.herb.notice.model.vo.Notice;
 import com.kh.herb.product.model.vo.Product;
 import com.kh.herb.product.model.vo.ProductFile;
+import com.kh.herb.qa.model.vo.Qa;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -126,9 +128,38 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
+	public int sales3() throws Exception {
+		return ad.sales3();
+	}
+
+	@Override
+	public int sales4() throws Exception {
+		return ad.sales4();
+	}
+
+	@Override
+	public int sell3() throws Exception {
+		return ad.sell3();
+	}
+	
+	@Override
+	public int sell4() throws Exception {
+		return ad.sell4();
+	}
+
+	@Override
 	public int totalSales() throws Exception {
 		return ad.totalSales();
 	}
 
+	@Override
+	public List<Notice> adminNoticeList() throws Exception {
+		return ad.adminNoticeList();
+	}
+
+	@Override
+	public List<Qa> adminQaList() throws Exception {
+		return ad.adminQaList();
+	}
 }
 

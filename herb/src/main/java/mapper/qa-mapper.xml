@@ -128,4 +128,13 @@
 			SYSDATE,#{ref},#{reStep+1},#{reLevel+1},0)
 	</insert> -->
 	
+	<!-- 관리자 메인에서 사용할 QA 리스트 -->
+	<select id="adminQaList" resultMap="resultQa">
+		<![CDATA[
+		SELECT * FROM( 
+		SELECT ROW_NUMBER() OVER(ORDER BY QA_NUM DESC) AS RNUM, 
+		QA_NUM, QA_TITLE FROM QA) WHERE RNUM >= 1 AND RNUM <= 6
+		 ]]>
+	</select>
+	
 </mapper>

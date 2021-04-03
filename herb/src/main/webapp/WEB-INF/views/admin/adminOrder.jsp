@@ -40,15 +40,11 @@ $(document).ready(function() {
 	$(document).on('click', '.orderUpt', updatefunction);
 	   function updatefunction(){ 
 		   var orderStr = $('#orderStatus').val();
-		   var orderNum = $('.orderUpt').val();
+		   var orderNum = $(this).val();
 		      $.ajax({
-		         type : 'post',
+		         type : 'get',
 		         dataType : 'json',
-		         url : 'orderUpt.do',
-		         data : {
-						'orderStatus' : orderStr,
-						'orderNum' : orderNum
-					},
+		         url : 'orderUpt.do?orderStatus='+orderStr+'&orderNum='+orderNum,
 		         success : function(data){
 		              if(data.ok == "dup"){
 		            	alert('배송상태 업데이트 성공');

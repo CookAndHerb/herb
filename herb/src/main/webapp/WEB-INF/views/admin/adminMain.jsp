@@ -25,6 +25,13 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
     <!-- sujung css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sujung.css" type="text/css">
+    
+    <style>
+    	#listArea{
+			display: inline-block;
+			width: 420px;
+		}
+    </style>
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -71,18 +78,55 @@
                 <!-- 내용 -->
                 <div class="col-lg-9 order-1 order-lg-2">
                 
+                <!-- 매출, 판매량 정보 -->
                 <div id="eventing">매출 정보</div>
+                 <p> 총 매출액 : <fmt:formatNumber pattern="###,###,###" value="${totalSales}" />원</p>
                 <%@ include file="adminChart.jsp" %>
+                <br><br><br>
                 
-           <%--      <div id="eventing">매출 정보</div>
-                 <div class="totalSales">
-                 <p class="font">총 매출 금액</p>
-                 <p id="mainPrice"><fmt:formatNumber pattern="###,###,###" value="${totalSales}" /> 원</p>
-                 </div>
-                 <div class="monthSales">
-                 <p class="font">월별 매출 금액</p>
-                 <p id="mainPrice"> 000000000원</p>
-                 </div> --%>
+				<!-- 공지사항 리스트 -->
+				<div id="listArea">
+				<div id="eventing">공지사항</div>
+				<table class="table table-bordered" style="text-align:center; font-size: small;">
+  					  <thead>
+     					 <tr>
+        					<th style="width:55px">번호</th>
+    					    <th>제목</th>
+      					</tr>
+    				</thead>
+    				<tbody>
+    				<c:forEach var="notice" items="${notice}">
+      					<tr>
+        					<td>${notice.noticeNum }</td>
+        					<td><a href="noticePage.do?noticeNum=${notice.noticeNum}&page=1" style="color:black; float:left;">${notice.noticeTitle }</a></td>
+      					</tr>
+      				</c:forEach>		
+    			</tbody>
+  				</table>
+  				</div>
+  				
+  				<!-- QA 리스트 -->
+  				<div id="listArea">
+  					<div id="eventing">질문 게시판</div>
+				<table class="table table-bordered" style="text-align:center; font-size: small;">
+  					  <thead>
+     					 <tr>
+        					<th style="width:55px">번호</th>
+    					    <th>제목</th>
+      					</tr>
+    				</thead>
+    				<tbody>
+    				<c:forEach var="qa" items="${Qa}">
+      					<tr>
+        					<td>${qa.qaNum}</td>
+        					<td><a href="qaPwForm.do?qaNum=${qa.qaNum}&curPage=1" style="color:black; float:left;">
+						${qa.qaTitle}</a></td>
+      					</tr>
+      				</c:forEach>		
+    			</tbody>
+  				</table>
+  				</div>
+				
                  <br><br><br>
                  <div id="eventing">진행 중 이벤트</div>
                   <img class="banner" src="${pageContext.request.contextPath}/resources/img/sujung/banner1.JPG">
