@@ -41,7 +41,7 @@ window.onload = function(){
 	}else if(url.indexOf("admin") != -1){
 		$('.mainNav li').removeClass("active");
 		$('.nav_admin').addClass("active");
-		$('.nav_notice ul li a').css('background','#212529');
+		$('.nav_admin ul li a').css('background','#212529');
 	}else if(url.indexOf("member") != -1){
 		$('.mainNav li').removeClass("active");
 		$('.nav_member').addClass("active");
