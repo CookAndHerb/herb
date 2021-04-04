@@ -117,7 +117,7 @@
 								</tr>
 								<tr>
 									<th>총 주문 금액</th>
-									<td><fmt:formatNumber pattern="###,###,###" value="${order[0].orderAmount}" /> 원</td>
+									<td><fmt:formatNumber pattern="###,###,###" value="${order[0].orderAmount}" />원</td>
 									<th>배송비</th>
 									<td>2,500원</td>					
 								</tr>

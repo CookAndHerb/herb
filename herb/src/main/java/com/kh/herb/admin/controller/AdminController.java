@@ -22,8 +22,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.herb.admin.model.service.AdminService;
 import com.kh.herb.admin.model.vo.AdminOrder;
 import com.kh.herb.member.model.vo.Member;
+import com.kh.herb.notice.model.vo.Notice;
 import com.kh.herb.product.model.vo.Product;
 import com.kh.herb.product.model.vo.ProductFile;
+import com.kh.herb.qa.model.vo.Qa;
 
 @Controller 
 public class AdminController {
@@ -35,10 +37,26 @@ public class AdminController {
 	//관리자 페이지 메인
 	@RequestMapping("adminMain.do")
 	public ModelAndView adminMain(ModelAndView mav) throws Exception {
-		//int totalSales = as.totalSales();
-		//mav.addObject("totalSales", totalSales);
+		int totalSales = as.totalSales(); //총 매출
+		int sales3 = as.sales3(); //3월 매출
+		int sales4 = as.sales4(); //4월 매출
+		int sell3 = as.sell3(); //3월 판매량
+		int sell4 = as.sell4(); //4월 판매량
+		
+		//공지사항 리스트
+		List<Notice> notice = as.adminNoticeList();
+		
+		//QA 리스트
+		List<Qa> Qa = as.adminQaList();
+		
+		mav.addObject("totalSales", totalSales);
+		mav.addObject("sales3", sales3);
+		mav.addObject("sales4", sales4);
+		mav.addObject("sell3", sell3);
+		mav.addObject("sell4", sell4);
+		mav.addObject("notice", notice);
+		mav.addObject("Qa", Qa);
 		mav.setViewName("admin/adminMain");
-		//mav.setViewName("admin/adminChart");
 		return mav;
 	}
 
@@ -412,7 +430,7 @@ public class AdminController {
 	}
 
 	//배송상태수정
-	@RequestMapping(value="orderUpt.do", method=RequestMethod.POST)
+	@RequestMapping(value="orderUpt.do", method=RequestMethod.GET)
 	@ResponseBody
 	public String updateOrder(@RequestParam(value="orderStatus", required=false) String orderStatus, @RequestParam(value="orderNum", required=false) int orderNum) throws Exception{
 		int result = as.updateOrder(orderStatus, orderNum);

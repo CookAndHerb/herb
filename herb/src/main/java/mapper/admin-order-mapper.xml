@@ -73,9 +73,36 @@
 		UPDATE ORDER_TABLE SET ORDER_STATUS=#{orderStatus} WHERE ORDER_NUM=#{orderNum}
 	</update>
 	
-	<!-- 3월 매출  -->
+	<!-- 총 매출 -->
 	<select id="totalSales" resultType="_int">
-		SELECT DECODE(TO_CHAR(ORDER_DATE, 'YYYY-MM'), '2021-03', SUM(ORDER_AMOUNT), 0)
+		SELECT SUM(ORDER_AMOUNT) FROM ADMIN_ORDER
+	</select>
+	
+	<!-- 3월 매출  -->
+	<select id="sales3" resultType="_int">
+		SELECT DECODE(TO_CHAR(ORDER_DATE, 'YYYY-MM'), '2021-03', SUM(ORDER_AMOUNT))
+		FROM ADMIN_ORDER GROUP BY TO_CHAR(ORDER_DATE, 'YYYY-MM') 
+		HAVING DECODE(TO_CHAR(ORDER_DATE, 'YYYY-MM'), '2021-03', SUM(ORDER_AMOUNT))>0
+	</select>
+	
+	<!-- 4월 매출  -->
+	<select id="sales4" resultType="_int">
+		SELECT DECODE(TO_CHAR(ORDER_DATE, 'YYYY-MM'), '2021-04', SUM(ORDER_AMOUNT))
+		FROM ADMIN_ORDER GROUP BY TO_CHAR(ORDER_DATE, 'YYYY-MM') 
+		HAVING DECODE(TO_CHAR(ORDER_DATE, 'YYYY-MM'), '2021-04', SUM(ORDER_AMOUNT))>0
+	</select>
+	
+	<!-- 3월 판매량 -->
+	<select id="sell3" resultType="_int">
+		SELECT DECODE(TO_CHAR(ORDER_DATE, 'YYYY-MM'), '2021-03', SUM(ORDER_DETAIL_STOCK))
 		FROM ADMIN_ORDER GROUP BY TO_CHAR(ORDER_DATE, 'YYYY-MM')
+		HAVING DECODE(TO_CHAR(ORDER_DATE, 'YYYY-MM'), '2021-03', SUM(ORDER_DETAIL_STOCK))>0
+	</select>
+	
+	<!-- 4월 판매량 -->
+	<select id="sell4" resultType="_int">
+		SELECT DECODE(TO_CHAR(ORDER_DATE, 'YYYY-MM'), '2021-04', SUM(ORDER_DETAIL_STOCK))
+		FROM ADMIN_ORDER GROUP BY TO_CHAR(ORDER_DATE, 'YYYY-MM')
+		HAVING DECODE(TO_CHAR(ORDER_DATE, 'YYYY-MM'), '2021-04', SUM(ORDER_DETAIL_STOCK))>0
 	</select>
 </mapper>
