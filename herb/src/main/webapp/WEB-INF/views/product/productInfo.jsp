@@ -888,10 +888,6 @@
       
       // 리뷰 제출 및 예외처리
       function reviewList() {
-         if (fileList.length == 0) {
-            alert("후기 사진을 첨부해주세요.");
-            return false;
-         }
          if (fileList.length > 6) {
             alert("사진은 최대 6개까지 첨부할 수 있습니다.");
             return false;
@@ -900,15 +896,18 @@
             alert("내용을 적어주세요");
             return false;
          }
+         if (fileList2.length != 0) {
+             alert("후기 사진을 첨부해주세요.");
+             return false;
+          }
 
-       	
          var formData = new FormData();
          formData.append('pNum', $('#pNum').val());
          formData.append('rWriter', $("#rWriter").val());
          formData.append('rStar', rStar);
          formData.append('rContent', $("#rContent").val());
          // 다중첨부파일
-         if (fileList) {
+         if (fileList != null) {
             for ( var index in fileList) {
                formData.append('fileName', fileList[index]);
             }
@@ -984,7 +983,7 @@
       src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
    <script
       src="${pageContext.request.contextPath}/resources/js/jquery-ui.min.js"></script>
-   <script
+   <script 
       src="${pageContext.request.contextPath}/resources/js/jquery.countdown.min.js"></script>
    <script
       src="${pageContext.request.contextPath}/resources/js/jquery.nice-select.min.js"></script>

@@ -19,6 +19,35 @@
 <script>
 // 검색
 window.onload = function(){
+	var url = $(location).attr('pathname');
+	console.log(url);
+	
+	if(url.indexOf("product") != -1 || url.indexOf("category") != -1){
+		$('.mainNav li').removeClass("active");
+		$('.nav_shop').addClass("active");
+	}else if(url.indexOf("index") != -1){
+		$('.mainNav li').removeClass("active");
+		$('.nav_home').addClass("active");
+	}else if(url.indexOf("cart") != -1){
+		$('.mainNav li').removeClass("active");
+		$('.nav_cart').addClass("active");
+	}else if(url.indexOf("noticeList") != -1 || url.indexOf("qaList") != -1 || url.indexOf("faqList") != -1){
+		$('.mainNav li').removeClass("active");
+		$('.nav_notice').addClass("active");
+		$('.nav_notice ul li a').css('background','#212529');
+	}else if(url.indexOf("contact") != -1){
+		$('.mainNav li').removeClass("active");
+		$('.nav_contact').addClass("active");
+	}else if(url.indexOf("admin") != -1){
+		$('.mainNav li').removeClass("active");
+		$('.nav_admin').addClass("active");
+		$('.nav_notice ul li a').css('background','#212529');
+	}else if(url.indexOf("member") != -1){
+		$('.mainNav li').removeClass("active");
+		$('.nav_member').addClass("active");
+		$('.nav_member ul li a').css('background','#212529');
+	}
+	
 	document.getElementById("SearchBtn").onclick=function(){
 		if(frm.keyword.value==""){
 			frm.keyword.focus();
@@ -210,23 +239,23 @@ window.onload = function(){
                     </div>
                 </div>
                 <nav class="nav-menu mobile-menu">
-                    <ul>
-                        <li class="active"><a href="index.do">Home</a></li>
-                        <li><a href="product.do">Shop</a></li>
-                        <li><a href="cartList.do">Cart</a></li>
-                        <li><a href="noticeList.do">Service Center</a>
+                    <ul class="mainNav">
+                        <li class="nav_home active"><a href="index.do">Home</a></li>
+                        <li class="nav_shop"><a href="product.do">Shop</a></li>
+                        <li class="nav_cart"><a href="cartList.do">Cart</a></li>
+                        <li class="nav_notice"><a href="noticeList.do">Service Center</a>
                             <ul class="dropdown">
                                 <li><a href="noticeList.do">공지사항</a></li>
                                 <li><a href="faqList.do">자주 묻는 질문</a></li>
                                 <li><a href="qaList.do">질문 게시판</a></li>
                             </ul>
                         </li>
-                        <li><a href="contact.do">Contact</a></li>
+                        <li class="nav_contact"><a href="contact.do" id="nav_contant">Contact</a></li>
                         
                      
                     	<c:choose>
                     	<c:when test="${sessionScope.member.userNum > 0 && sessionScope.member.userNum <= 999}">
-                        <li><a href="adminMain.do">admin</a>
+                        <li class="nav_admin"><a href="adminMain.do">admin</a>
                             <ul class="dropdown">
                                 <li><a href="adminProduct.do">상품관리</a></li>
                                 <li><a href="adminOrder.do">주문관리</a></li>
@@ -235,7 +264,7 @@ window.onload = function(){
                         </li>
                        </c:when>
                        <c:when  test="${sessionScope.member.userNum >999}">
-                           <li><a href="memberOrder.do">MY HERB</a>
+                           <li class="nav_member"><a href="memberOrder.do">MY HERB</a>
                             <ul class="dropdown">
                                 <li><a href="memberOrder.do">주문 조회</a></li>
                                 <li><a href="memberUpdate.do">개인 정보 수정</a></li>
