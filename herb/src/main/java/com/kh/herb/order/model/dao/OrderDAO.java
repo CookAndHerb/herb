@@ -50,4 +50,8 @@ public class OrderDAO {
 	public List<OrderDetailList> orderDetailList(int orderNum) {
 		return sqlSession.selectList("Order.orderDetailList", orderNum);
 	}
+
+	public int updatePSell(OrderDetailList od) {
+		return sqlSession.update("Order.updatePSell",od);
+	}
 }

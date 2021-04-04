@@ -82,7 +82,22 @@
 		<result property="pCost" column="P_COST"/>
 	</resultMap>
 	
-	
+	<resultMap id="proResult" type="Product">
+		<id property="pNum" column="P_NUM"></id>
+		<result property="pName" column="P_NAME"></result>
+		<result property="pCost" column="P_COST"></result>
+		<result property="imageName" column="P_IMAGE_NAME"></result>
+		<result property="imagePath" column="P_IMAGE_PATH"></result>
+		<result property="pContent" column="P_CONTENT"></result>
+		<result property="pStar" column="P_STAR"></result>
+		<result property="pSell" column="P_SELL"></result>
+		<result property="pMaDate" column="P_MA_DATE"></result>
+		<result property="pExDate" column="P_EX_DATE"></result>
+		<result property="pCapacity" column="P_CAPACITY"></result>
+		<result property="pType" column="P_TYPE"></result>
+		<result property="pCategory" column="P_CATEGORY"></result>
+		<result property="pStarAvg" column="P_STAR_AVG"></result>
+	</resultMap>
 	
 	
 		<!-- 카트 리스트 -->
@@ -154,5 +169,11 @@
             	 on d.ORDER_DETAIL_P_NUM = g.P_NUM
      	WHERE o.ORDER_NUM = #{orderNum}
 	</select>
+	
+	<!-- orderNum에 존재하는 상품들의 psell 업데이트 -->
+	<update id="updatePSell" parameterType="OrderDetail">
+		UPDATE PRODUCT SET P_SELL = P_SELL + #{orderDetailStock}
+   			WHERE P_NUM = #{orderDetailPnum}
+	</update>
 	
 </mapper>

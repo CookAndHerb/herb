@@ -25,6 +25,8 @@ public interface OrderService {
 	public int deleteCart(String userId) throws Exception;
 
 	public List<OrderDetailList> orderDetailList(int orderNum) throws Exception;
+
+	public int updatePSell(OrderDetailList od) throws Exception;
 	
 	
 }

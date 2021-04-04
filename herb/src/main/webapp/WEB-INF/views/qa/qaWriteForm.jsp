@@ -34,6 +34,30 @@
 	float: left;
 }
 </style>
+<!-- <script>
+$(document).ready(function() { 
+	$('#btn_write').click(function(){ 
+		if($('#qaPw').val()=='') { 
+			alert('비밀번호를 입력하세요'); 
+			$('#qaPw').focus(); 
+		} else {
+			window.location = "qaInsert.do";
+		}
+	});
+});
+</script> -->
+<script type="text/javascript">
+	function writeBtn() {
+		var qaWriteForm = document.qaWriteForm;
+		var qaPw = qaWriteForm.qaPw.value;
+		
+		if(!qaPw) {
+			alert("비밀번호를 입력하세요.")
+		} else {
+			qaWriteForm.submit();
+		}
+	}
+</script>
 
 </head>
 <body>
@@ -81,7 +105,7 @@
                 <!-- 내용 -->
                 <div class="col-lg-9 order-1 order-lg-2">
                 <h3 style="font-weight:bold; text-align:center;">질문 게시판 글 작성</h3><br><br>
-                   <form method="post" action="qaInsert.do">
+                   <form method="post" action="qaInsert.do" name="qaWriteForm">
 						<div class="input-group mb-3">
 							<div class="input-group-prepend"><label class="input-group-text px-4">제목</label></div>
 							<input type="text" class="form-control" name="qaTitle" placeholder="글 제목을 입력하세요">
@@ -102,10 +126,11 @@
 						</script>
 				    <div class="input-group mb-3">
 							<div class="input-group-prepend"><label class="input-group-text px-4">비밀번호 </label></div>
-							<input type="text" class="form-control" name="qaPw" placeholder="비밀번호를 입력하세요">
+							<input type="text" class="form-control" name="qaPw" id="qaPw" placeholder="비밀번호를 입력하세요">
 						</div>
 					<div align="center">
-						<input type="submit" id="btn_write" class="btn btn-warning" value="등록" onclick="location.href='qaInsert.do'">
+					<input type="button" id="btn_write" class="btn btn-warning" value="등록" onclick="writeBtn()">
+						<!-- <input type="submit" id="btn_write" class="btn btn-warning" value="등록" onclick="location.href='qaInsert.do'"> -->  
 						<input type="button" class="btn btn-secondary" value="취소" onclick="location.href='qaList.do'">
 					</div>
 				</form>
