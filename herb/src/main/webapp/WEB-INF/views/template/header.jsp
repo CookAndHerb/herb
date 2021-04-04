@@ -238,6 +238,7 @@ window.onload = function(){
                            <li><a href="memberOrder.do">MY HERB</a>
                             <ul class="dropdown">
                                 <li><a href="memberOrder.do">주문 조회</a></li>
+                                <li><a href="memberReview.do">구매 후기</a></li>
                                 <li><a href="memberUpdate.do">개인 정보 수정</a></li>
                                 <li><a href="memberDelete.do">탈퇴하기</a></li>
                             </ul>
