@@ -11,7 +11,7 @@ public class Sha256Util {
 		
 		// import java.security.MessageDigest;
 		// 암호화를 처리할 수 있는 MessageDigest 객체를 생성 (java에서 기본 제공)
-		MessageDigest mDigest = MessageDigest.getInstance("SHA-256"); // SHA-256 알고리즘 사용, SHA-512로도 사용 가능한 것 같음.
+		MessageDigest mDigest = MessageDigest.getInstance("SHA-256"); // SHA-256 알고리즘 사용
 		
 		// 생성된 MessageDigest 객체를 가지고 데이터를 암호화
 		// update 메소드를 사용할 때에는 (String data로 받은) 문자열을 Byte배열(data.getBytes())로 변경해서  mDigest에 넘겨주어야 함

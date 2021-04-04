@@ -29,6 +29,13 @@
 	<!-- 부트스트랩 -->
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 
+<style>
+.box1 {text-align : center}
+.box2 {display : inline-block}
+.box3 {text-align : left}
+</style>
+
+
 </head>
 <body>
 	<!-- 상단 공동 메뉴 -->
@@ -41,7 +48,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
-                        <a href="index.do"><i class="fa fa-home"></i>장바구니</a>
+                        <a href="index.do"><i class="fa fa-home"></i> 장바구니</a>
                         <span>주문 완료</span>
                     </div>
                 </div>
@@ -55,19 +62,12 @@
  	    <!-- Shopping Cart Section Begin -->
     <section class="checkout-section spad">
         <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        
-                        
-                        </div>
-                    </div>
-                    
-                    
+         <form class="checkout-form box1">
                     
                     <!-- 주문 리스트  -->
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 box2">
                         
-                        <div class="place-order">
+                        <div class="place-order box3">
                             <h4>주문 목록</h4>
                             <div class="order-total">
                                 <ul class="order-table">
@@ -86,12 +86,14 @@
                                 <h4>주문이 완료되었습니다.</h4>
                             </div>
                         </div>
-                        
+                    
                         
                         
                         
                     </div>
+                    </form>
                 </div>
+               
        <!--  </div> -->
     </section>
     <!-- Shopping Cart Section End -->

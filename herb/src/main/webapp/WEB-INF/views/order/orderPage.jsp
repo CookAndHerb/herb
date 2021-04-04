@@ -103,7 +103,7 @@ $(function(){
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
-                        <a href="index.do"><i class="fa fa-home"></i>장바구니</a>
+                        <a href="index.do"><i class="fa fa-home"></i> 장바구니</a>
                         <span>주문/결제</span>
                     </div>
                 </div>

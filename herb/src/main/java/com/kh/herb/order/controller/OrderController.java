@@ -99,7 +99,7 @@ public class OrderController {
 		public ModelAndView paySuccess(ModelAndView mv,
 				Order order, HttpSession session) throws Exception {
 		
-			// 1. orderDetail list 가져오기
+			// 1. orderDetail list 가져오기 - 주문 목록
 			//List<CartList> cartList = orderService.cartList(userId)
 			Member member = (Member)session.getAttribute("member");
 			String userId = member.getUserId();
@@ -112,35 +112,24 @@ public class OrderController {
 			List<OrderDetailList> orderDetailList = orderService.orderDetailList(orderNum);
 			mv.addObject("orderDetailList",orderDetailList);
 			
-			// 2. cart 비우기
+			// 2. psell 업데이트
+		/*
+		 * [결제 완료 후 총 판매량 업데이트 하기] 
+		 *  장바구니 : userId로 리스트 가져옴 
+		 *  pNum으로 psell 조회 
+		 *  장바구니에 있는 psell = cartStock + psell 더하기. psell update시키기
+		 */
+			for(OrderDetailList od : orderDetailList){
+				   orderService.updatePSell(od);
+				}
+
+			
+			
+			// 3. cart 비우기
 			int result = orderService.deleteCart(userId);
 			mv.setViewName("order/orderList");
 			
 			return mv;
 		}
-		
-		/*
-		@RequestMapping(value = "memberOrderDetail.do", method=RequestMethod.GET) 
-		public ModelAndView orderDetailList(@RequestParam(name = "orderNum")int orderNum, HttpSession session, ModelAndView mv) throws Exception{
-			System.out.println("여기왔어요");
-			System.out.println(orderNum);
-			
-			Member member = (Member)session.getAttribute("member");
-			if(member == null) {
-				mv.setViewName("cart/noLogin");
-			}else {
-			String userId = member.getUserId();
-			
-			OrderDetailList odl = new OrderDetailList();
-			
-			odl.setOrderUserId(userId);
-			odl.setOrderNum(orderNum);
-			
-			mv.addObject("orderDetailList", myHerbService.orderDetailList(odl));
-			mv.setViewName("myHerb/memberOrderDetail");
-			}
-			return mv;
-		} */
-		
 		
 }

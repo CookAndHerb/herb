@@ -57,4 +57,10 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderDetailList> orderDetailList(int orderNum) throws Exception {
 		return orderDAO.orderDetailList(orderNum);
 	}
+
+
+	@Override
+	public int updatePSell(OrderDetailList od) throws Exception {
+		return orderDAO.updatePSell(od);
+	}
 }
