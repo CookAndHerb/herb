@@ -76,24 +76,17 @@ public class AdminController {
 		product.setImageName(fileProduct.getImageName());
 		product.setImagePath(fileProduct.getImagePath());
 
-
+		//단일 이미지와 그 외 정보들 DB전송 및 서버 저장
 		int result1 = as.insertProduct(product);
-		//System.out.println(product.getpNum());
-
+		
+		//다중 이미지 DB전송 및 서버 저정
 		ProductFile infoFile = new ProductFile();
-
 		for(MultipartFile productInfo : pInfoFiles) {
 			infoFile = infoImage(productInfo, request);
 			pf.setpInfoFile(infoFile.getpInfoFile());
 			pf.setpInfoPath(infoFile.getpInfoPath());
 			int cnt = as.insertFile(pf);
 		}
-
-
-		//		pf.setpInfoFile(infoFile.getpInfoFile());
-		//		pf.setpInfoPath(infoFile.getpInfoPath());
-		//		
-		//		int result2 = as.insertFile(pf);
 
 		mav.addObject("result1", result1);
 		mav.setViewName("product/productInsComplete");

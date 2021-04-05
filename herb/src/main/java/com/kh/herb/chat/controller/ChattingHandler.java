@@ -26,6 +26,7 @@ public class ChattingHandler extends TextWebSocketHandler{
         sessionList.add(session);
         log.info("{} 연결됨", session.getId());  
         
+      //세션에 저장된 회원 아이디를 가져옴
         Map<String, Object> map = session.getAttributes();
     	String userId = (String) map.get("userId");
         
@@ -40,6 +41,7 @@ public class ChattingHandler extends TextWebSocketHandler{
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
     	log.info("{}로 부터 {} 받음", session.getId(), message.getPayload());
     	
+    	//세션에 저장된 회원 아이디를 가져옴
     	Map<String, Object> map = session.getAttributes();
     	String userId = (String) map.get("userId");
     	
@@ -54,7 +56,8 @@ public class ChattingHandler extends TextWebSocketHandler{
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         sessionList.remove(session);
         log.info("{} 연결 끊김.", session.getId());
-        
+      
+        //세션에 저장된 회원 아이디를 가져옴
         Map<String, Object> map = session.getAttributes();
     	String userId = (String) map.get("userId");
         
