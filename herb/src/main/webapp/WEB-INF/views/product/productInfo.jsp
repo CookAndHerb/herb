@@ -321,11 +321,15 @@
                            <!-- 리뷰가 있을 경우 -->
                            <c:if test="${!empty review}">
                            <fmt:parseNumber var="rStarAvg" value="${reAvg}" integerOnly="true" />
-                              <c:forEach begin="1" end="${rStarAvg-1}">
-                                 <i class="fa fa-star"></i>
-                              </c:forEach>
-
+                              <c:if test="${rStarAvg eq 5}">
+                                 <c:forEach begin="1" end="${rStarAvg}">
+                                  	<i class="fa fa-star"></i>
+                                 </c:forEach>
+                              </c:if>
                               <c:if test="${rStarAvg ne 5}">
+	                              <c:forEach begin="1" end="${rStarAvg-1}">
+	                                 <i class="fa fa-star"></i>
+	                              </c:forEach>
                                  <c:forEach begin="0" end="${5-rStarAvg}">
                                   	<i class="fa fa-star-o"></i>
                                  </c:forEach>
@@ -655,7 +659,7 @@
              data: {pNum:num, rWriter:id},
              success : function(data){
                 var sto = "배송완료";
-                if(data.order == sto){
+                if(data.order != sto){
                   if($('#reWrite').css("display") == "none"){
                      $('#reWrite').show();
                   }else{
