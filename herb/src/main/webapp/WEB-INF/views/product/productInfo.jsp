@@ -837,7 +837,7 @@
         	 alert("별점을 선택해주세요.");
         	 return false;
          }
-         if (fileList2.length != 0 && oldFileList.length != 0) {
+         if (fileList2.length == 0 && oldFileList.length == 0) {
         	 console.log(fileList2.length + oldFileList.length);
             alert("후기 사진을 첨부해주세요.");
             return false;
