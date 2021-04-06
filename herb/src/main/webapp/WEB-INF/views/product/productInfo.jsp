@@ -659,7 +659,7 @@
              data: {pNum:num, rWriter:id},
              success : function(data){
                 var sto = "배송완료";
-                if(data.order != sto){
+                if(data.order == sto){
                   if($('#reWrite').css("display") == "none"){
                      $('#reWrite').show();
                   }else{
