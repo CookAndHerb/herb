@@ -96,7 +96,7 @@
                             </div>
                             <div class="group-input">
                                 <div class="label">비밀번호<span style="color:orange;">&nbsp;*</span></div>
-                                <input type="text" name="userPw">
+                                <input type="password" name="userPw">
                             </div>
                             <button type="submit" class="site-btn register-btn">탈퇴하기</button>
                         </form>
