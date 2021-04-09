@@ -16,20 +16,20 @@ API 적용, 마이페이지 - 회원정보 수정, 회원 탈퇴, 주문 내역,
 ```
 
 ### 📝개요
-다양한 영양제 브랜드의 시장 진입 및 코로나 19 확산에 따른 건강 관심도 증대에 따라 영양제 쇼핑몰을 기획해보게 됨
+다양한 영양제 브랜드의 시장 진입 및 코로나 19 확산에 따른 건강 관심도 증대에 따라 영양제 쇼핑몰을 기획해보게 됨 <br>
 카테고리별로 나뉘어진 영양제를 볼 수 있고 구매를 원하는 상품을 장바구니에 담아 결제까지 할 수 있다.
 
 ### 🖥️구현기능
 상품 게시판, 고객센터, 회사 소개 페이지, 관리자 페이지, 마이 페이지, 장바구니 기능, 상품 결제 기능, 오픈 채팅 기능
 
 ### 📝설계의 주안점
-쇼핑몰로서의 제 기능 수행
+쇼핑몰로서의 제 기능 수행 <br>
 여러가지 API 적용
 
 🖥️사용기술 및 개발환경
-•개발도구 : Spring Tool Suite 4
-•DBMS : Oracle DB - SqlDeveloper
-•Server : Apache Tomcat 9.0
-•Language : Java, HTML5, CSS3, Javascript, SQL
-•디자인 툴 : Bootstrap
+•개발도구 : Spring Tool Suite 4 <br>
+•DBMS : Oracle DB - SqlDeveloper <br>
+•Server : Apache Tomcat 9.0 <br>
+•Language : Java, HTML5, CSS3, Javascript, SQL <br>
+•디자인 툴 : Bootstrap <br>
 HTML, CSS, Javascript, Ajax, WebSocket
